@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jni\app-android.c" />
+    <ClCompile Include="jni\cart.c" />
+    <ClCompile Include="jni\font.c" />
+    <ClCompile Include="jni\game.c" />
+    <ClCompile Include="jni\leika.c" />
+    <ClCompile Include="jni\main.c" />
+    <ClCompile Include="jni\old.c" />
+    <ClCompile Include="jni\pumpkin.c" />
+    <ClCompile Include="jni\resources.c" />
+    <ClCompile Include="jni\sound-android.c" />
+    <ClCompile Include="jni\sound-win32.c" />
+    <ClCompile Include="jni\worm.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="jni\blend.h" />
+    <ClInclude Include="jni\cart.h" />
+    <ClInclude Include="jni\font.h" />
+    <ClInclude Include="jni\game.h" />
+    <ClInclude Include="jni\leika.h" />
+    <ClInclude Include="jni\pumpkin.h" />
+    <ClInclude Include="jni\resources.h" />
+    <ClInclude Include="jni\sound.h" />
+    <ClInclude Include="jni\spray.h" />
+    <ClInclude Include="jni\worm.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="jni\Android.mk" />
+    <None Include="jni\Application.mk" />
+    <None Include="Makefile" />
+    <None Include="makevs.bat" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E737E1F8-5B62-4339-83E7-28B7D5A9FF84}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakeBuildCommandLine>makevs.bat</NMakeBuildCommandLine>
+    <NMakeOutput>debug\afirst.exe</NMakeOutput>
+    <NMakeCleanCommandLine>makevs.bat clean</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>makevs.bat rebuild</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>c:\apps\vs2010ex\VC\INCLUDE;$(NMakeIncludeSearchPath);jni;../common;../arch-win32</NMakeIncludeSearchPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakeBuildCommandLine>makevs.bat</NMakeBuildCommandLine>
+    <NMakeOutput>debug\afirst.exe</NMakeOutput>
+    <NMakeCleanCommandLine>makevs.bat clean</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>makevs.bat rebuils</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>c:\apps\vs2010ex\VC\INCLUDE;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

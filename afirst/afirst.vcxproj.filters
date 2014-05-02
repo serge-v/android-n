@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="jni\font.c" />
+    <ClCompile Include="jni\main.c" />
+    <ClCompile Include="jni\pumpkin.c" />
+    <ClCompile Include="jni\pic.c" />
+    <ClCompile Include="..\common\app-win32.c" />
+    <ClCompile Include="jni\game.c" />
+    <ClCompile Include="jni\sound-win32.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="jni\font.h" />
+    <ClInclude Include="jni\pumpkin.h" />
+    <ClInclude Include="jni\blend.h" />
+    <ClInclude Include="jni\pic.h" />
+    <ClInclude Include="jni\game.h" />
+    <ClInclude Include="jni\sound.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="courier.bmp">
+      <Filter>pics</Filter>
+    </CustomBuild>
+    <CustomBuild Include="grass.bmp">
+      <Filter>pics</Filter>
+    </CustomBuild>
+    <CustomBuild Include="pumpkin.bmp">
+      <Filter>pics</Filter>
+    </CustomBuild>
+    <CustomBuild Include="pumpkin_spoiled.bmp">
+      <Filter>pics</Filter>
+    </CustomBuild>
+    <CustomBuild Include="whatocean.wav">
+      <Filter>snds</Filter>
+    </CustomBuild>
+    <CustomBuild Include="pumpkin_mask.bmp">
+      <Filter>pics</Filter>
+    </CustomBuild>
+    <CustomBuild Include="bg.wav">
+      <Filter>snds</Filter>
+    </CustomBuild>
+    <CustomBuild Include="font.bmp">
+      <Filter>pics</Filter>
+    </CustomBuild>
+    <CustomBuild Include="button_quit.bmp">
+      <Filter>pics</Filter>
+    </CustomBuild>
+    <CustomBuild Include="button_test.bmp">
+      <Filter>pics</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="pics">
+      <UniqueIdentifier>{abe8f278-1096-4e17-967b-7e26b0d8d63e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="snds">
+      <UniqueIdentifier>{5478301e-e058-41cc-9704-abc1224f404d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
