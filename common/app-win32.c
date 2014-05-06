@@ -186,7 +186,7 @@ int create_window(HINSTANCE instance, int cmd_show)
     if (!g_hwnd)
         return -1;
 
-	glwnd = CreateWindowW(L"Static", NULL, WS_CHILD|WS_VISIBLE|WS_BORDER, 10, 10, 1280, 800, g_hwnd, NULL, NULL, NULL);
+	g_glwnd = CreateWindowW(L"Static", NULL, WS_CHILD|WS_VISIBLE|WS_BORDER, 10, 10, 1280, 800, g_hwnd, NULL, NULL, NULL);
 
 	create_controls();
 
