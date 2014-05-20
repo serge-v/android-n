@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include "../common/app.h"
 
-//static HWND glWnd;
 static HWND frustLabel;
 static int sWindowWidth = 1000;
 static int sWindowHeight = 600;
@@ -15,7 +14,7 @@ int g_log_level = 0;
 
 struct rectf
 {
-	float l,t,r,b;
+	float l, t, r, b;
 };
 
 struct vecf
@@ -29,13 +28,13 @@ static struct vecf rot = { 50, 70, 0 };
 
 static void check_glerrors()
 {
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR)
-    {
-        wchar_t errorString[32];
-        swprintf(errorString, 32, L"0x%04x", error);
-        MessageBox(NULL, errorString, L"GL Error", MB_OK);
-    }
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		wchar_t errorString[32];
+		swprintf(errorString, 32, L"0x%04x", error);
+		MessageBox(NULL, errorString, L"GL Error", MB_OK);
+	}
 }
 
 void app_touch(int release, int w, int h)
@@ -46,44 +45,44 @@ void update_controls()
 {
 	wchar_t text[1000];
 	swprintf_s(text, 1000,
-		L"frustum: l:%.2f r:%.2f b:%.2f t:%.2f\n"
-		L"         AZ      SX     DC      FV\n"
-		L"tran:    x:%.2f, y:%.2f, z:%.2f\n"
-		L"         QW      ER     TY\n"
-		L"rot:     x:%.0f, y:%.0f, z:%.0f\n"
-		L"         GB      HN     JM",
-		frc.l, frc.r, frc.b, frc.t,
-		tran.x, tran.y, tran.z,
-		rot.x, rot.y, rot.z);
+	           L"frustum: l:%.2f r:%.2f b:%.2f t:%.2f\n"
+	           L"         AZ      SX     DC      FV\n"
+	           L"tran:    x:%.2f, y:%.2f, z:%.2f\n"
+	           L"         QW      ER     TY\n"
+	           L"rot:     x:%.0f, y:%.0f, z:%.0f\n"
+	           L"         GB      HN     JM",
+	           frc.l, frc.r, frc.b, frc.t,
+	           tran.x, tran.y, tran.z,
+	           rot.x, rot.y, rot.z);
 	SetWindowText(frustLabel, text);
 }
 
 void app_init(int w, int h)
 {
-  update_controls();
+	update_controls();
 
-  glClearColor(0.1f, 0.39f, 0.88f, 1.0f);
-  glColor3f(1.0f, 1.0f, 1.0f);
+	glClearColor(0.1f, 0.39f, 0.88f, 1.0f);
+	glColor3f(1.0f, 1.0f, 1.0f);
 
-  glEnable(GL_CULL_FACE);
-  glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glFrustum(frc.l, frc.r, frc.b, frc.t, 1, 40);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glFrustum(frc.l, frc.r, frc.b, frc.t, 1, 40);
 
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  glTranslatef(tran.x, tran.y, tran.z);
-  glRotatef(rot.x, 1, 0, 0);
-  glRotatef(rot.y, 0, 1, 0);
-  glRotatef(rot.z, 0, 0, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(tran.x, tran.y, tran.z);
+	glRotatef(rot.x, 1, 0, 0);
+	glRotatef(rot.y, 0, 1, 0);
+	glRotatef(rot.z, 0, 0, 1);
 
-  glEnable(GL_DEPTH_TEST);
-  glEnable(GL_LIGHTING);
-  glEnable(GL_LIGHT0);
-  glColor3f(1,0,0);
-  glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glColor3f(1, 0, 0);
+	glEnable(GL_COLOR_MATERIAL);
 }
 
 void app_render(long ticj, int w, int h)
@@ -91,28 +90,36 @@ void app_render(long ticj, int w, int h)
 	GLfloat i;
 	//glClear(GL_COLOR_BUFFER_BIT);
 
-    glClearColor (0.0,0.0,0.0,1.0);
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Draw a white grid "floor" for the tetrahedron to sit on.
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_LINES);
 	for (i = -2.5; i <= 2.5; i += 0.25)
 	{
-		glVertex3f(i, 0, 2.5); glVertex3f(i, 0, -2.5);
-		glVertex3f(2.5, 0, i); glVertex3f(-2.5, 0, i);
+		glVertex3f(i, 0, 2.5);
+		glVertex3f(i, 0, -2.5);
+		glVertex3f(2.5, 0, i);
+		glVertex3f(-2.5, 0, i);
 	}
 	glEnd();
 
 	// Draw the tetrahedron.  It is a four sided figure, so when defining it
 	// with a triangle strip we have to repeat the last two vertices.
 	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(1, 1, 1); glVertex3f(0, 2, 0);
-	glColor3f(1, 0, 0); glVertex3f(-1, 0, 1);
-	glColor3f(0, 1, 0); glVertex3f(1, 0, 1);
-	glColor3f(0, 0, 1); glVertex3f(0, 0, -1.4f);
-	glColor3f(1, 1, 1); glVertex3f(0, 2, 0);
-	glColor3f(1, 0, 0); glVertex3f(-1, 0, 1);
+	glColor3f(1, 1, 1);
+	glVertex3f(0, 2, 0);
+	glColor3f(1, 0, 0);
+	glVertex3f(-1, 0, 1);
+	glColor3f(0, 1, 0);
+	glVertex3f(1, 0, 1);
+	glColor3f(0, 0, 1);
+	glVertex3f(0, 0, -1.4f);
+	glColor3f(1, 1, 1);
+	glVertex3f(0, 2, 0);
+	glColor3f(1, 0, 0);
+	glVertex3f(-1, 0, 1);
 	glEnd();
 
 	glFlush();
@@ -168,7 +175,7 @@ void app_key(int key)
 
 void create_controls()
 {
-	frustLabel = CreateWindow(L"Static", NULL, WS_CHILD|WS_VISIBLE|WS_BORDER, 1300, 300, 300, 100, g_hwnd, NULL, NULL, NULL);
+	frustLabel = CreateWindow(L"Static", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER, 1300, 300, 300, 100, g_hwnd, NULL, NULL, NULL);
 	SendMessage(frustLabel, WM_SETFONT, (WPARAM)GetStockObject(ANSI_FIXED_FONT), (LPARAM)NULL);
 }
 
