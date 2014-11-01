@@ -1,4 +1,12 @@
-CFLAGS=/I"../arch-win32" /I../common /I../freetype-2.4.10/include /Zi /nologo /W4 /WX /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb"
+ifeq ($(OS),Windows_NT)
+	ARCH=win32
+	CFLAGS=/I"../arch-win32" /I../common /I../freetype-2.4.10/include /Zi /nologo /W4 /WX /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /c
+	LINKING=${LINK} /OUT:"Debug\afirst.exe" /INCREMENTAL:NO /NOLOGO /MANIFEST:NO /ALLOWISOLATION:NO /DEBUG /PDB:"Debug\afirst.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\afirst.lib" /MACHINE:X86 /LIBPATH:$(LIB1) /LIBPATH:$(LIB2) $(OBJS) $(LIBS) /NODEFAULTLIB:MSVCRTD.lib
+else
+	CFLAGS=-I../arch-linux -I../common -I/usr/include/freetype2 -g -c
+	ARCH=linux
+	LINKING=$(CC) -g -o debug/afirst.exe $(OBJS) -lrt -lGL -lpng -lfreetype -lglut
+endif
 
 LIBS=winmm.lib opengl32.lib glu32.lib kernel32.lib user32.lib gdi32.lib \
 ../freetype-2.4.10/objs/win32/vc2010/freetype2410MT_D.lib \
@@ -38,19 +46,17 @@ OBJS=\
     debug/leika.obj             \
     debug/spray.obj             \
     debug/resources.obj         \
-    debug/bg.wav.obj                \
-    debug/whatocean.wav.obj         \
-    debug/sound-win32.obj         \
-    debug/app-win32.obj           \
+    debug/bg.wav.obj            \
+    debug/sound-$(ARCH).obj     \
+    debug/app-$(ARCH).obj
 
-
-all: bmpconv afirst-win32
+all: afirst-$(ARCH)
 
 # ========================================================================================
 
-bmpconv: ../bmpconv/debug/bmpconv.exe
+#bmpconv: ../bmpconv/debug/bmpconv.exe
 
-a: afirst-win32 afirst-android-debug
+a: afirst-$(ARCH) afirst-android-debug
 
 ar: afirst-android-release
 
@@ -58,7 +64,7 @@ afirst-android-debug: bin/afirst-debug.apk
 
 afirst-android-release: bin/afirst.apk /cygdrive/z/afirst.apk
 
-afirst-win32: debug/afirst.exe
+afirst-$(ARCH): debug/afirst.exe
 
 # ========================================================================================
 
@@ -76,23 +82,23 @@ bin/afirst-release-unsigned.apk: jni/*.c
 	ndk
 	ant release
 
-../bmpconv/debug/bmpconv.exe:
-	make -C ../bmpconv
+#../bmpconv/debug/bmpconv.exe:
+#	make -C ../bmpconv
 
 debug/afirst.exe: $(OBJS)
-	@${LINK} /OUT:"Debug\afirst.exe" /INCREMENTAL:NO /NOLOGO /MANIFEST:NO /ALLOWISOLATION:NO /DEBUG /PDB:"Debug\afirst.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\afirst.lib" /MACHINE:X86 /LIBPATH:$(LIB1) /LIBPATH:$(LIB2) $(OBJS) $(LIBS) /NODEFAULTLIB:MSVCRTD.lib
+	$(LINKING)
 
 debug/%.obj : jni/%.c
-	@${CC} /c ${INCLUDE1} ${INCLUDE2} ${CFLAGS} $<
+	${CC} ${CFLAGS} $< -o $@
 
 debug/%.obj : ../common/%.c
-	@${CC} /c ${INCLUDE1} ${INCLUDE2} ${CFLAGS} $<
+	${CC} ${CFLAGS} $< -o $@
 	
 debug/%.wav.obj : jni/gen/%.wav.c
-	@${CC} /c ${INCLUDE1} ${INCLUDE2} ${CFLAGS} $<
+	${CC} ${CFLAGS} $< -o $@
 
 debug/%.png.obj : jni/gen/%.png.c
-	@${CC} /c ${INCLUDE1} ${INCLUDE2} ${CFLAGS} $<
+	${CC} ${CFLAGS} $< -o $@
 
 .PRECIOUS: jni/gen/%.wav.c jni/gen/%.png.c
 

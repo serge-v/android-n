@@ -1,3 +1,7 @@
 */Debug/
 *.log
 *.suo
+*.xbm
+char_*.png
+debug/
+gen/

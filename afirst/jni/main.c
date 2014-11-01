@@ -315,7 +315,7 @@ void app_render(long tick, int width, int height)
     draw_bg();
     draw_debug();
     draw_objects();
-//    draw_axises();
+    draw_axises();
 //    draw_controls();
 }
 

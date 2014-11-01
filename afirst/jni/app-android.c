@@ -19,6 +19,10 @@ struct engine
 {
     struct android_app* app;
 
+    ASensorManager* sensorManager;
+    const ASensor* accelerometerSensor;
+    ASensorEventQueue* sensorEventQueue;
+
     int animating;
     EGLDisplay display;
     EGLSurface surface;
@@ -90,6 +94,7 @@ static int engine_init_display(struct engine* engine)
     engine->surface = surface;
     engine->width = w;
     engine->height = h;
+    engine->state.angle = 0;
 
     // Initialize GL state.
 //    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
@@ -241,3 +246,4 @@ void android_main(struct android_app* state)
         }
     }
 }
+
