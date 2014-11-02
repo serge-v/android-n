@@ -5,6 +5,8 @@
 #include <GL/gl.h>
 #include <GL/glx.h>
 #include <GL/glu.h>
+#include "log.h"
+#include "app.h"
 
 Display                 *dpy;
 Window                  root;
@@ -24,7 +26,10 @@ int g_log_level = 0;
 
 int main(int argc, char *argv[])
 {
-	XEvent         xev;
+	g_log = fopen("1.log", "wt");
+	LOGI("log opened");
+
+	XEvent xev;
 
 	dpy = XOpenDisplay(NULL);
 
@@ -96,28 +101,41 @@ int main(int argc, char *argv[])
 
 	XDestroyImage(xim);
 
-	while (1)
+	while (g_app_alive)
 	{
 		XNextEvent(dpy, &xev);
 
-		if (xev.type == Expose)
+		if (xev.type == KeyPress)
 		{
-			XWindowAttributes      gwa;
-			XGetWindowAttributes(dpy, win, &gwa);
-			app_render(0, 400, 400);
+			int keysyms_per_keycode_return;
+			KeySym *keysym = XGetKeyboardMapping(dpy, xev.xkey.keycode, 1, &keysyms_per_keycode_return);
+			if (*keysym == XK_Escape)
+			{
+				g_app_alive = 0;
+			}
+			else
+			{
+				LOGI("key: %c(%x)", (int)*keysym, (int)*keysym);
+				app_key(toupper(*keysym));
+			}
+			XFree(keysym);
+		}
+
+		if (g_app_alive)
+		{
+			struct timeval timeNow;
+			gettimeofday(&timeNow, NULL);
+			uint64_t ms = timeNow.tv_sec * 1000 + timeNow.tv_usec / 1000;
+			XWindowAttributes gwa;
+//			XGetWindowAttributes(dpy, win, &gwa);
+//			app_render(ms, gwa.width, gwa.height);
+			app_render(ms, 400, 400);
 			glXSwapBuffers(dpy, win);
 		}
-
-		else if (xev.type == KeyPress)
-		{
-			
-			glXMakeCurrent(dpy, None, NULL);
-			glXDestroyContext(dpy, glc);
-			XDestroyWindow(dpy, win);
-			XCloseDisplay(dpy);
-			exit(0);
-		}
-
 	}
 
+	glXMakeCurrent(dpy, None, NULL);
+	glXDestroyContext(dpy, glc);
+	XDestroyWindow(dpy, win);
+	XCloseDisplay(dpy);
 }

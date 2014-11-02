@@ -5,7 +5,7 @@
 #include <sys/time.h>
 
 FILE* g_log = NULL;
-int g_app_alive = 0;
+int g_app_alive = 1;
 
 static const char* levels[] =
 {

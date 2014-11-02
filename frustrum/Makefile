@@ -14,7 +14,7 @@ all: frustrum.exe pixmap.exe
 frustrum.exe: frustrum.obj app-$(ARCH).obj app.obj
 	$(LINKING)
 
-pixmap.exe: pixmap.obj app-$(ARCH).obj
+pixmap.exe: pixmap.obj app-$(ARCH).obj app.obj
 	$(LINKING)
 
 %.obj : %.c
