@@ -11,5 +11,6 @@ void create_controls();
 void check_glerrors();
 
 extern int g_app_alive;
+extern FILE* g_log;
 
 #endif // !APP_H_INCLUDED

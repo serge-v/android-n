@@ -1,96 +1,123 @@
 #include <stdio.h>
-#include <time.h>
-#include <jni.h>
-#include <GLES/gl.h>
-#include <GL/glut.h>
-#include "app.h"
-#include "log.h"
+#include <stdlib.h>
+#include <string.h>
+#include <X11/Xlib.h>
+#include <GL/gl.h>
+#include <GL/glx.h>
+#include <GL/glu.h>
 
-int g_app_alive = 1;
-static FILE* g_log = NULL;
+Display                 *dpy;
+Window                  root;
+GLint                   att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
+XVisualInfo             *vi;
+XSetWindowAttributes    swa;
+Window                  win;
+GLXContext              glc;
+Pixmap                  pixmap;
+int                     pixmap_width = 128, pixmap_height = 128;
+GC                      gc;
+XImage                  *xim;
+GLuint                  texture_id;
 
-static const wchar_t sAppName[] = L"test";
+const char* g_appname = "frustum";
+int g_log_level = 0;
 
-static int W = 1280;
-static int H = 800;
-
-static const char* levels[] =
+int main(int argc, char *argv[])
 {
-	"LEVEL0",
-	"LEVEL1",
-	"TRACE",
-	"DEBUG",
-	"INFO",
-	"WARN",
-	"ERROR",
-	"FATAL"
-};
+	XEvent         xev;
 
-int print_level(int level)
-{
-	time_t now = time(NULL);
-	struct tm* t = gmtime(&now);
-	return fprintf(g_log, "%04d-%02d-%02d %02d:%02d:%02d %s ", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, levels[level]);
-}
+	dpy = XOpenDisplay(NULL);
 
-void check_glerrors()
-{
-	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
+	if (dpy == NULL)
 	{
-		wchar_t errorString[32];
-		wprintf(L"0x%04x", error);
+		printf("\n\tcannot open display\n\n");
+		exit(0);
 	}
-}
 
-int __android_log_print(int prio, const char *tag,  const char *fmt, ...)
-{
-	va_list marker;
-	int n;
-	tag;
+	root = DefaultRootWindow(dpy);
 
-	va_start(marker, fmt);
-	n = print_level(prio);
-	n += vfprintf(g_log, fmt, marker);
-	n += fprintf(g_log, "\n");
-	fflush(g_log);
-	return n;
-}
+	vi = glXChooseVisual(dpy, 0, att);
 
-static long get_ms()
-{
-    struct timeval  now;
-    gettimeofday(&now, NULL);
-    return (long)(now.tv_sec * 1000 + now.tv_usec / 1000);
-}
+	if (vi == NULL)
+	{
+		printf("\n\tno appropriate visual found\n\n");
+		exit(0);
+	}
 
-void displayMe(void)
-{
-	glClear(GL_COLOR_BUFFER_BIT);
-	glBegin(GL_POLYGON);
-	glVertex3f(0.0, 0.0, 0.0);
-	glVertex3f(0.5, 0.0, 0.0);
-	glVertex3f(0.5, 0.5, 0.0);
-	glVertex3f(0.0, 0.5, 0.0);
-	glEnd();
-	app_render(get_ms(), W, H);
-	glFlush();
-}
+	swa.event_mask = ExposureMask | KeyPressMask;
+	swa.colormap   = XCreateColormap(dpy, root, vi->visual, AllocNone);
 
-int main(int argc, char** argv)
-{
-	g_log = fopen("1.log", "wt");
-	LOGI("log opened");
+	win = XCreateWindow(dpy, root, 0, 0, 600, 600, 0, vi->depth, InputOutput, vi->visual, CWEventMask  | CWColormap, &swa);
+	XMapWindow(dpy, win);
+	XStoreName(dpy, win, "PIXMAP TO TEXTURE");
 
-	app_init(W, H);
+	glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
 
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE);
-	glutInitWindowSize(300, 300);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Hello world :D");
-	glutDisplayFunc(displayMe);
-	glutMainLoop();
+	if (glc == NULL)
+	{
+		printf("\n\tcannot create gl context\n\n");
+		exit(0);
+	}
 
-	return 0;
+	glXMakeCurrent(dpy, win, glc);
+	glEnable(GL_DEPTH_TEST);
+
+	pixmap = XCreatePixmap(dpy, root, pixmap_width, pixmap_height, vi->depth);
+	gc = DefaultGC(dpy, 0);
+
+	XSetForeground(dpy, gc, 0x00c0c0);
+	XFillRectangle(dpy, pixmap, gc, 0, 0, pixmap_width, pixmap_height);
+
+	XSetForeground(dpy, gc, 0x000000);
+	XFillArc(dpy, pixmap, gc, 15, 25, 50, 50, 0, 360 * 64);
+
+	XSetForeground(dpy, gc, 0x0000ff);
+	XDrawString(dpy, pixmap, gc, 10, 15, "PIXMAP TO TEXTURE", strlen("PIXMAP TO TEXTURE"));
+
+	XSetForeground(dpy, gc, 0xff0000);
+	XFillRectangle(dpy, pixmap, gc, 75, 75, 45, 35);
+
+	XFlush(dpy);
+	xim = XGetImage(dpy, pixmap, 0, 0, pixmap_width, pixmap_height, AllPlanes, ZPixmap);
+
+	if (xim == NULL)
+	{
+		printf("\n\tximage could not be created.\n\n");
+	}
+
+
+	glEnable(GL_TEXTURE_2D);
+	glGenTextures(1, &texture_id);
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixmap_height, pixmap_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)(&(xim->data[0])));
+
+	XDestroyImage(xim);
+
+	while (1)
+	{
+		XNextEvent(dpy, &xev);
+
+		if (xev.type == Expose)
+		{
+			XWindowAttributes      gwa;
+			XGetWindowAttributes(dpy, win, &gwa);
+			app_render(0, 400, 400);
+			glXSwapBuffers(dpy, win);
+		}
+
+		else if (xev.type == KeyPress)
+		{
+			
+			glXMakeCurrent(dpy, None, NULL);
+			glXDestroyContext(dpy, glc);
+			XDestroyWindow(dpy, win);
+			XCloseDisplay(dpy);
+			exit(0);
+		}
+
+	}
+
 }

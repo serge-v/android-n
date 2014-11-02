@@ -5,8 +5,8 @@ ifeq ($(OS),Windows_NT)
 else
 	CFLAGS=-I../arch-linux -I../common -I/usr/include/freetype2 -g -c
 	ARCH=linux
-	LINKING=$(CC) -g -o debug/afirst.exe $(OBJS) -lrt -lGL -lpng -lfreetype -lglut
-endif
+	LINKING=$(CC) -g -o debug/afirst.exe $(OBJS) -lrt -lGL -lpng -lfreetype -lglut -lX11 -lEGL
+endif 
 
 LIBS=winmm.lib opengl32.lib glu32.lib kernel32.lib user32.lib gdi32.lib \
 ../freetype-2.4.10/objs/win32/vc2010/freetype2410MT_D.lib \
@@ -48,7 +48,8 @@ OBJS=\
     debug/resources.obj         \
     debug/bg.wav.obj            \
     debug/sound-$(ARCH).obj     \
-    debug/app-$(ARCH).obj
+    debug/app-$(ARCH).obj       \
+    debug/app.obj
 
 all: afirst-$(ARCH)
 

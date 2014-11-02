@@ -2,6 +2,9 @@
 *.log
 *.suo
 *.xbm
+*.obj
+*.orig
+*.exe
 char_*.png
 debug/
 gen/

@@ -5,12 +5,9 @@
 #include <stdio.h>
 #include "../common/app.h"
 
-static HWND frustLabel;
-static int sWindowWidth = 1000;
-static int sWindowHeight = 600;
-
-const char* g_appname = "frustum";
-int g_log_level = 0;
+//static HWND frustLabel;
+static int sWindowWidth = 400;
+static int sWindowHeight = 400;
 
 struct rectf
 {
@@ -26,35 +23,25 @@ static struct rectf frc = { -2, 2, 2, -2 };
 static struct vecf tran = { 0, 0, -3 };
 static struct vecf rot = { 50, 70, 0 };
 
-static void check_glerrors()
-{
-	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
-		wchar_t errorString[32];
-		swprintf(errorString, 32, L"0x%04x", error);
-		MessageBox(NULL, errorString, L"GL Error", MB_OK);
-	}
-}
-
 void app_touch(int release, int w, int h)
 {
 }
 
 void update_controls()
 {
-	wchar_t text[1000];
-	swprintf_s(text, 1000,
-	           L"frustum: l:%.2f r:%.2f b:%.2f t:%.2f\n"
-	           L"         AZ      SX     DC      FV\n"
-	           L"tran:    x:%.2f, y:%.2f, z:%.2f\n"
-	           L"         QW      ER     TY\n"
-	           L"rot:     x:%.0f, y:%.0f, z:%.0f\n"
-	           L"         GB      HN     JM",
+	char text[1000];
+	sprintf(text, 
+	           "frustum: l:%.2f r:%.2f b:%.2f t:%.2f\n"
+	           "         AZ      SX     DC      FV\n"
+	           "tran:    x:%.2f, y:%.2f, z:%.2f\n"
+	           "         QW      ER     TY\n"
+	           "rot:     x:%.0f, y:%.0f, z:%.0f\n"
+	           "         GB      HN     JM",
 	           frc.l, frc.r, frc.b, frc.t,
 	           tran.x, tran.y, tran.z,
 	           rot.x, rot.y, rot.z);
-	SetWindowText(frustLabel, text);
+//	SetWindowText(frustLabel, text);
+	printf("%s", text);
 }
 
 void app_init(int w, int h)
@@ -121,8 +108,6 @@ void app_render(long ticj, int w, int h)
 	glColor3f(1, 0, 0);
 	glVertex3f(-1, 0, 1);
 	glEnd();
-
-	glFlush();
 }
 
 void app_key(int key)
@@ -175,8 +160,8 @@ void app_key(int key)
 
 void create_controls()
 {
-	frustLabel = CreateWindow(L"Static", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER, 1300, 300, 300, 100, g_hwnd, NULL, NULL, NULL);
-	SendMessage(frustLabel, WM_SETFONT, (WPARAM)GetStockObject(ANSI_FIXED_FONT), (LPARAM)NULL);
+//	frustLabel = CreateWindow(L"Static", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER, 1300, 300, 300, 100, g_hwnd, NULL, NULL, NULL);
+//	SendMessage(frustLabel, WM_SETFONT, (WPARAM)GetStockObject(ANSI_FIXED_FONT), (LPARAM)NULL);
 }
 
 void app_deinit()
