@@ -9,13 +9,18 @@ else
 	LINKING=$(CC) -g -o $@ $^ -lrt -lGL -lpng -lfreetype -lglut -lX11 -lEGL -lGLU
 endif 
 
-all: frustrum.exe pixmap.exe
+all: frustrum.exe pixmap.exe pictest.exe
 
 frustrum.exe: frustrum.obj app-$(ARCH).obj app.obj
 	$(LINKING)
 
 pixmap.exe: pixmap.obj app-$(ARCH).obj app.obj
 	$(LINKING)
+
+pictest.exe: pictest.obj pic.obj app-$(ARCH).obj app.obj cart.png.obj
+	$(LINKING)
+
+pictest.c : ../common/pic.c ../common/app-$(ARCH).c
 
 %.obj : %.c
 	${CC} ${CFLAGS} $< -o $@

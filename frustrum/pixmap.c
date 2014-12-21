@@ -41,3 +41,8 @@ void app_init(int w, int h)
 void app_deinit()
 {
 }
+
+void
+app_key(int key)
+{
+}

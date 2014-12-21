@@ -18,7 +18,7 @@ void pic_create(struct pic* p, const char* name, const unsigned char* d, int w, 
 	LOGGLE("glTexParameteri 1");
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	LOGGLE("glTexParameteri 2");
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, d);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, d);
 	LOGGLE("texture loading: %s", name);
 	LOGI("texture loaded: %s, %dx%d", name, w, h);
 
@@ -197,8 +197,8 @@ int pic_load_png_data(struct pic* p, const unsigned char* data, int len)
         channels = 3;
     }
 
-    if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
-
+    if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
+    {
         png_set_tRNS_to_alpha(png_ptr);
         channels+=1;
     }

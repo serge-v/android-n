@@ -21,7 +21,7 @@ GC                      gc;
 XImage                  *xim;
 GLuint                  texture_id;
 
-const char* g_appname = "frustum";
+const char* g_appname = "";
 int g_log_level = 0;
 
 int main(int argc, char *argv[])
@@ -90,7 +90,6 @@ int main(int argc, char *argv[])
 		printf("\n\tximage could not be created.\n\n");
 	}
 
-
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &texture_id);
 	glBindTexture(GL_TEXTURE_2D, texture_id);
@@ -100,6 +99,10 @@ int main(int argc, char *argv[])
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixmap_height, pixmap_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)(&(xim->data[0])));
 
 	XDestroyImage(xim);
+
+	XWindowAttributes gwa;
+	XGetWindowAttributes(dpy, win, &gwa);
+	app_init(gwa.width, gwa.height);
 
 	while (g_app_alive)
 	{
@@ -127,9 +130,9 @@ int main(int argc, char *argv[])
 			gettimeofday(&timeNow, NULL);
 			uint64_t ms = timeNow.tv_sec * 1000 + timeNow.tv_usec / 1000;
 			XWindowAttributes gwa;
-//			XGetWindowAttributes(dpy, win, &gwa);
-//			app_render(ms, gwa.width, gwa.height);
-			app_render(ms, 400, 400);
+			XGetWindowAttributes(dpy, win, &gwa);
+			app_render(ms, gwa.width, gwa.height);
+//			app_render(ms, 400, 400);
 			glXSwapBuffers(dpy, win);
 		}
 	}
