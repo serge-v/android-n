@@ -3,9 +3,16 @@ ifeq ($(OS),Windows_NT)
 	CFLAGS=/I"../arch-win32" /I../common /I../freetype-2.4.10/include /Zi /nologo /W4 /WX /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /c
 	LINKING=${LINK} /OUT:"Debug\afirst.exe" /INCREMENTAL:NO /NOLOGO /MANIFEST:NO /ALLOWISOLATION:NO /DEBUG /PDB:"Debug\afirst.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\afirst.lib" /MACHINE:X86 /LIBPATH:$(LIB1) /LIBPATH:$(LIB2) $(OBJS) $(LIBS) /NODEFAULTLIB:MSVCRTD.lib
 else
-	CFLAGS=-I../arch-linux -I../common -I/usr/include/freetype2 -g -c
-	ARCH=linux
-	LINKING=$(CC) -g -o debug/afirst.exe $(OBJS) -lrt -lGL -lpng -lfreetype -lglut -lX11 -lEGL
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Darwin)
+		CFLAGS=-Wno-deprecated-declarations -I../arch-osx -I../common -I/usr/local/include/freetype2 -g -c
+		ARCH=osx
+		LINKING=$(CC) -g -o debug/afirst $(OBJS) -lfreetype -lpng -framework GLUT -framework OpenGL
+	else
+		CFLAGS=-I../arch-linux -I../common -I/usr/include/freetype2 -g -c
+		ARCH=linux
+		LINKING=$(CC) -g -o debug/afirst.exe $(OBJS) -lrt -lGL -lpng -lfreetype -lglut -lX11 -lEGL
+	endif
 endif 
 
 LIBS=winmm.lib opengl32.lib glu32.lib kernel32.lib user32.lib gdi32.lib \
@@ -83,8 +90,8 @@ bin/afirst-release-unsigned.apk: jni/*.c
 	ndk
 	ant release
 
-#../bmpconv/debug/bmpconv.exe:
-#	make -C ../bmpconv
+debug/mkresource: mkresource.c
+	gcc $< -o $@
 
 debug/afirst.exe: $(OBJS)
 	$(LINKING)
@@ -103,18 +110,15 @@ debug/%.png.obj : jni/gen/%.png.c
 
 .PRECIOUS: jni/gen/%.wav.c jni/gen/%.png.c
 
-jni/gen/%.png.c : med/%.xcf
-	@convert $< -depth 24 $(basename $<).png
-	@mv $(basename $<).png jni/gen/
-	@cd jni/gen ; xxd -i $(basename $(notdir $<)).png $(basename $(notdir $<)).png.c ; cd ../..
-	@sed -n "1 { s/\].*/\];/ ; s/^^/extern / ; p }; /_len/p;" jni/gen/$(basename $(notdir $<)).png.c > jni/gen/$(basename $(notdir $<)).png.h
-	@sed -i "/_len/d" jni/gen/$(basename $(notdir $<)).png.c
+jni/gen/%.png.c : med/%.xcf debug/mkresource
+	convert $< -depth 24 $(basename $<).png
+	debug/mkresource $(basename $<).png $(basename $(notdir $<))_png \
+		jni/gen/$(basename $(notdir $<)).png.h jni/gen/$(basename $(notdir $<)).png.c
 
-jni/gen/%.wav.c : med/%.wav
-	@sox $< -r 8k -c 1 jni/gen/$(basename $(notdir $<)).s16
-	@cd jni/gen ; xxd -i $(basename $(notdir $<)).s16 $(basename $(notdir $<)).wav.c ; cd ../..
-	@sed -n "1 { s/\].*/\];/ ; s/^^/extern / ; p }; /_len/p;" jni/gen/$(basename $(notdir $<)).wav.c > jni/gen/$(basename $(notdir $<)).wav.h
-	@sed -i "/_len/d" jni/gen/$(basename $(notdir $<)).wav.c
+jni/gen/%.wav.c : med/%.wav debug/mkresource
+	sox $< -r 8k -c 1 jni/gen/$(basename $(notdir $<)).s16
+	debug/mkresource jni/gen/$(basename $(notdir $<)).s16 jni/gen/$(basename $(notdir $<)) \
+		$(basename $(notdir $<)).wav.h $(basename $(notdir $<)).wav.c
 
 depends: jni/*.c
 	gcc -I../arch-win32 -I../common /I../freetype-2.4.10/include -MM $^ | sed 's/\(.*\.o\)/debug\/\1bj/' > depends.txt
