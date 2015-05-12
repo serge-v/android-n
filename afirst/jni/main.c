@@ -21,7 +21,6 @@ static float ux, uy;        // user to scene divider
 
 static int mouse_x = -1, mouse_y = -1;
 static float left = -0.4f, bottom = -1, size_x = 8, size_y = 8;
-static float cell_w = 0.5f;
 
 static int lb_down = 0;
 
@@ -296,9 +295,6 @@ void draw_title(enum game_state state)
 
 void app_render(long tick, int width, int height)
 {
-	width;
-	height;
-
 	app_recalc(tick);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

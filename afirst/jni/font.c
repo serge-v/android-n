@@ -237,7 +237,7 @@ void draw_str(const char* s, GLfloat x, GLfloat y)
 	glTranslatef(x, y, 0);
 	while (*s)
 	{
-		struct pic* p = &courier_pics[*s];
+		struct pic* p = &courier_pics[(size_t)*s];
 		if (p->name)
 		{
 			draw_char(p);

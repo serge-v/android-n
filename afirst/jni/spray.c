@@ -19,7 +19,6 @@ void spray_create(struct spray* p, const char* name, float x, float y)
 
 void spray_draw(const struct spray* p)
 {
-    p;
     pic_draw2(&R.spray_pic, &R.spray_mask_pic);
 }
 

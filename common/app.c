@@ -33,7 +33,6 @@ __android_log_print(int prio, const char *tag,  const char *fmt, ...)
 {
 	va_list marker;
 	int n;
-	tag;
 
 	va_start(marker, fmt);
 	n = print_level(prio);

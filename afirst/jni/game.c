@@ -87,7 +87,7 @@ void game_touch(struct game* g, int touch_x, int touch_y)
         p->age = 0;
         p->stage = PUMPKIN_PICKING;
         g->cart.pumpkin_count++;
-        LOGT("pickup pumpkin. picked count: %d. age: %.2f", g->pickup_count, p->age);
+        LOGT("pickup pumpkin. picked count: %d. age: %.2ld", g->pickup_count, p->age);
     }
 }
 

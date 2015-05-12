@@ -3,6 +3,7 @@
 #include "../common/log.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <memory.h>
 #include <png.h>
 
 void pic_create(struct pic* p, const char* name, const unsigned char* d, int w, int h)
@@ -54,9 +55,10 @@ void read_file_fn(png_structp png_ptr, png_bytep data, png_size_t length)
     png_voidp a = png_get_io_ptr(png_ptr);
     struct read_params* p = (struct read_params*)a;
     size_t was_read = fread(data, 1, length, p->f);
-    if (was_read < 0)
+    if (was_read == 0)
     {
-        png_error(png_ptr, "cannot read file");
+        if (ferror(p->f) != 0)
+	    png_error(png_ptr, "cannot read file");
     }
 }
 
@@ -320,7 +322,6 @@ void pic_draw(const struct pic* p)
 
 void pic_draw2(const struct pic* p, const struct pic* mask)
 {
-    mask;
     glPushMatrix();
 
     glEnable(GL_TEXTURE_2D);
