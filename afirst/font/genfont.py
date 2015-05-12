@@ -14,9 +14,9 @@ import os, sys
 # generate('0', '9')
 
 for i in range(ord(u'0'), ord(u'z')+1):
-    cmd = u'convert -resize 32x48\! -font nimbus-mono-regular -pointsize 300 label:%s char_%04x.xbm' % (unichr(i), i)
+    cmd = u'convert -resize 32x48\! -font Arial -pointsize 300 label:%s char_%04x.xbm' % (unichr(i), i)
     print cmd
     os.system(cmd)
-    cmd = u'convert -resize 32x48\! -font nimbus-mono-regular -pointsize 300 label:%s char_%04x.png' % (unichr(i), i)
+    cmd = u'convert -resize 32x48\! -font Arial -pointsize 300 label:%s char_%04x.png' % (unichr(i), i)
     print cmd
     os.system(cmd)
