@@ -41,12 +41,12 @@ LOCAL_SRC_FILES := \
 
 LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv1_CM -lOpenSLES -lz
 LOCAL_STATIC_LIBRARIES := android_native_app_glue common freetype png
-LOCAL_C_INCLUDES := ../common ../freetype-2.4.10/include
+LOCAL_C_INCLUDES := ../common ../freetype-2.5.5/include
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,android/native_app_glue)
 $(call import-module,common)
-$(call import-module,freetype-2.4.10)
+$(call import-module,freetype-2.5.5)
 $(call import-module,libpng)
