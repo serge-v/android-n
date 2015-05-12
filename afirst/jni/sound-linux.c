@@ -19,13 +19,12 @@ static void create_players()
 
 void sound_create()
 {
-    create_players();
+	create_players();
 }
 
 void sound_destroy()
 {
 }
 
-void sound_play(enum game_sound sound)
-{
+void sound_play(enum game_sound sound) {
 }

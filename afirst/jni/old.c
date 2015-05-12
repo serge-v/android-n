@@ -1,86 +1,81 @@
-struct sphere
-{
-  float radius;
-  int rings;
-  int sectors;
+struct sphere {
+	float radius;
+	int rings;
+	int sectors;
 
-  GLfloat* vertices;
-  GLfloat* normals;
-  GLfloat* texcoords;
-  GLushort* indices;
+	GLfloat* vertices;
+	GLfloat* normals;
+	GLfloat* texcoords;
+	GLushort* indices;
 
-  int vertices_size;
-  int normals_size;
-  int texcoords_size;
-  int indices_size;
+	int vertices_size;
+	int normals_size;
+	int texcoords_size;
+	int indices_size;
 };
 
 void create_solid_sphere(struct sphere* sph, float radius, int rings, int sectors);
 
 void create_solid_sphere(struct sphere* sph, float radius, int rings, int sectors)
 {
-  float const R = 1.0f / (float)(rings - 1);
-  float const S = 1.0f / (float)(sectors - 1);
-  int r, s;
-  GLfloat* v, *n, *t;
-  GLushort* i;
-  
-  sph->radius = radius;
-  sph->rings = rings;
-  sph->sectors = sectors;
+	float const R = 1.0f / (float)(rings - 1);
+	float const S = 1.0f / (float)(sectors - 1);
+	int r, s;
+	GLfloat* v, *n, *t;
+	GLushort* i;
 
-  sph->vertices_size = rings * sectors * 3;
-  sph->vertices = malloc(sph->vertices_size * sizeof(GLfloat));
-  sph->normals_size = rings * sectors * 3;
-  sph->normals = malloc(sph->normals_size * sizeof(GLfloat));
-  sph->texcoords_size = rings * sectors * 2;
-  sph->texcoords = malloc(sph->texcoords_size * sizeof(GLfloat));
-  sph->indices_size = rings * sectors * 4;
-  sph->indices = malloc(sph->indices_size * sizeof(GLushort));
+	sph->radius = radius;
+	sph->rings = rings;
+	sph->sectors = sectors;
 
-  v = sph->vertices;
-  n = sph->normals;
-  t = sph->texcoords;
-  i = sph->indices;
+	sph->vertices_size = rings * sectors * 3;
+	sph->vertices = malloc(sph->vertices_size * sizeof(GLfloat));
+	sph->normals_size = rings * sectors * 3;
+	sph->normals = malloc(sph->normals_size * sizeof(GLfloat));
+	sph->texcoords_size = rings * sectors * 2;
+	sph->texcoords = malloc(sph->texcoords_size * sizeof(GLfloat));
+	sph->indices_size = rings * sectors * 4;
+	sph->indices = malloc(sph->indices_size * sizeof(GLushort));
 
-  for (r = 0; r < rings; r++)
-  {
-    for (s = 0; s < sectors; s++)
-    {
-      float const y = sinf( -M_PI_2 + M_PI * r * R );
-      float const x = cosf( 2 * M_PI * s * S ) * sinf( M_PI * r * R );
-      float const z = sinf( 2 * M_PI * s * S ) * sinf( M_PI * r * R );
+	v = sph->vertices;
+	n = sph->normals;
+	t = sph->texcoords;
+	i = sph->indices;
 
-      *t++ = s * S;
-      *t++ = r * R;
+	for (r = 0; r < rings; r++) {
+		for (s = 0; s < sectors; s++) {
+			float const y = sinf(-M_PI_2 + M_PI * r * R);
+			float const x = cosf(2 * M_PI * s * S) * sinf(M_PI * r * R);
+			float const z = sinf(2 * M_PI * s * S) * sinf(M_PI * r * R);
 
-      *v++ = x * radius;
-      *v++ = y * radius;
-      *v++ = z * radius;
+			*t++ = s * S;
+			*t++ = r * R;
 
-      *n++ = x;
-      *n++ = y;
-      *n++ = z;
-    }
-  }
+			*v++ = x * radius;
+			*v++ = y * radius;
+			*v++ = z * radius;
 
-  for (r = 0; r < rings; r++)
-  {
-    for(s = 0; s < sectors; s++)
-    {
-      *i++ = r * sectors + s;
-      *i++ = r * sectors + (s + 1);
-      *i++ = (r + 1) * sectors + (s + 1);
-      *i++ = (r + 1) * sectors + s;
-    }
-  }
+			*n++ = x;
+			*n++ = y;
+			*n++ = z;
+		}
+	}
+
+	for (r = 0; r < rings; r++) {
+		for (s = 0; s < sectors; s++) {
+			*i++ = r * sectors + s;
+			*i++ = r * sectors + (s + 1);
+			*i++ = (r + 1) * sectors + (s + 1);
+			*i++ = (r + 1) * sectors + s;
+		}
+	}
 }
 
 /*
 void draw_sphere(struct sphere* sph, GLfloat x, GLfloat y, GLfloat z)
 {
   glMatrixMode(GL_MODELVIEW);
-  
+
   glTranslatef(x, y, z);
 
   glEnableClientState(GL_VERTEX_ARRAY);

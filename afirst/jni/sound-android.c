@@ -15,67 +15,51 @@ static struct player eff_player;
 
 static void create_players()
 {
-    SLresult rc;
+	SLresult rc;
 
-    if (aeng.object)
-    {
-        LOGE("aengine already created");
-        return;
-    }
-    
-    rc = create_engine(&aeng);
-    
-    if (rc == -1)
-    {
-        LOGE("create_engine: rc: %d, errno: %d, slerror: %d", rc, errno, get_sl_error());
-    }
-    else
-    {
-        LOGI("aengine created");
-    }
+	if (aeng.object) {
+		LOGE("aengine already created");
+		return;
+	}
 
-    rc = create_queued_player(&bg_player, &aeng);
+	rc = create_engine(&aeng);
 
-    if (rc == -1)
-    {
-        LOGE("create bg_player: rc: %d, errno: %d, slerror: %d", rc, errno, get_sl_error());
-    }
-    else
-    {
-        LOGI("bg_player created");
-    }
+	if (rc == -1)
+		LOGE("create_engine: rc: %d, errno: %d, slerror: %d", rc, errno, get_sl_error());
+	else
+		LOGI("aengine created");
 
-     rc = create_queued_player(&eff_player, &aeng);
+	rc = create_queued_player(&bg_player, &aeng);
 
-    if (rc == -1)
-    {
-        LOGE("create eff_player: rc: %d, errno: %d, slerror: %d", rc, errno, get_sl_error());
-    }
-    else
-    {
-        LOGI("eff_player created");
-    }
+	if (rc == -1)
+		LOGE("create bg_player: rc: %d, errno: %d, slerror: %d", rc, errno, get_sl_error());
+	else
+		LOGI("bg_player created");
+
+	rc = create_queued_player(&eff_player, &aeng);
+
+	if (rc == -1)
+		LOGE("create eff_player: rc: %d, errno: %d, slerror: %d", rc, errno, get_sl_error());
+	else
+		LOGI("eff_player created");
 }
 
 void sound_create()
 {
-    create_players();
+	create_players();
 }
 
 void sound_destroy()
 {
 }
 
-void sound_play(enum game_sound sound)
-{
-    struct player* p;
-    int rc;
+void sound_play(enum game_sound sound) {
+	struct player* p;
+	int rc;
 
-    p = (sound == sound_bg) ? &bg_player : &eff_player;
-    
-    rc = play_data(p, bg_s16, bg_s16_len);
-    if (rc)
-    {
-        LOGE("play_data error: %d", rc);
-    }
+	p = (sound == sound_bg) ? &bg_player : &eff_player;
+
+	rc = play_data(p, bg_s16, bg_s16_len);
+	if (rc)
+		LOGE("play_data error: %d", rc);
 }

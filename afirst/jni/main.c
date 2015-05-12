@@ -28,20 +28,18 @@ static struct game g;
 static struct pic button_test;
 static struct pic button_quit;
 
-void check_button(struct pic* p, float glx, float gly)
+static void
+check_button(struct pic* p, float glx, float gly)
 {
 	if (glx > p->pos.x + p->vertices[0].x && glx < p->pos.x + p->vertices[3].x &&
-	        gly > p->pos.y + p->vertices[1].x && gly < p->pos.y + p->vertices[2].y)
-	{
+	    gly > p->pos.y + p->vertices[1].x && gly < p->pos.y + p->vertices[2].y)
 		p->selected = 1;
-	}
 	else
-	{
 		p->selected = 0;
-	}
 }
 
-void app_touch(int release, int x, int y)
+void
+app_touch(int release, int x, int y)
 {
 	float glx, gly;
 
@@ -50,8 +48,7 @@ void app_touch(int release, int x, int y)
 	check_button(&button_test, glx, gly);
 	check_button(&button_quit, glx, gly);
 
-	if (release == 1)
-	{
+	if (release == 1) {
 		if (button_quit.selected)
 			g_app_alive = 0;
 
@@ -71,12 +68,12 @@ void app_touch(int release, int x, int y)
 
 		if (mouse_x >= 0 && mouse_y >= 0 && mouse_x < g.max_x && mouse_y < g.max_y)
 			game_touch(&g, mouse_x, mouse_y);
-	}
-	else if (release == 2)
+	} else if (release == 2)
 		lb_down = 0;
 }
 
-static void gl_init()
+static void
+gl_init()
 {
 	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_GREATER, 0.5f);
@@ -86,7 +83,8 @@ static void gl_init()
 	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-static void gl_init_viewport(int width, int height)
+static void
+gl_init_viewport(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
@@ -100,7 +98,8 @@ static void gl_init_viewport(int width, int height)
 	glEnable(GL_BLEND);
 }
 
-void app_init(int width, int height)
+void
+app_init(int width, int height)
 {
 //    width = 400;
 //    height = 300;
@@ -127,12 +126,12 @@ void app_init(int width, int height)
 	LOGI("app_init. w: %d, h: %d", width, height);
 }
 
-void app_recalc(long tick)
+void
+app_recalc(long tick)
 {
 	long ms;
 
-	if (last_tick == 0)
-	{
+	if (last_tick == 0) {
 		last_tick = tick;
 		return;
 	}
@@ -144,7 +143,8 @@ void app_recalc(long tick)
 	last_tick = tick;
 }
 
-static void draw_debug()
+static void
+draw_debug()
 {
 	char str[100];
 
@@ -159,7 +159,8 @@ static void draw_debug()
 	glPopMatrix();
 }
 
-static void draw_bg()
+static void
+draw_bg()
 {
 	glPushMatrix();
 	glLoadIdentity();
@@ -169,7 +170,8 @@ static void draw_bg()
 	glPopMatrix();
 }
 
-static void draw_objects()
+static void
+draw_objects()
 {
 	int x, y;
 	char str[100];
@@ -193,14 +195,10 @@ static void draw_objects()
 	glLoadIdentity();
 	glTranslatef(0.5f, 0.5f, 0);
 
-	for (x = 0; x < g.max_x; x++)
-	{
-		for (y = 0; y < g.max_y; y++)
-		{
+	for (x = 0; x < g.max_x; x++) {
+		for (y = 0; y < g.max_y; y++) {
 			if (g.field[x][y].stage > PUMPKIN_NONE)
-			{
 				pumpkin_draw(&g.field[x][y]);
-			}
 			glTranslatef(0, 1, 0);
 		}
 		glTranslatef(1, (GLfloat) - g.max_y, 0);
@@ -228,8 +226,7 @@ static void draw_objects()
 
 #define D -0.05f
 
-struct point axises_vertices[] =
-{
+struct point axises_vertices[] = {
 	{ 0, 0 }, { 10, 0 },
 	{ 0, 0 }, { 0, 10 },
 	{ 5, 0 }, { 5, -0.2f },
@@ -254,7 +251,8 @@ struct point axises_vertices[] =
 	{ 0, 9 }, { D, 9 },
 };
 
-void draw_controls()
+static void
+draw_controls()
 {
 	glLoadIdentity();
 //    glScalef(1, 0.5f, 0);
@@ -267,7 +265,8 @@ void draw_controls()
 	pic_draw(&button_quit);
 }
 
-void draw_axises()
+static void
+draw_axises()
 {
 	glLoadIdentity();
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -281,8 +280,8 @@ void draw_axises()
 //    glDisableClientState(GL_COLOR_ARRAY);
 }
 
-void draw_title(enum game_state state)
-{
+static void
+draw_title(enum game_state state) {
 	glLoadIdentity();
 
 	if (state == GAME_OVER)
@@ -293,7 +292,8 @@ void draw_title(enum game_state state)
 	}
 }
 
-void app_render(long tick, int width, int height)
+void
+app_render(long tick, int width, int height)
 {
 	app_recalc(tick);
 
@@ -302,9 +302,7 @@ void app_render(long tick, int width, int height)
 	glShadeModel(GL_SMOOTH);
 
 	if (g.state == GAME_OVER)
-	{
 		draw_title(g.state);
-	}
 
 	draw_bg();
 	draw_debug();
@@ -313,19 +311,17 @@ void app_render(long tick, int width, int height)
 //    draw_controls();
 }
 
-void app_key(int key)
+void
+app_key(int key)
 {
 	if (key == 'S')
-	{
 		inc_blend_mode(1);
-	}
 	else if (key == 'D')
-	{
 		inc_blend_mode(0);
-	}
 }
 
-void app_deinit()
+void
+app_deinit()
 {
 	game_destroy(&g);
 	font_destroy();
@@ -333,6 +329,7 @@ void app_deinit()
 	LOGI("app_deinit");
 }
 
-void create_controls()
+void
+create_controls()
 {
 }
