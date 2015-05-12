@@ -111,14 +111,14 @@ debug/%.png.obj : jni/gen/%.png.c
 .PRECIOUS: jni/gen/%.wav.c jni/gen/%.png.c
 
 jni/gen/%.png.c : med/%.xcf debug/mkresource
-	convert $< -depth 24 $(basename $<).png
-	debug/mkresource $(basename $<).png $(basename $(notdir $<))_png \
+	convert $< -depth 24 $(basename $(notdir $<)).png
+	debug/mkresource $(basename $(notdir $<)).png $(basename $(notdir $<))_png \
 		jni/gen/$(basename $(notdir $<)).png.h jni/gen/$(basename $(notdir $<)).png.c
 
 jni/gen/%.wav.c : med/%.wav debug/mkresource
 	sox $< -r 8k -c 1 jni/gen/$(basename $(notdir $<)).s16
-	debug/mkresource jni/gen/$(basename $(notdir $<)).s16 jni/gen/$(basename $(notdir $<)) \
-		$(basename $(notdir $<)).wav.h $(basename $(notdir $<)).wav.c
+	debug/mkresource jni/gen/$(basename $(notdir $<)).s16 $(basename $(notdir $<)) \
+		jni/gen/$(basename $(notdir $<)).wav.h jni/gen/$(basename $(notdir $<)).wav.c
 
 depends: jni/*.c
 	gcc -I../arch-win32 -I../common /I../freetype-2.4.10/include -MM $^ | sed 's/\(.*\.o\)/debug\/\1bj/' > depends.txt

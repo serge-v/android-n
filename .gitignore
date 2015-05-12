@@ -1,10 +1,9 @@
-*/Debug/
-*.log
-*.suo
-*.xbm
-*.obj
-*.orig
-*.exe
-char_*.png
 debug/
+jni/
 gen/
+
+*.png
+*.xbm
+*.log
+*.orig
+
