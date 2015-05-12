@@ -56,6 +56,8 @@ int main(int argc, char *argv[])
 	g_log = fopen("1.log", "wt");
 	LOGI("log opened");
 
+	app_init(window_width, window_height);
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(window_width, window_height);

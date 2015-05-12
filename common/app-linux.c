@@ -33,8 +33,7 @@ int main(int argc, char *argv[])
 
 	dpy = XOpenDisplay(NULL);
 
-	if (dpy == NULL)
-	{
+	if (dpy == NULL) {
 		printf("\n\tcannot open display\n\n");
 		exit(0);
 	}
@@ -43,8 +42,7 @@ int main(int argc, char *argv[])
 
 	vi = glXChooseVisual(dpy, 0, att);
 
-	if (vi == NULL)
-	{
+	if (vi == NULL) {
 		printf("\n\tno appropriate visual found\n\n");
 		exit(0);
 	}
@@ -58,8 +56,7 @@ int main(int argc, char *argv[])
 
 	glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
 
-	if (glc == NULL)
-	{
+	if (glc == NULL) {
 		printf("\n\tcannot create gl context\n\n");
 		exit(0);
 	}
@@ -86,9 +83,7 @@ int main(int argc, char *argv[])
 	xim = XGetImage(dpy, pixmap, 0, 0, pixmap_width, pixmap_height, AllPlanes, ZPixmap);
 
 	if (xim == NULL)
-	{
 		printf("\n\tximage could not be created.\n\n");
-	}
 
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &texture_id);
@@ -104,28 +99,22 @@ int main(int argc, char *argv[])
 	XGetWindowAttributes(dpy, win, &gwa);
 	app_init(gwa.width, gwa.height);
 
-	while (g_app_alive)
-	{
+	while (g_app_alive) {
 		XNextEvent(dpy, &xev);
 
-		if (xev.type == KeyPress)
-		{
+		if (xev.type == KeyPress) {
 			int keysyms_per_keycode_return;
 			KeySym *keysym = XGetKeyboardMapping(dpy, xev.xkey.keycode, 1, &keysyms_per_keycode_return);
 			if (*keysym == XK_Escape)
-			{
 				g_app_alive = 0;
-			}
-			else
-			{
+			else {
 				LOGI("key: %c(%x)", (int)*keysym, (int)*keysym);
 				app_key(toupper(*keysym));
 			}
 			XFree(keysym);
 		}
 
-		if (g_app_alive)
-		{
+		if (g_app_alive) {
 			struct timeval timeNow;
 			gettimeofday(&timeNow, NULL);
 			uint64_t ms = timeNow.tv_sec * 1000 + timeNow.tv_usec / 1000;

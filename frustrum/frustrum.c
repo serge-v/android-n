@@ -12,13 +12,11 @@
 static int sWindowWidth = 400;
 static int sWindowHeight = 400;
 
-struct rectf
-{
+struct rectf {
 	float l, t, r, b;
 };
 
-struct vecf
-{
+struct vecf {
 	float x, y, z;
 };
 
@@ -35,47 +33,47 @@ void
 update_controls()
 {
 	char text[1000];
-	sprintf(text, 
-		"\n\n=====\n"
-		"frustum: l:%.2f r:%.2f b:%.2f t:%.2f\n"
-		"         AZ      SX     DC      FV\n"
-		"tran:    x:%.2f, y:%.2f, z:%.2f\n"
-		"         QW      ER     TY\n"
-		"rot:     x:%.0f, y:%.0f, z:%.0f\n"
-		"         GB      HN     JM\n",
-		frc.l, frc.r, frc.b, frc.t,
-		tran.x, tran.y, tran.z,
-		rot.x, rot.y, rot.z);
+	sprintf(text,
+	        "\n\n=====\n"
+	        "frustum: l:%.2f r:%.2f b:%.2f t:%.2f\n"
+	        "         AZ      SX     DC      FV\n"
+	        "tran:    x:%.2f, y:%.2f, z:%.2f\n"
+	        "         QW      ER     TY\n"
+	        "rot:     x:%.0f, y:%.0f, z:%.0f\n"
+	        "         GB      HN     JM\n",
+	        frc.l, frc.r, frc.b, frc.t,
+	        tran.x, tran.y, tran.z,
+	        rot.x, rot.y, rot.z);
 //	SetWindowText(frustLabel, text);
 	printf("%s", text);
 }
 
 void app_init(int w, int h)
 {
-/*	update_controls();
+	/*	update_controls();
 
-	glClearColor(0.1f, 0.39f, 0.88f, 1.0f);
-	glColor3f(1.0f, 1.0f, 1.0f);
+		glClearColor(0.1f, 0.39f, 0.88f, 1.0f);
+		glColor3f(1.0f, 1.0f, 1.0f);
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glFrustum(frc.l, frc.r, frc.b, frc.t, 1, 40);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glFrustum(frc.l, frc.r, frc.b, frc.t, 1, 40);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef(tran.x, tran.y, tran.z);
-	glRotatef(rot.x, 1, 0, 0);
-	glRotatef(rot.y, 0, 1, 0);
-	glRotatef(rot.z, 0, 0, 1);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glTranslatef(tran.x, tran.y, tran.z);
+		glRotatef(rot.x, 1, 0, 0);
+		glRotatef(rot.y, 0, 1, 0);
+		glRotatef(rot.z, 0, 0, 1);
 
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glColor3f(1, 0, 0);
-	glEnable(GL_COLOR_MATERIAL);*/
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		glColor3f(1, 0, 0);
+		glEnable(GL_COLOR_MATERIAL);*/
 }
 
 void app_render2(long ticj, int w, int h)
@@ -142,8 +140,7 @@ void app_render(long ticj, int w, int h)
 	// Draw a white grid "floor" for the tetrahedron to sit on.
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_LINES);
-	for (i = -2.5; i <= 2.5; i += 0.25)
-	{
+	for (i = -2.5; i <= 2.5; i += 0.25) {
 		glVertex3f(i, 0, 2.5);
 		glVertex3f(i, 0, -2.5);
 		glVertex3f(2.5, 0, i);
@@ -167,7 +164,7 @@ void app_render(long ticj, int w, int h)
 	glColor3f(1, 0, 0);
 	glVertex3f(-1, 0, 1);
 	glEnd();
-	
+
 	update_controls();
 }
 

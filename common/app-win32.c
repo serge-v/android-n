@@ -18,8 +18,7 @@ HWND g_glwnd;
 static int sWindowWidth = 1280;
 static int sWindowHeight = 800;
 
-static const char* levels[] =
-{
+static const char* levels[] = {
 	"LEVEL0",
 	"LEVEL1",
 	"TRACE",
@@ -40,8 +39,7 @@ int print_level(int level)
 void check_glerrors()
 {
 	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
+	if (error != GL_NO_ERROR) {
 		wchar_t errorString[32];
 		swprintf(errorString, 32, L"0x%04x", error);
 		MessageBoxW(NULL, errorString, L"GL Error", MB_OK);
@@ -55,8 +53,7 @@ static LRESULT CALLBACK wnd_proc(HWND wnd, UINT message,
 	POINT pt;
 	int useDefWindowProc = 0;
 
-	switch (message)
-	{
+	switch (message) {
 	case WM_PAINT:
 		break;
 	case WM_CLOSE:
@@ -82,8 +79,7 @@ static LRESULT CALLBACK wnd_proc(HWND wnd, UINT message,
 		break;
 
 	case WM_SIZE:
-		if (GetClientRect(g_hwnd, &rc))
-		{
+		if (GetClientRect(g_hwnd, &rc)) {
 			sWindowWidth = rc.right;
 			sWindowHeight = rc.bottom;
 		}
@@ -239,15 +235,13 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, in
 	    }
 	}
 	*/
-	while ((rc = GetMessage(&msg, g_hwnd, 0, 0)) != 0)
-	{
+	while ((rc = GetMessage(&msg, g_hwnd, 0, 0)) != 0) {
 		if (rc == -1)
 			break;
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 
-		if (msg.message == WM_PAINT)
-		{
+		if (msg.message == WM_PAINT) {
 			app_render(GetTickCount(), sWindowWidth, sWindowHeight);
 			check_glerrors();
 			SwapBuffers(hDC);

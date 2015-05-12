@@ -7,8 +7,7 @@
 FILE* g_log = NULL;
 int g_app_alive = 1;
 
-static const char* levels[] =
-{
+static const char* levels[] = {
 	"LEVEL0",
 	"LEVEL1",
 	"TRACE",

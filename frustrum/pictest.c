@@ -39,7 +39,7 @@ app_render(long ticj, int w, int h)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
+
 	pic_draw(&cart_pic);
 
 }

@@ -92,11 +92,11 @@ typedef SLuint32					SLresult;
 
 /** Interface ID defined as a UUID */
 typedef const struct SLInterfaceID_ {
-    SLuint32 time_low;
-    SLuint16 time_mid;
-    SLuint16 time_hi_and_version;
-    SLuint16 clock_seq;
-    SLuint8  node[6];
+	SLuint32 time_low;
+	SLuint16 time_mid;
+	SLuint16 time_hi_and_version;
+	SLuint16 clock_seq;
+	SLuint8  node[6];
 } * SLInterfaceID;
 
 /* Forward declaration for the object interface */
@@ -388,60 +388,60 @@ extern SL_API const SLInterfaceID SL_IID_OBJECT;
 /** Object callback */
 
 
-typedef void (SLAPIENTRY *slObjectCallback) (
-	SLObjectItf caller,
-	const void * pContext,
-	SLuint32 event,
-	SLresult result,
+typedef void (SLAPIENTRY *slObjectCallback)(
+    SLObjectItf caller,
+    const void * pContext,
+    SLuint32 event,
+    SLresult result,
     SLuint32 param,
     void *pInterface
 );
 
 
 struct SLObjectItf_ {
-	SLresult (*Realize) (
-		SLObjectItf self,
-		SLboolean async
+	SLresult(*Realize)(
+	    SLObjectItf self,
+	    SLboolean async
 	);
-	SLresult (*Resume) (
-		SLObjectItf self,
-		SLboolean async
+	SLresult(*Resume)(
+	    SLObjectItf self,
+	    SLboolean async
 	);
-	SLresult (*GetState) (
-		SLObjectItf self,
-		SLuint32 * pState
+	SLresult(*GetState)(
+	    SLObjectItf self,
+	    SLuint32 * pState
 	);
-	SLresult (*GetInterface) (
-		SLObjectItf self,
-		const SLInterfaceID iid,
-		void * pInterface
+	SLresult(*GetInterface)(
+	    SLObjectItf self,
+	    const SLInterfaceID iid,
+	    void * pInterface
 	);
-	SLresult (*RegisterCallback) (
-		SLObjectItf self,
-		slObjectCallback callback,
-		void * pContext
+	SLresult(*RegisterCallback)(
+	    SLObjectItf self,
+	    slObjectCallback callback,
+	    void * pContext
 	);
-	void (*AbortAsyncOperation) (
-		SLObjectItf self
+	void (*AbortAsyncOperation)(
+	    SLObjectItf self
 	);
-	void (*Destroy) (
-		SLObjectItf self
+	void (*Destroy)(
+	    SLObjectItf self
 	);
-	SLresult (*SetPriority) (
-		SLObjectItf self,
-		SLint32 priority,
-		SLboolean preemptable
+	SLresult(*SetPriority)(
+	    SLObjectItf self,
+	    SLint32 priority,
+	    SLboolean preemptable
 	);
-	SLresult (*GetPriority) (
-		SLObjectItf self,
-		SLint32 *pPriority,
-		SLboolean *pPreemptable
+	SLresult(*GetPriority)(
+	    SLObjectItf self,
+	    SLint32 *pPriority,
+	    SLboolean *pPreemptable
 	);
-	SLresult (*SetLossOfControlInterfaces) (
-		SLObjectItf self,
-		SLint16 numInterfaces,
-		SLInterfaceID * pInterfaceIDs,
-		SLboolean enabled
+	SLresult(*SetLossOfControlInterfaces)(
+	    SLObjectItf self,
+	    SLint16 numInterfaces,
+	    SLInterfaceID * pInterfaceIDs,
+	    SLboolean enabled
 	);
 };
 
@@ -514,91 +514,91 @@ struct SLAudioIODeviceCapabilitiesItf_;
 typedef const struct SLAudioIODeviceCapabilitiesItf_ * const * SLAudioIODeviceCapabilitiesItf;
 
 
-typedef void (SLAPIENTRY *slAvailableAudioInputsChangedCallback) (
-	SLAudioIODeviceCapabilitiesItf caller,
-	void *pContext,
-	SLuint32 deviceID,
-	SLint32 numInputs,
-	SLboolean isNew
+typedef void (SLAPIENTRY *slAvailableAudioInputsChangedCallback)(
+    SLAudioIODeviceCapabilitiesItf caller,
+    void *pContext,
+    SLuint32 deviceID,
+    SLint32 numInputs,
+    SLboolean isNew
 );
 
 
-typedef void (SLAPIENTRY *slAvailableAudioOutputsChangedCallback) (
-	SLAudioIODeviceCapabilitiesItf caller,
-	void *pContext,
-	SLuint32 deviceID,
-	SLint32 numOutputs,
-	SLboolean isNew
+typedef void (SLAPIENTRY *slAvailableAudioOutputsChangedCallback)(
+    SLAudioIODeviceCapabilitiesItf caller,
+    void *pContext,
+    SLuint32 deviceID,
+    SLint32 numOutputs,
+    SLboolean isNew
 );
 
-typedef void (SLAPIENTRY *slDefaultDeviceIDMapChangedCallback) (
-	SLAudioIODeviceCapabilitiesItf caller,
-	void *pContext,
-	SLboolean isOutput,
-	SLint32 numDevices
+typedef void (SLAPIENTRY *slDefaultDeviceIDMapChangedCallback)(
+    SLAudioIODeviceCapabilitiesItf caller,
+    void *pContext,
+    SLboolean isOutput,
+    SLint32 numDevices
 );
 
 
 struct SLAudioIODeviceCapabilitiesItf_ {
-	SLresult (*GetAvailableAudioInputs)(
-		SLAudioIODeviceCapabilitiesItf self,
-		SLint32  *pNumInputs,
-		SLuint32 *pInputDeviceIDs
+	SLresult(*GetAvailableAudioInputs)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    SLint32  *pNumInputs,
+	    SLuint32 *pInputDeviceIDs
 	);
-	SLresult (*QueryAudioInputCapabilities)(
-		SLAudioIODeviceCapabilitiesItf self,
-		SLuint32 deviceId,
-		SLAudioInputDescriptor *pDescriptor
+	SLresult(*QueryAudioInputCapabilities)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    SLuint32 deviceId,
+	    SLAudioInputDescriptor *pDescriptor
 	);
-	SLresult (*RegisterAvailableAudioInputsChangedCallback) (
-		SLAudioIODeviceCapabilitiesItf self,
-		slAvailableAudioInputsChangedCallback callback,
-		void *pContext
+	SLresult(*RegisterAvailableAudioInputsChangedCallback)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    slAvailableAudioInputsChangedCallback callback,
+	    void *pContext
 	);
-	SLresult (*GetAvailableAudioOutputs)(
-		SLAudioIODeviceCapabilitiesItf self,
-		SLint32 *pNumOutputs,
-		SLuint32 *pOutputDeviceIDs
+	SLresult(*GetAvailableAudioOutputs)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    SLint32 *pNumOutputs,
+	    SLuint32 *pOutputDeviceIDs
 	);
-	SLresult (*QueryAudioOutputCapabilities)(
-		SLAudioIODeviceCapabilitiesItf self,
-		SLuint32 deviceId,
-		SLAudioOutputDescriptor *pDescriptor
+	SLresult(*QueryAudioOutputCapabilities)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    SLuint32 deviceId,
+	    SLAudioOutputDescriptor *pDescriptor
 	);
-	SLresult (*RegisterAvailableAudioOutputsChangedCallback) (
-		SLAudioIODeviceCapabilitiesItf self,
-		slAvailableAudioOutputsChangedCallback callback,
-		void *pContext
+	SLresult(*RegisterAvailableAudioOutputsChangedCallback)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    slAvailableAudioOutputsChangedCallback callback,
+	    void *pContext
 	);
-	SLresult (*RegisterDefaultDeviceIDMapChangedCallback) (
-		SLAudioIODeviceCapabilitiesItf self,
-		slDefaultDeviceIDMapChangedCallback callback,
-		void *pContext
+	SLresult(*RegisterDefaultDeviceIDMapChangedCallback)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    slDefaultDeviceIDMapChangedCallback callback,
+	    void *pContext
 	);
-	SLresult (*GetAssociatedAudioInputs) (
-		SLAudioIODeviceCapabilitiesItf self,
-		SLuint32 deviceId,
-		SLint32 *pNumAudioInputs,
-		SLuint32 *pAudioInputDeviceIDs
+	SLresult(*GetAssociatedAudioInputs)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    SLuint32 deviceId,
+	    SLint32 *pNumAudioInputs,
+	    SLuint32 *pAudioInputDeviceIDs
 	);
-	SLresult (*GetAssociatedAudioOutputs) (
-		SLAudioIODeviceCapabilitiesItf self,
-		SLuint32 deviceId,
-		SLint32 *pNumAudioOutputs,
-		SLuint32 *pAudioOutputDeviceIDs
+	SLresult(*GetAssociatedAudioOutputs)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    SLuint32 deviceId,
+	    SLint32 *pNumAudioOutputs,
+	    SLuint32 *pAudioOutputDeviceIDs
 	);
-	SLresult (*GetDefaultAudioDevices) (
-		SLAudioIODeviceCapabilitiesItf self,
-		SLuint32 defaultDeviceID,
-		SLint32 *pNumAudioDevices,
-		SLuint32 *pAudioDeviceIDs
+	SLresult(*GetDefaultAudioDevices)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    SLuint32 defaultDeviceID,
+	    SLint32 *pNumAudioDevices,
+	    SLuint32 *pAudioDeviceIDs
 	);
-	SLresult (*QuerySampleFormatsSupported)(
-		SLAudioIODeviceCapabilitiesItf self,
-		SLuint32 deviceId,
-		SLmilliHertz samplingRate,
-		SLint32 *pSampleFormats,
-		SLint32 *pNumOfSampleFormats
+	SLresult(*QuerySampleFormatsSupported)(
+	    SLAudioIODeviceCapabilitiesItf self,
+	    SLuint32 deviceId,
+	    SLmilliHertz samplingRate,
+	    SLint32 *pSampleFormats,
+	    SLint32 *pNumOfSampleFormats
 	);
 };
 
@@ -620,9 +620,9 @@ typedef struct SLLEDDescriptor_ {
 /*---------------------------------------------------------------------------*/
 
 typedef struct SLHSL_ {
-    SLmillidegree  hue;
-    SLpermille     saturation;
-    SLpermille     lightness;
+	SLmillidegree  hue;
+	SLpermille     saturation;
+	SLpermille     lightness;
 } SLHSL;
 
 
@@ -632,23 +632,23 @@ struct SLLEDArrayItf_;
 typedef const struct SLLEDArrayItf_ * const * SLLEDArrayItf;
 
 struct SLLEDArrayItf_ {
-	SLresult (*ActivateLEDArray) (
-		SLLEDArrayItf self,
-		SLuint32 lightMask
+	SLresult(*ActivateLEDArray)(
+	    SLLEDArrayItf self,
+	    SLuint32 lightMask
 	);
-	SLresult (*IsLEDArrayActivated) (
-		SLLEDArrayItf self,
-		SLuint32 *lightMask
+	SLresult(*IsLEDArrayActivated)(
+	    SLLEDArrayItf self,
+	    SLuint32 *lightMask
 	);
-	SLresult (*SetColor) (
-		SLLEDArrayItf self,
-		SLuint8 index,
-		const SLHSL *color
+	SLresult(*SetColor)(
+	    SLLEDArrayItf self,
+	    SLuint8 index,
+	    const SLHSL *color
 	);
-	SLresult (*GetColor) (
-		SLLEDArrayItf self,
-		SLuint8 index,
-		SLHSL *color
+	SLresult(*GetColor)(
+	    SLLEDArrayItf self,
+	    SLuint8 index,
+	    SLHSL *color
 	);
 };
 
@@ -677,29 +677,29 @@ struct SLVibraItf_;
 typedef const struct SLVibraItf_ * const * SLVibraItf;
 
 struct SLVibraItf_ {
-	SLresult (*Vibrate) (
-		SLVibraItf self,
-		SLboolean vibrate
+	SLresult(*Vibrate)(
+	    SLVibraItf self,
+	    SLboolean vibrate
 	);
-	SLresult (*IsVibrating) (
-		SLVibraItf self,
-		SLboolean *pVibrating
+	SLresult(*IsVibrating)(
+	    SLVibraItf self,
+	    SLboolean *pVibrating
 	);
-	SLresult (*SetFrequency) (
-		SLVibraItf self,
-		SLmilliHertz frequency
+	SLresult(*SetFrequency)(
+	    SLVibraItf self,
+	    SLmilliHertz frequency
 	);
-	SLresult (*GetFrequency) (
-		SLVibraItf self,
-		SLmilliHertz *pFrequency
+	SLresult(*GetFrequency)(
+	    SLVibraItf self,
+	    SLmilliHertz *pFrequency
 	);
-	SLresult (*SetIntensity) (
-		SLVibraItf self,
-		SLpermille intensity
+	SLresult(*SetIntensity)(
+	    SLVibraItf self,
+	    SLpermille intensity
 	);
-	SLresult (*GetIntensity) (
-		SLVibraItf self,
-		SLpermille *pIntensity
+	SLresult(*GetIntensity)(
+	    SLVibraItf self,
+	    SLpermille *pIntensity
 	);
 };
 
@@ -750,10 +750,10 @@ struct SLVibraItf_ {
 
 
 typedef struct SLMetadataInfo_ {
-    SLuint32     size;
-    SLuint32     encoding;
-    SLchar       langCountry[16];
-    SLuint8      data[1];
+	SLuint32     size;
+	SLuint32     encoding;
+	SLchar       langCountry[16];
+	SLuint8      data[1];
 } SLMetadataInfo;
 
 extern SL_API const SLInterfaceID SL_IID_METADATAEXTRACTION;
@@ -763,43 +763,43 @@ typedef const struct SLMetadataExtractionItf_ * const * SLMetadataExtractionItf;
 
 
 struct SLMetadataExtractionItf_ {
-	SLresult (*GetItemCount) (
-		SLMetadataExtractionItf self,
-		SLuint32 *pItemCount
+	SLresult(*GetItemCount)(
+	    SLMetadataExtractionItf self,
+	    SLuint32 *pItemCount
 	);
-	SLresult (*GetKeySize) (
-		SLMetadataExtractionItf self,
-		SLuint32 index,
-		SLuint32 *pKeySize
+	SLresult(*GetKeySize)(
+	    SLMetadataExtractionItf self,
+	    SLuint32 index,
+	    SLuint32 *pKeySize
 	);
-	SLresult (*GetKey) (
-		SLMetadataExtractionItf self,
-		SLuint32 index,
-		SLuint32 keySize,
-		SLMetadataInfo *pKey
+	SLresult(*GetKey)(
+	    SLMetadataExtractionItf self,
+	    SLuint32 index,
+	    SLuint32 keySize,
+	    SLMetadataInfo *pKey
 	);
-	SLresult (*GetValueSize) (
-		SLMetadataExtractionItf self,
-		SLuint32 index,
-		SLuint32 *pValueSize
+	SLresult(*GetValueSize)(
+	    SLMetadataExtractionItf self,
+	    SLuint32 index,
+	    SLuint32 *pValueSize
 	);
-	SLresult (*GetValue) (
-		SLMetadataExtractionItf self,
-		SLuint32 index,
-		SLuint32 valueSize,
-		SLMetadataInfo *pValue
+	SLresult(*GetValue)(
+	    SLMetadataExtractionItf self,
+	    SLuint32 index,
+	    SLuint32 valueSize,
+	    SLMetadataInfo *pValue
 	);
-	SLresult (*AddKeyFilter) (
-		SLMetadataExtractionItf self,
-		SLuint32 keySize,
-		const void *pKey,
-		SLuint32 keyEncoding,
-		const SLchar *pValueLangCountry,
-		SLuint32 valueEncoding,
-		SLuint8 filterMask
+	SLresult(*AddKeyFilter)(
+	    SLMetadataExtractionItf self,
+	    SLuint32 keySize,
+	    const void *pKey,
+	    SLuint32 keyEncoding,
+	    const SLchar *pValueLangCountry,
+	    SLuint32 valueEncoding,
+	    SLuint8 filterMask
 	);
-	SLresult (*ClearKeyFilter) (
-		SLMetadataExtractionItf self
+	SLresult(*ClearKeyFilter)(
+	    SLMetadataExtractionItf self
 	);
 };
 
@@ -825,30 +825,30 @@ struct SLMetadataTraversalItf_;
 typedef const struct SLMetadataTraversalItf_ * const * SLMetadataTraversalItf;
 
 struct SLMetadataTraversalItf_ {
-	SLresult (*SetMode) (
-		SLMetadataTraversalItf self,
-		SLuint32 mode
+	SLresult(*SetMode)(
+	    SLMetadataTraversalItf self,
+	    SLuint32 mode
 	);
-	SLresult (*GetChildCount) (
-		SLMetadataTraversalItf self,
-		SLuint32 *pCount
+	SLresult(*GetChildCount)(
+	    SLMetadataTraversalItf self,
+	    SLuint32 *pCount
 	);
-	SLresult (*GetChildMIMETypeSize) (
-		SLMetadataTraversalItf self,
-		SLuint32 index,
-		SLuint32 *pSize
+	SLresult(*GetChildMIMETypeSize)(
+	    SLMetadataTraversalItf self,
+	    SLuint32 index,
+	    SLuint32 *pSize
 	);
-	SLresult (*GetChildInfo) (
-		SLMetadataTraversalItf self,
-		SLuint32 index,
-		SLint32 *pNodeID,
-		SLuint32 *pType,
-		SLuint32 size,
-		SLchar *pMimeType
+	SLresult(*GetChildInfo)(
+	    SLMetadataTraversalItf self,
+	    SLuint32 index,
+	    SLint32 *pNodeID,
+	    SLuint32 *pType,
+	    SLuint32 size,
+	    SLchar *pMimeType
 	);
-	SLresult (*SetActiveNode) (
-		SLMetadataTraversalItf self,
-		SLuint32 index
+	SLresult(*SetActiveNode)(
+	    SLMetadataTraversalItf self,
+	    SLuint32 index
 	);
 };
 
@@ -862,9 +862,9 @@ struct SLDynamicSourceItf_;
 typedef const struct SLDynamicSourceItf_ * const * SLDynamicSourceItf;
 
 struct SLDynamicSourceItf_ {
-	SLresult (*SetSource) (
-		SLDynamicSourceItf self,
-		SLDataSource *pDataSource
+	SLresult(*SetSource)(
+	    SLDynamicSourceItf self,
+	    SLDataSource *pDataSource
 	);
 };
 
@@ -877,28 +877,28 @@ extern SL_API const SLInterfaceID SL_IID_OUTPUTMIX;
 struct SLOutputMixItf_;
 typedef const struct SLOutputMixItf_ * const * SLOutputMixItf;
 
-typedef void (SLAPIENTRY *slMixDeviceChangeCallback) (
-	SLOutputMixItf caller,
+typedef void (SLAPIENTRY *slMixDeviceChangeCallback)(
+    SLOutputMixItf caller,
     void *pContext
 );
 
 
 struct SLOutputMixItf_ {
-	SLresult (*GetDestinationOutputDeviceIDs) (
-		SLOutputMixItf self,
-		SLint32 *pNumDevices,
-		SLuint32 *pDeviceIDs
+	SLresult(*GetDestinationOutputDeviceIDs)(
+	    SLOutputMixItf self,
+	    SLint32 *pNumDevices,
+	    SLuint32 *pDeviceIDs
 	);
-	SLresult (*RegisterDeviceChangeCallback) (
-		SLOutputMixItf self,
-		slMixDeviceChangeCallback callback,
-		void *pContext
-    );
-    SLresult (*ReRoute)(
-        SLOutputMixItf self,
-        SLint32 numOutputDevices,
-        SLuint32 *pOutputDeviceIDs
-    );
+	SLresult(*RegisterDeviceChangeCallback)(
+	    SLOutputMixItf self,
+	    slMixDeviceChangeCallback callback,
+	    void *pContext
+	);
+	SLresult(*ReRoute)(
+	    SLOutputMixItf self,
+	    SLint32 numOutputDevices,
+	    SLuint32 *pOutputDeviceIDs
+	);
 };
 
 
@@ -928,60 +928,60 @@ extern SL_API const SLInterfaceID SL_IID_PLAY;
 struct SLPlayItf_;
 typedef const struct SLPlayItf_ * const * SLPlayItf;
 
-typedef void (SLAPIENTRY *slPlayCallback) (
-	SLPlayItf caller,
-	void *pContext,
-	SLuint32 event
+typedef void (SLAPIENTRY *slPlayCallback)(
+    SLPlayItf caller,
+    void *pContext,
+    SLuint32 event
 );
 
 struct SLPlayItf_ {
-	SLresult (*SetPlayState) (
-		SLPlayItf self,
-		SLuint32 state
+	SLresult(*SetPlayState)(
+	    SLPlayItf self,
+	    SLuint32 state
 	);
-	SLresult (*GetPlayState) (
-		SLPlayItf self,
-		SLuint32 *pState
+	SLresult(*GetPlayState)(
+	    SLPlayItf self,
+	    SLuint32 *pState
 	);
-	SLresult (*GetDuration) (
-		SLPlayItf self,
-		SLmillisecond *pMsec
+	SLresult(*GetDuration)(
+	    SLPlayItf self,
+	    SLmillisecond *pMsec
 	);
-	SLresult (*GetPosition) (
-		SLPlayItf self,
-		SLmillisecond *pMsec
+	SLresult(*GetPosition)(
+	    SLPlayItf self,
+	    SLmillisecond *pMsec
 	);
-	SLresult (*RegisterCallback) (
-		SLPlayItf self,
-		slPlayCallback callback,
-		void *pContext
+	SLresult(*RegisterCallback)(
+	    SLPlayItf self,
+	    slPlayCallback callback,
+	    void *pContext
 	);
-	SLresult (*SetCallbackEventsMask) (
-		SLPlayItf self,
-		SLuint32 eventFlags
+	SLresult(*SetCallbackEventsMask)(
+	    SLPlayItf self,
+	    SLuint32 eventFlags
 	);
-	SLresult (*GetCallbackEventsMask) (
-		SLPlayItf self,
-		SLuint32 *pEventFlags
+	SLresult(*GetCallbackEventsMask)(
+	    SLPlayItf self,
+	    SLuint32 *pEventFlags
 	);
-	SLresult (*SetMarkerPosition) (
-		SLPlayItf self,
-		SLmillisecond mSec
+	SLresult(*SetMarkerPosition)(
+	    SLPlayItf self,
+	    SLmillisecond mSec
 	);
-	SLresult (*ClearMarkerPosition) (
-		SLPlayItf self
+	SLresult(*ClearMarkerPosition)(
+	    SLPlayItf self
 	);
-	SLresult (*GetMarkerPosition) (
-		SLPlayItf self,
-		SLmillisecond *pMsec
+	SLresult(*GetMarkerPosition)(
+	    SLPlayItf self,
+	    SLmillisecond *pMsec
 	);
-	SLresult (*SetPositionUpdatePeriod) (
-		SLPlayItf self,
-		SLmillisecond mSec
+	SLresult(*SetPositionUpdatePeriod)(
+	    SLPlayItf self,
+	    SLmillisecond mSec
 	);
-	SLresult (*GetPositionUpdatePeriod) (
-		SLPlayItf self,
-		SLmillisecond *pMsec
+	SLresult(*GetPositionUpdatePeriod)(
+	    SLPlayItf self,
+	    SLmillisecond *pMsec
 	);
 };
 
@@ -1005,41 +1005,41 @@ extern SL_API const SLInterfaceID SL_IID_PREFETCHSTATUS;
 struct SLPrefetchStatusItf_;
 typedef const struct SLPrefetchStatusItf_ * const * SLPrefetchStatusItf;
 
-typedef void (SLAPIENTRY *slPrefetchCallback) (
-	SLPrefetchStatusItf caller,
-	void *pContext,
-	SLuint32 event
+typedef void (SLAPIENTRY *slPrefetchCallback)(
+    SLPrefetchStatusItf caller,
+    void *pContext,
+    SLuint32 event
 );
 
 struct SLPrefetchStatusItf_ {
-	SLresult (*GetPrefetchStatus) (
-		SLPrefetchStatusItf self,
-		SLuint32 *pStatus
+	SLresult(*GetPrefetchStatus)(
+	    SLPrefetchStatusItf self,
+	    SLuint32 *pStatus
 	);
-	SLresult (*GetFillLevel) (
-		SLPrefetchStatusItf self,
-		SLpermille *pLevel
+	SLresult(*GetFillLevel)(
+	    SLPrefetchStatusItf self,
+	    SLpermille *pLevel
 	);
-	SLresult (*RegisterCallback) (
-		SLPrefetchStatusItf self,
-		slPrefetchCallback callback,
-		void *pContext
+	SLresult(*RegisterCallback)(
+	    SLPrefetchStatusItf self,
+	    slPrefetchCallback callback,
+	    void *pContext
 	);
-	SLresult (*SetCallbackEventsMask) (
-		SLPrefetchStatusItf self,
-		SLuint32 eventFlags
+	SLresult(*SetCallbackEventsMask)(
+	    SLPrefetchStatusItf self,
+	    SLuint32 eventFlags
 	);
-	SLresult (*GetCallbackEventsMask) (
-		SLPrefetchStatusItf self,
-		SLuint32 *pEventFlags
+	SLresult(*GetCallbackEventsMask)(
+	    SLPrefetchStatusItf self,
+	    SLuint32 *pEventFlags
 	);
-	SLresult (*SetFillUpdatePeriod) (
-		SLPrefetchStatusItf self,
-		SLpermille period
+	SLresult(*SetFillUpdatePeriod)(
+	    SLPrefetchStatusItf self,
+	    SLpermille period
 	);
-	SLresult (*GetFillUpdatePeriod) (
-		SLPrefetchStatusItf self,
-		SLpermille *pPeriod
+	SLresult(*GetFillUpdatePeriod)(
+	    SLPrefetchStatusItf self,
+	    SLpermille *pPeriod
 	);
 };
 
@@ -1061,34 +1061,34 @@ struct SLPlaybackRateItf_;
 typedef const struct SLPlaybackRateItf_ * const * SLPlaybackRateItf;
 
 struct SLPlaybackRateItf_ {
-	SLresult (*SetRate)(
-		SLPlaybackRateItf self,
-		SLpermille rate
+	SLresult(*SetRate)(
+	    SLPlaybackRateItf self,
+	    SLpermille rate
 	);
-	SLresult (*GetRate)(
-		SLPlaybackRateItf self,
-		SLpermille *pRate
+	SLresult(*GetRate)(
+	    SLPlaybackRateItf self,
+	    SLpermille *pRate
 	);
-	SLresult (*SetPropertyConstraints)(
-		SLPlaybackRateItf self,
-		SLuint32 constraints
+	SLresult(*SetPropertyConstraints)(
+	    SLPlaybackRateItf self,
+	    SLuint32 constraints
 	);
-	SLresult (*GetProperties)(
-		SLPlaybackRateItf self,
-		SLuint32 *pProperties
+	SLresult(*GetProperties)(
+	    SLPlaybackRateItf self,
+	    SLuint32 *pProperties
 	);
-	SLresult (*GetCapabilitiesOfRate)(
-		SLPlaybackRateItf self,
-		SLpermille rate,
-		SLuint32 *pCapabilities
+	SLresult(*GetCapabilitiesOfRate)(
+	    SLPlaybackRateItf self,
+	    SLpermille rate,
+	    SLuint32 *pCapabilities
 	);
-	SLresult (*GetRateRange) (
-		SLPlaybackRateItf self,
-		SLuint8 index,
-		SLpermille *pMinRate,
-		SLpermille *pMaxRate,
-		SLpermille *pStepSize,
-		SLuint32 *pCapabilities
+	SLresult(*GetRateRange)(
+	    SLPlaybackRateItf self,
+	    SLuint8 index,
+	    SLpermille *pMinRate,
+	    SLpermille *pMaxRate,
+	    SLpermille *pStepSize,
+	    SLuint32 *pCapabilities
 	);
 };
 
@@ -1105,22 +1105,22 @@ struct SLSeekItf_;
 typedef const struct SLSeekItf_ * const * SLSeekItf;
 
 struct SLSeekItf_ {
-	SLresult (*SetPosition)(
-		SLSeekItf self,
-		SLmillisecond pos,
-		SLuint32 seekMode
+	SLresult(*SetPosition)(
+	    SLSeekItf self,
+	    SLmillisecond pos,
+	    SLuint32 seekMode
 	);
-	SLresult (*SetLoop)(
-		SLSeekItf self,
-		SLboolean loopEnable,
-		SLmillisecond startPos,
-		SLmillisecond endPos
+	SLresult(*SetLoop)(
+	    SLSeekItf self,
+	    SLboolean loopEnable,
+	    SLmillisecond startPos,
+	    SLmillisecond endPos
 	);
-	SLresult (*GetLoop)(
-		SLSeekItf self,
-		SLboolean *pLoopEnabled,
-		SLmillisecond *pStartPos,
-		SLmillisecond *pEndPos
+	SLresult(*GetLoop)(
+	    SLSeekItf self,
+	    SLboolean *pLoopEnabled,
+	    SLmillisecond *pStartPos,
+	    SLmillisecond *pEndPos
 	);
 };
 
@@ -1150,61 +1150,61 @@ extern SL_API const SLInterfaceID SL_IID_RECORD;
 struct SLRecordItf_;
 typedef const struct SLRecordItf_ * const * SLRecordItf;
 
-typedef void (SLAPIENTRY *slRecordCallback) (
-	SLRecordItf caller,
-	void *pContext,
-	SLuint32 event
+typedef void (SLAPIENTRY *slRecordCallback)(
+    SLRecordItf caller,
+    void *pContext,
+    SLuint32 event
 );
 
 /** Recording interface methods */
 struct SLRecordItf_ {
-	SLresult (*SetRecordState) (
-		SLRecordItf self,
-		SLuint32 state
+	SLresult(*SetRecordState)(
+	    SLRecordItf self,
+	    SLuint32 state
 	);
-	SLresult (*GetRecordState) (
-		SLRecordItf self,
-		SLuint32 *pState
+	SLresult(*GetRecordState)(
+	    SLRecordItf self,
+	    SLuint32 *pState
 	);
-	SLresult (*SetDurationLimit) (
-		SLRecordItf self,
-		SLmillisecond msec
+	SLresult(*SetDurationLimit)(
+	    SLRecordItf self,
+	    SLmillisecond msec
 	);
-	SLresult (*GetPosition) (
-		SLRecordItf self,
-		SLmillisecond *pMsec
+	SLresult(*GetPosition)(
+	    SLRecordItf self,
+	    SLmillisecond *pMsec
 	);
-	SLresult (*RegisterCallback) (
-		SLRecordItf self,
-		slRecordCallback callback,
-		void *pContext
+	SLresult(*RegisterCallback)(
+	    SLRecordItf self,
+	    slRecordCallback callback,
+	    void *pContext
 	);
-	SLresult (*SetCallbackEventsMask) (
-		SLRecordItf self,
-		SLuint32 eventFlags
+	SLresult(*SetCallbackEventsMask)(
+	    SLRecordItf self,
+	    SLuint32 eventFlags
 	);
-	SLresult (*GetCallbackEventsMask) (
-		SLRecordItf self,
-		SLuint32 *pEventFlags
+	SLresult(*GetCallbackEventsMask)(
+	    SLRecordItf self,
+	    SLuint32 *pEventFlags
 	);
-	SLresult (*SetMarkerPosition) (
-		SLRecordItf self,
-		SLmillisecond mSec
+	SLresult(*SetMarkerPosition)(
+	    SLRecordItf self,
+	    SLmillisecond mSec
 	);
-	SLresult (*ClearMarkerPosition) (
-		SLRecordItf self
+	SLresult(*ClearMarkerPosition)(
+	    SLRecordItf self
 	);
-	SLresult (*GetMarkerPosition) (
-		SLRecordItf self,
-		SLmillisecond *pMsec
+	SLresult(*GetMarkerPosition)(
+	    SLRecordItf self,
+	    SLmillisecond *pMsec
 	);
-	SLresult (*SetPositionUpdatePeriod) (
-		SLRecordItf self,
-		SLmillisecond mSec
+	SLresult(*SetPositionUpdatePeriod)(
+	    SLRecordItf self,
+	    SLmillisecond mSec
 	);
-	SLresult (*GetPositionUpdatePeriod) (
-		SLRecordItf self,
-		SLmillisecond *pMsec
+	SLresult(*GetPositionUpdatePeriod)(
+	    SLRecordItf self,
+	    SLmillisecond *pMsec
 	);
 };
 
@@ -1220,65 +1220,65 @@ struct SLEqualizerItf_;
 typedef const struct SLEqualizerItf_ * const * SLEqualizerItf;
 
 struct SLEqualizerItf_ {
-	SLresult (*SetEnabled)(
-		SLEqualizerItf self,
-		SLboolean enabled
+	SLresult(*SetEnabled)(
+	    SLEqualizerItf self,
+	    SLboolean enabled
 	);
-	SLresult (*IsEnabled)(
-		SLEqualizerItf self,
-		SLboolean *pEnabled
+	SLresult(*IsEnabled)(
+	    SLEqualizerItf self,
+	    SLboolean *pEnabled
 	);
-	SLresult (*GetNumberOfBands)(
-		SLEqualizerItf self,
-		SLuint16 *pAmount
+	SLresult(*GetNumberOfBands)(
+	    SLEqualizerItf self,
+	    SLuint16 *pAmount
 	);
-	SLresult (*GetBandLevelRange)(
-		SLEqualizerItf self,
-		SLmillibel *pMin,
-		SLmillibel *pMax
+	SLresult(*GetBandLevelRange)(
+	    SLEqualizerItf self,
+	    SLmillibel *pMin,
+	    SLmillibel *pMax
 	);
-	SLresult (*SetBandLevel)(
-		SLEqualizerItf self,
-		SLuint16 band,
-		SLmillibel level
+	SLresult(*SetBandLevel)(
+	    SLEqualizerItf self,
+	    SLuint16 band,
+	    SLmillibel level
 	);
-	SLresult (*GetBandLevel)(
-		SLEqualizerItf self,
-		SLuint16 band,
-		SLmillibel *pLevel
+	SLresult(*GetBandLevel)(
+	    SLEqualizerItf self,
+	    SLuint16 band,
+	    SLmillibel *pLevel
 	);
-	SLresult (*GetCenterFreq)(
-		SLEqualizerItf self,
-		SLuint16 band,
-		SLmilliHertz *pCenter
+	SLresult(*GetCenterFreq)(
+	    SLEqualizerItf self,
+	    SLuint16 band,
+	    SLmilliHertz *pCenter
 	);
-	SLresult (*GetBandFreqRange)(
-		SLEqualizerItf self,
-		SLuint16 band,
-		SLmilliHertz *pMin,
-		SLmilliHertz *pMax
+	SLresult(*GetBandFreqRange)(
+	    SLEqualizerItf self,
+	    SLuint16 band,
+	    SLmilliHertz *pMin,
+	    SLmilliHertz *pMax
 	);
-	SLresult (*GetBand)(
-		SLEqualizerItf self,
-		SLmilliHertz frequency,
-		SLuint16 *pBand
+	SLresult(*GetBand)(
+	    SLEqualizerItf self,
+	    SLmilliHertz frequency,
+	    SLuint16 *pBand
 	);
-	SLresult (*GetCurrentPreset)(
-		SLEqualizerItf self,
-		SLuint16 *pPreset
+	SLresult(*GetCurrentPreset)(
+	    SLEqualizerItf self,
+	    SLuint16 *pPreset
 	);
-	SLresult (*UsePreset)(
-		SLEqualizerItf self,
-		SLuint16 index
+	SLresult(*UsePreset)(
+	    SLEqualizerItf self,
+	    SLuint16 index
 	);
-	SLresult (*GetNumberOfPresets)(
-		SLEqualizerItf self,
-		SLuint16 *pNumPresets
+	SLresult(*GetNumberOfPresets)(
+	    SLEqualizerItf self,
+	    SLuint16 *pNumPresets
 	);
-	SLresult (*GetPresetName)(
-		SLEqualizerItf self,
-		SLuint16 index,
-		const SLchar ** ppName
+	SLresult(*GetPresetName)(
+	    SLEqualizerItf self,
+	    SLuint16 index,
+	    const SLchar ** ppName
 	);
 };
 
@@ -1292,41 +1292,41 @@ struct SLVolumeItf_;
 typedef const struct SLVolumeItf_ * const * SLVolumeItf;
 
 struct SLVolumeItf_ {
-	SLresult (*SetVolumeLevel) (
-		SLVolumeItf self,
-		SLmillibel level
+	SLresult(*SetVolumeLevel)(
+	    SLVolumeItf self,
+	    SLmillibel level
 	);
-	SLresult (*GetVolumeLevel) (
-		SLVolumeItf self,
-		SLmillibel *pLevel
+	SLresult(*GetVolumeLevel)(
+	    SLVolumeItf self,
+	    SLmillibel *pLevel
 	);
-	SLresult (*GetMaxVolumeLevel) (
-		SLVolumeItf  self,
-		SLmillibel *pMaxLevel
+	SLresult(*GetMaxVolumeLevel)(
+	    SLVolumeItf  self,
+	    SLmillibel *pMaxLevel
 	);
-	SLresult (*SetMute) (
-		SLVolumeItf self,
-		SLboolean mute
+	SLresult(*SetMute)(
+	    SLVolumeItf self,
+	    SLboolean mute
 	);
-	SLresult (*GetMute) (
-		SLVolumeItf self,
-		SLboolean *pMute
+	SLresult(*GetMute)(
+	    SLVolumeItf self,
+	    SLboolean *pMute
 	);
-	SLresult (*EnableStereoPosition) (
-		SLVolumeItf self,
-		SLboolean enable
+	SLresult(*EnableStereoPosition)(
+	    SLVolumeItf self,
+	    SLboolean enable
 	);
-	SLresult (*IsEnabledStereoPosition) (
-		SLVolumeItf self,
-		SLboolean *pEnable
+	SLresult(*IsEnabledStereoPosition)(
+	    SLVolumeItf self,
+	    SLboolean *pEnable
 	);
-	SLresult (*SetStereoPosition) (
-		SLVolumeItf self,
-		SLpermille stereoPosition
+	SLresult(*SetStereoPosition)(
+	    SLVolumeItf self,
+	    SLpermille stereoPosition
 	);
-	SLresult (*GetStereoPosition) (
-		SLVolumeItf self,
-		SLpermille *pStereoPosition
+	SLresult(*GetStereoPosition)(
+	    SLVolumeItf self,
+	    SLpermille *pStereoPosition
 	);
 };
 
@@ -1341,22 +1341,22 @@ struct SLDeviceVolumeItf_;
 typedef const struct SLDeviceVolumeItf_ * const * SLDeviceVolumeItf;
 
 struct SLDeviceVolumeItf_ {
-	SLresult (*GetVolumeScale) (
-		SLDeviceVolumeItf self,
-		SLuint32 deviceID,
-		SLint32 *pMinValue,
-		SLint32 *pMaxValue,
-		SLboolean *pIsMillibelScale
+	SLresult(*GetVolumeScale)(
+	    SLDeviceVolumeItf self,
+	    SLuint32 deviceID,
+	    SLint32 *pMinValue,
+	    SLint32 *pMaxValue,
+	    SLboolean *pIsMillibelScale
 	);
-	SLresult (*SetVolume) (
-		SLDeviceVolumeItf self,
-		SLuint32 deviceID,
-		SLint32 volume
+	SLresult(*SetVolume)(
+	    SLDeviceVolumeItf self,
+	    SLuint32 deviceID,
+	    SLint32 volume
 	);
-	SLresult (*GetVolume) (
-		SLDeviceVolumeItf self,
-		SLuint32 deviceID,
-		SLint32 *pVolume
+	SLresult(*GetVolume)(
+	    SLDeviceVolumeItf self,
+	    SLuint32 deviceID,
+	    SLint32 *pVolume
 	);
 };
 
@@ -1371,8 +1371,8 @@ struct SLBufferQueueItf_;
 typedef const struct SLBufferQueueItf_ * const * SLBufferQueueItf;
 
 typedef void (SLAPIENTRY *slBufferQueueCallback)(
-	SLBufferQueueItf caller,
-	void *pContext
+    SLBufferQueueItf caller,
+    void *pContext
 );
 
 /** Buffer queue state **/
@@ -1384,22 +1384,22 @@ typedef struct SLBufferQueueState_ {
 
 
 struct SLBufferQueueItf_ {
-	SLresult (*Enqueue) (
-		SLBufferQueueItf self,
-		const void *pBuffer,
-		SLuint32 size
+	SLresult(*Enqueue)(
+	    SLBufferQueueItf self,
+	    const void *pBuffer,
+	    SLuint32 size
 	);
-	SLresult (*Clear) (
-		SLBufferQueueItf self
+	SLresult(*Clear)(
+	    SLBufferQueueItf self
 	);
-	SLresult (*GetState) (
-		SLBufferQueueItf self,
-		SLBufferQueueState *pState
+	SLresult(*GetState)(
+	    SLBufferQueueItf self,
+	    SLBufferQueueState *pState
 	);
-	SLresult (*RegisterCallback) (
-		SLBufferQueueItf self,
-		slBufferQueueCallback callback,
-		void* pContext
+	SLresult(*RegisterCallback)(
+	    SLBufferQueueItf self,
+	    slBufferQueueCallback callback,
+	    void* pContext
 	);
 };
 
@@ -1423,13 +1423,13 @@ struct SLPresetReverbItf_;
 typedef const struct SLPresetReverbItf_ * const * SLPresetReverbItf;
 
 struct SLPresetReverbItf_ {
-	SLresult (*SetPreset) (
-		SLPresetReverbItf self,
-		SLuint16 preset
+	SLresult(*SetPreset)(
+	    SLPresetReverbItf self,
+	    SLuint16 preset
 	);
-	SLresult (*GetPreset) (
-		SLPresetReverbItf self,
-		SLuint16 *pPreset
+	SLresult(*GetPreset)(
+	    SLPresetReverbItf self,
+	    SLuint16 *pPreset
 	);
 };
 
@@ -1523,93 +1523,93 @@ struct SLEnvironmentalReverbItf_;
 typedef const struct SLEnvironmentalReverbItf_ * const * SLEnvironmentalReverbItf;
 
 struct SLEnvironmentalReverbItf_ {
-	SLresult (*SetRoomLevel) (
-		SLEnvironmentalReverbItf self,
-		SLmillibel room
+	SLresult(*SetRoomLevel)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillibel room
 	);
-	SLresult (*GetRoomLevel) (
-		SLEnvironmentalReverbItf self,
-		SLmillibel *pRoom
+	SLresult(*GetRoomLevel)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillibel *pRoom
 	);
-	SLresult (*SetRoomHFLevel) (
-		SLEnvironmentalReverbItf self,
-		SLmillibel roomHF
+	SLresult(*SetRoomHFLevel)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillibel roomHF
 	);
-	SLresult (*GetRoomHFLevel) (
-		SLEnvironmentalReverbItf self,
-		SLmillibel *pRoomHF
+	SLresult(*GetRoomHFLevel)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillibel *pRoomHF
 	);
-	SLresult (*SetDecayTime) (
-		SLEnvironmentalReverbItf self,
-		SLmillisecond decayTime
+	SLresult(*SetDecayTime)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillisecond decayTime
 	);
-	SLresult (*GetDecayTime) (
-		SLEnvironmentalReverbItf self,
-		SLmillisecond *pDecayTime
+	SLresult(*GetDecayTime)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillisecond *pDecayTime
 	);
-	SLresult (*SetDecayHFRatio) (
-		SLEnvironmentalReverbItf self,
-		SLpermille decayHFRatio
+	SLresult(*SetDecayHFRatio)(
+	    SLEnvironmentalReverbItf self,
+	    SLpermille decayHFRatio
 	);
-	SLresult (*GetDecayHFRatio) (
-		SLEnvironmentalReverbItf self,
-		SLpermille *pDecayHFRatio
+	SLresult(*GetDecayHFRatio)(
+	    SLEnvironmentalReverbItf self,
+	    SLpermille *pDecayHFRatio
 	);
-	SLresult (*SetReflectionsLevel) (
-		SLEnvironmentalReverbItf self,
-		SLmillibel reflectionsLevel
+	SLresult(*SetReflectionsLevel)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillibel reflectionsLevel
 	);
-	SLresult (*GetReflectionsLevel) (
-		SLEnvironmentalReverbItf self,
-		SLmillibel *pReflectionsLevel
+	SLresult(*GetReflectionsLevel)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillibel *pReflectionsLevel
 	);
-	SLresult (*SetReflectionsDelay) (
-		SLEnvironmentalReverbItf self,
-		SLmillisecond reflectionsDelay
+	SLresult(*SetReflectionsDelay)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillisecond reflectionsDelay
 	);
-	SLresult (*GetReflectionsDelay) (
-		SLEnvironmentalReverbItf self,
-		SLmillisecond *pReflectionsDelay
+	SLresult(*GetReflectionsDelay)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillisecond *pReflectionsDelay
 	);
-	SLresult (*SetReverbLevel) (
-		SLEnvironmentalReverbItf self,
-		SLmillibel reverbLevel
+	SLresult(*SetReverbLevel)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillibel reverbLevel
 	);
-	SLresult (*GetReverbLevel) (
-		SLEnvironmentalReverbItf self,
-		SLmillibel *pReverbLevel
+	SLresult(*GetReverbLevel)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillibel *pReverbLevel
 	);
-	SLresult (*SetReverbDelay) (
-		SLEnvironmentalReverbItf self,
-		SLmillisecond reverbDelay
+	SLresult(*SetReverbDelay)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillisecond reverbDelay
 	);
-	SLresult (*GetReverbDelay) (
-		SLEnvironmentalReverbItf self,
-		SLmillisecond *pReverbDelay
+	SLresult(*GetReverbDelay)(
+	    SLEnvironmentalReverbItf self,
+	    SLmillisecond *pReverbDelay
 	);
-	SLresult (*SetDiffusion) (
-		SLEnvironmentalReverbItf self,
-		SLpermille diffusion
+	SLresult(*SetDiffusion)(
+	    SLEnvironmentalReverbItf self,
+	    SLpermille diffusion
 	);
-	SLresult (*GetDiffusion) (
-		SLEnvironmentalReverbItf self,
-		SLpermille *pDiffusion
+	SLresult(*GetDiffusion)(
+	    SLEnvironmentalReverbItf self,
+	    SLpermille *pDiffusion
 	);
-	SLresult (*SetDensity) (
-		SLEnvironmentalReverbItf self,
-		SLpermille density
+	SLresult(*SetDensity)(
+	    SLEnvironmentalReverbItf self,
+	    SLpermille density
 	);
-	SLresult (*GetDensity) (
-		SLEnvironmentalReverbItf self,
-		SLpermille *pDensity
+	SLresult(*GetDensity)(
+	    SLEnvironmentalReverbItf self,
+	    SLpermille *pDensity
 	);
-	SLresult (*SetEnvironmentalReverbProperties) (
-		SLEnvironmentalReverbItf self,
-		const SLEnvironmentalReverbSettings *pProperties
+	SLresult(*SetEnvironmentalReverbProperties)(
+	    SLEnvironmentalReverbItf self,
+	    const SLEnvironmentalReverbSettings *pProperties
 	);
-	SLresult (*GetEnvironmentalReverbProperties) (
-		SLEnvironmentalReverbItf self,
-		SLEnvironmentalReverbSettings *pProperties
+	SLresult(*GetEnvironmentalReverbProperties)(
+	    SLEnvironmentalReverbItf self,
+	    SLEnvironmentalReverbSettings *pProperties
 	);
 };
 
@@ -1624,34 +1624,34 @@ struct SLEffectSendItf_;
 typedef const struct SLEffectSendItf_ * const * SLEffectSendItf;
 
 struct SLEffectSendItf_ {
-	SLresult (*EnableEffectSend) (
-		SLEffectSendItf self,
-		const void *pAuxEffect,
-		SLboolean enable,
-		SLmillibel initialLevel
+	SLresult(*EnableEffectSend)(
+	    SLEffectSendItf self,
+	    const void *pAuxEffect,
+	    SLboolean enable,
+	    SLmillibel initialLevel
 	);
-	SLresult (*IsEnabled) (
-		SLEffectSendItf self,
-		const void * pAuxEffect,
-		SLboolean *pEnable
+	SLresult(*IsEnabled)(
+	    SLEffectSendItf self,
+	    const void * pAuxEffect,
+	    SLboolean *pEnable
 	);
-	SLresult (*SetDirectLevel) (
-		SLEffectSendItf self,
-		SLmillibel directLevel
+	SLresult(*SetDirectLevel)(
+	    SLEffectSendItf self,
+	    SLmillibel directLevel
 	);
-	SLresult (*GetDirectLevel) (
-		SLEffectSendItf self,
-		SLmillibel *pDirectLevel
+	SLresult(*GetDirectLevel)(
+	    SLEffectSendItf self,
+	    SLmillibel *pDirectLevel
 	);
-	SLresult (*SetSendLevel) (
-		SLEffectSendItf self,
-		const void *pAuxEffect,
-		SLmillibel sendLevel
+	SLresult(*SetSendLevel)(
+	    SLEffectSendItf self,
+	    const void *pAuxEffect,
+	    SLmillibel sendLevel
 	);
-	SLresult (*GetSendLevel)(
-		SLEffectSendItf self,
-		const void *pAuxEffect,
-		SLmillibel *pSendLevel
+	SLresult(*GetSendLevel)(
+	    SLEffectSendItf self,
+	    const void *pAuxEffect,
+	    SLmillibel *pSendLevel
 	);
 };
 
@@ -1668,13 +1668,13 @@ struct SL3DGroupingItf_ ;
 typedef const struct SL3DGroupingItf_ * const * SL3DGroupingItf;
 
 struct SL3DGroupingItf_ {
-	SLresult (*Set3DGroup) (
-		SL3DGroupingItf self,
-		SLObjectItf group
+	SLresult(*Set3DGroup)(
+	    SL3DGroupingItf self,
+	    SLObjectItf group
 	);
-	SLresult (*Get3DGroup) (
-		SL3DGroupingItf self,
-		SLObjectItf *pGroup
+	SLresult(*Get3DGroup)(
+	    SL3DGroupingItf self,
+	    SLObjectItf *pGroup
 	);
 };
 
@@ -1690,12 +1690,12 @@ struct SL3DCommitItf_;
 typedef const struct SL3DCommitItf_* const * SL3DCommitItf;
 
 struct SL3DCommitItf_ {
-	SLresult (*Commit) (
-		SL3DCommitItf self
+	SLresult(*Commit)(
+	    SL3DCommitItf self
 	);
-	SLresult (*SetDeferred) (
-		SL3DCommitItf self,
-		SLboolean deferred
+	SLresult(*SetDeferred)(
+	    SL3DCommitItf self,
+	    SLboolean deferred
 	);
 };
 
@@ -1716,44 +1716,44 @@ struct SL3DLocationItf_;
 typedef const struct SL3DLocationItf_ * const * SL3DLocationItf;
 
 struct SL3DLocationItf_ {
-	SLresult (*SetLocationCartesian) (
-		SL3DLocationItf self,
-		const SLVec3D *pLocation
+	SLresult(*SetLocationCartesian)(
+	    SL3DLocationItf self,
+	    const SLVec3D *pLocation
 	);
-	SLresult (*SetLocationSpherical) (
-		SL3DLocationItf self,
-		SLmillidegree azimuth,
-		SLmillidegree elevation,
-		SLmillimeter distance
+	SLresult(*SetLocationSpherical)(
+	    SL3DLocationItf self,
+	    SLmillidegree azimuth,
+	    SLmillidegree elevation,
+	    SLmillimeter distance
 	);
-	SLresult (*Move) (
-		SL3DLocationItf self,
-		const SLVec3D *pMovement
+	SLresult(*Move)(
+	    SL3DLocationItf self,
+	    const SLVec3D *pMovement
 	);
-	SLresult (*GetLocationCartesian) (
-		SL3DLocationItf self,
-		SLVec3D *pLocation
+	SLresult(*GetLocationCartesian)(
+	    SL3DLocationItf self,
+	    SLVec3D *pLocation
 	);
-	SLresult (*SetOrientationVectors) (
-		SL3DLocationItf self,
-		const SLVec3D *pFront,
-		const SLVec3D *pAbove
+	SLresult(*SetOrientationVectors)(
+	    SL3DLocationItf self,
+	    const SLVec3D *pFront,
+	    const SLVec3D *pAbove
 	);
-	SLresult (*SetOrientationAngles) (
-		SL3DLocationItf self,
-		SLmillidegree heading,
-		SLmillidegree pitch,
-		SLmillidegree roll
+	SLresult(*SetOrientationAngles)(
+	    SL3DLocationItf self,
+	    SLmillidegree heading,
+	    SLmillidegree pitch,
+	    SLmillidegree roll
 	);
-	SLresult (*Rotate) (
-		SL3DLocationItf self,
-		SLmillidegree theta,
-		const SLVec3D *pAxis
+	SLresult(*Rotate)(
+	    SL3DLocationItf self,
+	    SLmillidegree theta,
+	    const SLVec3D *pAxis
 	);
-	SLresult (*GetOrientationVectors) (
-		SL3DLocationItf self,
-		SLVec3D *pFront,
-		SLVec3D *pUp
+	SLresult(*GetOrientationVectors)(
+	    SL3DLocationItf self,
+	    SLVec3D *pFront,
+	    SLVec3D *pUp
 	);
 };
 
@@ -1769,27 +1769,27 @@ struct SL3DDopplerItf_;
 typedef const struct SL3DDopplerItf_ * const * SL3DDopplerItf;
 
 struct SL3DDopplerItf_ {
-	SLresult (*SetVelocityCartesian) (
-		SL3DDopplerItf self,
-		const SLVec3D *pVelocity
+	SLresult(*SetVelocityCartesian)(
+	    SL3DDopplerItf self,
+	    const SLVec3D *pVelocity
 	);
-	SLresult (*SetVelocitySpherical) (
-		SL3DDopplerItf self,
-		SLmillidegree azimuth,
-		SLmillidegree elevation,
-		SLmillimeter speed
+	SLresult(*SetVelocitySpherical)(
+	    SL3DDopplerItf self,
+	    SLmillidegree azimuth,
+	    SLmillidegree elevation,
+	    SLmillimeter speed
 	);
-	SLresult (*GetVelocityCartesian) (
-		SL3DDopplerItf self,
-		SLVec3D *pVelocity
+	SLresult(*GetVelocityCartesian)(
+	    SL3DDopplerItf self,
+	    SLVec3D *pVelocity
 	);
-	SLresult (*SetDopplerFactor) (
-		SL3DDopplerItf self,
-		SLpermille dopplerFactor
+	SLresult(*SetDopplerFactor)(
+	    SL3DDopplerItf self,
+	    SLpermille dopplerFactor
 	);
-	SLresult (*GetDopplerFactor) (
-		SL3DDopplerItf self,
-		SLpermille *pDopplerFactor
+	SLresult(*GetDopplerFactor)(
+	    SL3DDopplerItf self,
+	    SLpermille *pDopplerFactor
 	);
 };
 
@@ -1807,67 +1807,67 @@ struct SL3DSourceItf_;
 typedef const struct SL3DSourceItf_ * const * SL3DSourceItf;
 
 struct SL3DSourceItf_ {
-	SLresult (*SetHeadRelative) (
-		SL3DSourceItf self,
-		SLboolean headRelative
+	SLresult(*SetHeadRelative)(
+	    SL3DSourceItf self,
+	    SLboolean headRelative
 	);
-	SLresult (*GetHeadRelative) (
-		SL3DSourceItf self,
-		SLboolean *pHeadRelative
+	SLresult(*GetHeadRelative)(
+	    SL3DSourceItf self,
+	    SLboolean *pHeadRelative
 	);
-	SLresult (*SetRolloffDistances) (
-		SL3DSourceItf self,
-		SLmillimeter minDistance,
-		SLmillimeter maxDistance
+	SLresult(*SetRolloffDistances)(
+	    SL3DSourceItf self,
+	    SLmillimeter minDistance,
+	    SLmillimeter maxDistance
 	);
-	SLresult (*GetRolloffDistances) (
-		SL3DSourceItf self,
-		SLmillimeter *pMinDistance,
-		SLmillimeter *pMaxDistance
+	SLresult(*GetRolloffDistances)(
+	    SL3DSourceItf self,
+	    SLmillimeter *pMinDistance,
+	    SLmillimeter *pMaxDistance
 	);
-	SLresult (*SetRolloffMaxDistanceMute) (
-		SL3DSourceItf self,
-		SLboolean mute
+	SLresult(*SetRolloffMaxDistanceMute)(
+	    SL3DSourceItf self,
+	    SLboolean mute
 	);
-	SLresult (*GetRolloffMaxDistanceMute) (
-		SL3DSourceItf self,
-		SLboolean *pMute
+	SLresult(*GetRolloffMaxDistanceMute)(
+	    SL3DSourceItf self,
+	    SLboolean *pMute
 	);
-	SLresult (*SetRolloffFactor) (
-		SL3DSourceItf self,
-		SLpermille rolloffFactor
+	SLresult(*SetRolloffFactor)(
+	    SL3DSourceItf self,
+	    SLpermille rolloffFactor
 	);
-	SLresult (*GetRolloffFactor) (
-		SL3DSourceItf self,
-		SLpermille *pRolloffFactor
+	SLresult(*GetRolloffFactor)(
+	    SL3DSourceItf self,
+	    SLpermille *pRolloffFactor
 	);
-	SLresult (*SetRoomRolloffFactor) (
-		SL3DSourceItf self,
-		SLpermille roomRolloffFactor
+	SLresult(*SetRoomRolloffFactor)(
+	    SL3DSourceItf self,
+	    SLpermille roomRolloffFactor
 	);
-	SLresult (*GetRoomRolloffFactor) (
-		SL3DSourceItf self,
-		SLpermille *pRoomRolloffFactor
+	SLresult(*GetRoomRolloffFactor)(
+	    SL3DSourceItf self,
+	    SLpermille *pRoomRolloffFactor
 	);
-	SLresult (*SetRolloffModel) (
-		SL3DSourceItf self,
-		SLuint8 model
+	SLresult(*SetRolloffModel)(
+	    SL3DSourceItf self,
+	    SLuint8 model
 	);
-	SLresult (*GetRolloffModel) (
-		SL3DSourceItf self,
-		SLuint8 *pModel
+	SLresult(*GetRolloffModel)(
+	    SL3DSourceItf self,
+	    SLuint8 *pModel
 	);
-	SLresult (*SetCone) (
-		SL3DSourceItf self,
-		SLmillidegree innerAngle,
-		SLmillidegree outerAngle,
-		SLmillibel outerLevel
+	SLresult(*SetCone)(
+	    SL3DSourceItf self,
+	    SLmillidegree innerAngle,
+	    SLmillidegree outerAngle,
+	    SLmillibel outerLevel
 	);
-	SLresult (*GetCone) (
-		SL3DSourceItf self,
-		SLmillidegree *pInnerAngle,
-		SLmillidegree *pOuterAngle,
-		SLmillibel *pOuterLevel
+	SLresult(*GetCone)(
+	    SL3DSourceItf self,
+	    SLmillidegree *pInnerAngle,
+	    SLmillidegree *pOuterAngle,
+	    SLmillibel *pOuterLevel
 	);
 };
 
@@ -1881,38 +1881,38 @@ struct SL3DMacroscopicItf_;
 typedef const struct SL3DMacroscopicItf_ * const * SL3DMacroscopicItf;
 
 struct SL3DMacroscopicItf_ {
-	SLresult (*SetSize) (
-		SL3DMacroscopicItf self,
-		SLmillimeter width,
-		SLmillimeter height,
-		SLmillimeter depth
+	SLresult(*SetSize)(
+	    SL3DMacroscopicItf self,
+	    SLmillimeter width,
+	    SLmillimeter height,
+	    SLmillimeter depth
 	);
-	SLresult (*GetSize) (
-		SL3DMacroscopicItf self,
-		SLmillimeter *pWidth,
-		SLmillimeter *pHeight,
-		SLmillimeter *pDepth
+	SLresult(*GetSize)(
+	    SL3DMacroscopicItf self,
+	    SLmillimeter *pWidth,
+	    SLmillimeter *pHeight,
+	    SLmillimeter *pDepth
 	);
-	SLresult (*SetOrientationAngles) (
-		SL3DMacroscopicItf self,
-		SLmillidegree heading,
-		SLmillidegree pitch,
-		SLmillidegree roll
+	SLresult(*SetOrientationAngles)(
+	    SL3DMacroscopicItf self,
+	    SLmillidegree heading,
+	    SLmillidegree pitch,
+	    SLmillidegree roll
 	);
-	SLresult (*SetOrientationVectors) (
-		SL3DMacroscopicItf self,
-		const SLVec3D *pFront,
-		const SLVec3D *pAbove
+	SLresult(*SetOrientationVectors)(
+	    SL3DMacroscopicItf self,
+	    const SLVec3D *pFront,
+	    const SLVec3D *pAbove
 	);
-	SLresult (*Rotate) (
-		SL3DMacroscopicItf self,
-		SLmillidegree theta,
-		const SLVec3D *pAxis
+	SLresult(*Rotate)(
+	    SL3DMacroscopicItf self,
+	    SLmillidegree theta,
+	    const SLVec3D *pAxis
 	);
-	SLresult (*GetOrientationVectors) (
-		SL3DMacroscopicItf self,
-		SLVec3D *pFront,
-		SLVec3D *pUp
+	SLresult(*GetOrientationVectors)(
+	    SL3DMacroscopicItf self,
+	    SLVec3D *pFront,
+	    SLVec3D *pUp
 	);
 };
 
@@ -1927,29 +1927,29 @@ struct SLMuteSoloItf_;
 typedef const struct SLMuteSoloItf_ * const * SLMuteSoloItf;
 
 struct SLMuteSoloItf_ {
-	SLresult (*SetChannelMute) (
-		SLMuteSoloItf self,
-		SLuint8 chan,
-		SLboolean mute
+	SLresult(*SetChannelMute)(
+	    SLMuteSoloItf self,
+	    SLuint8 chan,
+	    SLboolean mute
 	);
-	SLresult (*GetChannelMute) (
-		SLMuteSoloItf self,
-		SLuint8 chan,
-		SLboolean *pMute
+	SLresult(*GetChannelMute)(
+	    SLMuteSoloItf self,
+	    SLuint8 chan,
+	    SLboolean *pMute
 	);
-	SLresult (*SetChannelSolo) (
-		SLMuteSoloItf self,
-		SLuint8 chan,
-		SLboolean solo
+	SLresult(*SetChannelSolo)(
+	    SLMuteSoloItf self,
+	    SLuint8 chan,
+	    SLboolean solo
 	);
-	SLresult (*GetChannelSolo) (
-		SLMuteSoloItf self,
-		SLuint8 chan,
-		SLboolean *pSolo
+	SLresult(*GetChannelSolo)(
+	    SLMuteSoloItf self,
+	    SLuint8 chan,
+	    SLboolean *pSolo
 	);
-	SLresult (*GetNumChannels) (
-		SLMuteSoloItf self,
-		SLuint8 *pNumChannels
+	SLresult(*GetNumChannels)(
+	    SLMuteSoloItf self,
+	    SLuint8 *pNumChannels
 	);
 };
 
@@ -1972,34 +1972,34 @@ extern SL_API const SLInterfaceID SL_IID_DYNAMICINTERFACEMANAGEMENT;
 struct SLDynamicInterfaceManagementItf_;
 typedef const struct SLDynamicInterfaceManagementItf_ * const * SLDynamicInterfaceManagementItf;
 
-typedef void (SLAPIENTRY *slDynamicInterfaceManagementCallback) (
-	SLDynamicInterfaceManagementItf caller,
-	void * pContext,
-	SLuint32 event,
-	SLresult result,
+typedef void (SLAPIENTRY *slDynamicInterfaceManagementCallback)(
+    SLDynamicInterfaceManagementItf caller,
+    void * pContext,
+    SLuint32 event,
+    SLresult result,
     const SLInterfaceID iid
 );
 
 
 struct SLDynamicInterfaceManagementItf_ {
-	SLresult (*AddInterface) (
-		SLDynamicInterfaceManagementItf self,
-		const SLInterfaceID iid,
-		SLboolean async
+	SLresult(*AddInterface)(
+	    SLDynamicInterfaceManagementItf self,
+	    const SLInterfaceID iid,
+	    SLboolean async
 	);
-	SLresult (*RemoveInterface) (
-		SLDynamicInterfaceManagementItf self,
-		const SLInterfaceID iid
+	SLresult(*RemoveInterface)(
+	    SLDynamicInterfaceManagementItf self,
+	    const SLInterfaceID iid
 	);
-	SLresult (*ResumeInterface) (
-		SLDynamicInterfaceManagementItf self,
-		const SLInterfaceID iid,
-		SLboolean async
+	SLresult(*ResumeInterface)(
+	    SLDynamicInterfaceManagementItf self,
+	    const SLInterfaceID iid,
+	    SLboolean async
 	);
-	SLresult (*RegisterCallback) (
-		SLDynamicInterfaceManagementItf self,
-		slDynamicInterfaceManagementCallback callback,
-		void * pContext
+	SLresult(*RegisterCallback)(
+	    SLDynamicInterfaceManagementItf self,
+	    slDynamicInterfaceManagementCallback callback,
+	    void * pContext
 	);
 };
 
@@ -2021,48 +2021,48 @@ extern SL_API const SLInterfaceID SL_IID_MIDIMESSAGE;
 struct SLMIDIMessageItf_;
 typedef const struct SLMIDIMessageItf_ * const * SLMIDIMessageItf;
 
-typedef void (SLAPIENTRY *slMetaEventCallback) (
-	SLMIDIMessageItf caller,
-	void *pContext,
-	SLuint8 type,
+typedef void (SLAPIENTRY *slMetaEventCallback)(
+    SLMIDIMessageItf caller,
+    void *pContext,
+    SLuint8 type,
     SLuint32 length,
-	const SLuint8 *pData,
-	SLuint32 tick,
-	SLuint16 track
+    const SLuint8 *pData,
+    SLuint32 tick,
+    SLuint16 track
 );
 
-typedef void (SLAPIENTRY *slMIDIMessageCallback) (
-	SLMIDIMessageItf caller,
-	void *pContext,
-	SLuint8 statusByte,
-	SLuint32 length,
-	const SLuint8 *pData,
-	SLuint32 tick,
-	SLuint16 track
+typedef void (SLAPIENTRY *slMIDIMessageCallback)(
+    SLMIDIMessageItf caller,
+    void *pContext,
+    SLuint8 statusByte,
+    SLuint32 length,
+    const SLuint8 *pData,
+    SLuint32 tick,
+    SLuint16 track
 );
 
 struct SLMIDIMessageItf_ {
-	SLresult (*SendMessage) (
-		SLMIDIMessageItf self,
-		const SLuint8 *data,
-		SLuint32 length
+	SLresult(*SendMessage)(
+	    SLMIDIMessageItf self,
+	    const SLuint8 *data,
+	    SLuint32 length
 	);
-	SLresult (*RegisterMetaEventCallback) (
-		SLMIDIMessageItf self,
-		slMetaEventCallback callback,
-		void *pContext
+	SLresult(*RegisterMetaEventCallback)(
+	    SLMIDIMessageItf self,
+	    slMetaEventCallback callback,
+	    void *pContext
 	);
-	SLresult (*RegisterMIDIMessageCallback) (
-		SLMIDIMessageItf self,
-		slMIDIMessageCallback callback,
-		void *pContext
+	SLresult(*RegisterMIDIMessageCallback)(
+	    SLMIDIMessageItf self,
+	    slMIDIMessageCallback callback,
+	    void *pContext
 	);
-	SLresult (*AddMIDIMessageCallbackFilter) (
-		SLMIDIMessageItf self,
-		SLuint32 messageType
+	SLresult(*AddMIDIMessageCallbackFilter)(
+	    SLMIDIMessageItf self,
+	    SLuint32 messageType
 	);
-	SLresult (*ClearMIDIMessageCallbackFilter) (
-		SLMIDIMessageItf self
+	SLresult(*ClearMIDIMessageCallbackFilter)(
+	    SLMIDIMessageItf self
 	);
 };
 
@@ -2078,49 +2078,49 @@ struct SLMIDIMuteSoloItf_;
 typedef const struct SLMIDIMuteSoloItf_ * const * SLMIDIMuteSoloItf;
 
 struct SLMIDIMuteSoloItf_ {
-	SLresult (*SetChannelMute) (
-		SLMIDIMuteSoloItf self,
-		SLuint8 channel,
-		SLboolean mute
+	SLresult(*SetChannelMute)(
+	    SLMIDIMuteSoloItf self,
+	    SLuint8 channel,
+	    SLboolean mute
 	);
-	SLresult (*GetChannelMute) (
-		SLMIDIMuteSoloItf self,
-		SLuint8 channel,
-		SLboolean *pMute
+	SLresult(*GetChannelMute)(
+	    SLMIDIMuteSoloItf self,
+	    SLuint8 channel,
+	    SLboolean *pMute
 	);
-	SLresult (*SetChannelSolo) (
-		SLMIDIMuteSoloItf self,
-		SLuint8 channel,
-		SLboolean solo
+	SLresult(*SetChannelSolo)(
+	    SLMIDIMuteSoloItf self,
+	    SLuint8 channel,
+	    SLboolean solo
 	);
-	SLresult (*GetChannelSolo) (
-		SLMIDIMuteSoloItf self,
-		SLuint8 channel,
-		SLboolean *pSolo
+	SLresult(*GetChannelSolo)(
+	    SLMIDIMuteSoloItf self,
+	    SLuint8 channel,
+	    SLboolean *pSolo
 	);
-	SLresult (*GetTrackCount) (
-		SLMIDIMuteSoloItf self,
-		SLuint16 *pCount
+	SLresult(*GetTrackCount)(
+	    SLMIDIMuteSoloItf self,
+	    SLuint16 *pCount
 	);
-	SLresult (*SetTrackMute) (
-		SLMIDIMuteSoloItf self,
-		SLuint16 track,
-		SLboolean mute
+	SLresult(*SetTrackMute)(
+	    SLMIDIMuteSoloItf self,
+	    SLuint16 track,
+	    SLboolean mute
 	);
-	SLresult (*GetTrackMute) (
-		SLMIDIMuteSoloItf self,
-		SLuint16 track,
-		SLboolean *pMute
+	SLresult(*GetTrackMute)(
+	    SLMIDIMuteSoloItf self,
+	    SLuint16 track,
+	    SLboolean *pMute
 	);
-	SLresult (*SetTrackSolo) (
-		SLMIDIMuteSoloItf self,
-		SLuint16 track,
-		SLboolean solo
+	SLresult(*SetTrackSolo)(
+	    SLMIDIMuteSoloItf self,
+	    SLuint16 track,
+	    SLboolean solo
 	);
-	SLresult (*GetTrackSolo) (
-		SLMIDIMuteSoloItf self,
-		SLuint16 track,
-		SLboolean *pSolo
+	SLresult(*GetTrackSolo)(
+	    SLMIDIMuteSoloItf self,
+	    SLuint16 track,
+	    SLboolean *pSolo
 	);
 };
 
@@ -2136,21 +2136,21 @@ struct SLMIDITempoItf_;
 typedef const struct SLMIDITempoItf_ * const * SLMIDITempoItf;
 
 struct SLMIDITempoItf_ {
-	SLresult (*SetTicksPerQuarterNote) (
-		SLMIDITempoItf self,
-		SLuint32 tpqn
+	SLresult(*SetTicksPerQuarterNote)(
+	    SLMIDITempoItf self,
+	    SLuint32 tpqn
 	);
-	SLresult (*GetTicksPerQuarterNote) (
-		SLMIDITempoItf self,
-		SLuint32 *pTpqn
+	SLresult(*GetTicksPerQuarterNote)(
+	    SLMIDITempoItf self,
+	    SLuint32 *pTpqn
 	);
-	SLresult (*SetMicrosecondsPerQuarterNote) (
-		SLMIDITempoItf self,
-		SLmicrosecond uspqn
+	SLresult(*SetMicrosecondsPerQuarterNote)(
+	    SLMIDITempoItf self,
+	    SLmicrosecond uspqn
 	);
-	SLresult (*GetMicrosecondsPerQuarterNote) (
-		SLMIDITempoItf self,
-		SLmicrosecond *uspqn
+	SLresult(*GetMicrosecondsPerQuarterNote)(
+	    SLMIDITempoItf self,
+	    SLmicrosecond *uspqn
 	);
 };
 
@@ -2166,27 +2166,27 @@ struct SLMIDITimeItf_;
 typedef const struct SLMIDITimeItf_ * const * SLMIDITimeItf;
 
 struct SLMIDITimeItf_ {
-	SLresult (*GetDuration) (
-		SLMIDITimeItf self,
-		SLuint32 *pDuration
+	SLresult(*GetDuration)(
+	    SLMIDITimeItf self,
+	    SLuint32 *pDuration
 	);
-	SLresult (*SetPosition) (
-		SLMIDITimeItf self,
-		SLuint32 position
+	SLresult(*SetPosition)(
+	    SLMIDITimeItf self,
+	    SLuint32 position
 	);
-	SLresult (*GetPosition) (
-		SLMIDITimeItf self,
-		SLuint32 *pPosition
+	SLresult(*GetPosition)(
+	    SLMIDITimeItf self,
+	    SLuint32 *pPosition
 	);
-	SLresult (*SetLoopPoints) (
-		SLMIDITimeItf self,
-		SLuint32 startTick,
-		SLuint32 numTicks
+	SLresult(*SetLoopPoints)(
+	    SLMIDITimeItf self,
+	    SLuint32 startTick,
+	    SLuint32 numTicks
 	);
-	SLresult (*GetLoopPoints) (
-		SLMIDITimeItf self,
-		SLuint32 *pStartTick,
-		SLuint32 *pNumTicks
+	SLresult(*GetLoopPoints)(
+	    SLMIDITimeItf self,
+	    SLuint32 *pStartTick,
+	    SLuint32 *pNumTicks
 	);
 };
 
@@ -2276,28 +2276,28 @@ struct SLMIDITimeItf_ {
 #define SL_AUDIOMODE_REALAUDIO_SURROUND	((SLuint32) 0x00000004)
 
 typedef struct SLAudioCodecDescriptor_ {
-    SLuint32      maxChannels;
-    SLuint32      minBitsPerSample;
-    SLuint32      maxBitsPerSample;
-    SLmilliHertz  minSampleRate;
-    SLmilliHertz  maxSampleRate;
-    SLboolean     isFreqRangeContinuous;
-    SLmilliHertz *pSampleRatesSupported;
-    SLuint32      numSampleRatesSupported;
-    SLuint32      minBitRate;
-    SLuint32      maxBitRate;
-    SLboolean     isBitrateRangeContinuous;
-    SLuint32     *pBitratesSupported;
-    SLuint32      numBitratesSupported;
-    SLuint32	  profileSetting;
-    SLuint32      modeSetting;
+	SLuint32      maxChannels;
+	SLuint32      minBitsPerSample;
+	SLuint32      maxBitsPerSample;
+	SLmilliHertz  minSampleRate;
+	SLmilliHertz  maxSampleRate;
+	SLboolean     isFreqRangeContinuous;
+	SLmilliHertz *pSampleRatesSupported;
+	SLuint32      numSampleRatesSupported;
+	SLuint32      minBitRate;
+	SLuint32      maxBitRate;
+	SLboolean     isBitrateRangeContinuous;
+	SLuint32     *pBitratesSupported;
+	SLuint32      numBitratesSupported;
+	SLuint32	  profileSetting;
+	SLuint32      modeSetting;
 } SLAudioCodecDescriptor;
 
 /*Structure used to retrieve the profile and level settings supported by an audio encoder */
 
 typedef struct SLAudioCodecProfileMode_ {
-    SLuint32 profileSetting;
-    SLuint32 modeSetting;
+	SLuint32 profileSetting;
+	SLuint32 modeSetting;
 } SLAudioCodecProfileMode;
 
 extern SL_API const SLInterfaceID SL_IID_AUDIODECODERCAPABILITIES;
@@ -2306,17 +2306,17 @@ struct SLAudioDecoderCapabilitiesItf_;
 typedef const struct SLAudioDecoderCapabilitiesItf_ * const * SLAudioDecoderCapabilitiesItf;
 
 struct SLAudioDecoderCapabilitiesItf_ {
-    SLresult (*GetAudioDecoders) (
-        SLAudioDecoderCapabilitiesItf self,
-        SLuint32 * pNumDecoders ,
-        SLuint32 *pDecoderIds
-    );
-    SLresult (*GetAudioDecoderCapabilities) (
-        SLAudioDecoderCapabilitiesItf self,
-        SLuint32 decoderId,
-        SLuint32 *pIndex,
-        SLAudioCodecDescriptor *pDescriptor
-    );
+	SLresult(*GetAudioDecoders)(
+	    SLAudioDecoderCapabilitiesItf self,
+	    SLuint32 * pNumDecoders ,
+	    SLuint32 *pDecoderIds
+	);
+	SLresult(*GetAudioDecoderCapabilities)(
+	    SLAudioDecoderCapabilitiesItf self,
+	    SLuint32 decoderId,
+	    SLuint32 *pIndex,
+	    SLAudioCodecDescriptor *pDescriptor
+	);
 };
 
 
@@ -2329,19 +2329,19 @@ struct SLAudioDecoderCapabilitiesItf_ {
 /* Structure used when setting audio encoding parameters */
 
 typedef struct SLAudioEncoderSettings_ {
-    SLuint32 encoderId;
-    SLuint32 channelsIn;
-    SLuint32 channelsOut;
-    SLmilliHertz sampleRate;
-    SLuint32 bitRate;
-    SLuint32 bitsPerSample;
-    SLuint32 rateControl;
-    SLuint32 profileSetting;
-    SLuint32 levelSetting;
-    SLuint32 channelMode;
-    SLuint32 streamFormat;
-    SLuint32 encodeOptions;
-    SLuint32 blockAlignment;
+	SLuint32 encoderId;
+	SLuint32 channelsIn;
+	SLuint32 channelsOut;
+	SLmilliHertz sampleRate;
+	SLuint32 bitRate;
+	SLuint32 bitsPerSample;
+	SLuint32 rateControl;
+	SLuint32 profileSetting;
+	SLuint32 levelSetting;
+	SLuint32 channelMode;
+	SLuint32 streamFormat;
+	SLuint32 encodeOptions;
+	SLuint32 blockAlignment;
 } SLAudioEncoderSettings;
 
 extern SL_API const SLInterfaceID SL_IID_AUDIOENCODERCAPABILITIES;
@@ -2350,17 +2350,17 @@ struct SLAudioEncoderCapabilitiesItf_;
 typedef const struct SLAudioEncoderCapabilitiesItf_ * const * SLAudioEncoderCapabilitiesItf;
 
 struct SLAudioEncoderCapabilitiesItf_ {
-    SLresult (*GetAudioEncoders) (
-        SLAudioEncoderCapabilitiesItf self,
-        SLuint32 *pNumEncoders ,
-        SLuint32 *pEncoderIds
-    );
-    SLresult (*GetAudioEncoderCapabilities) (
-        SLAudioEncoderCapabilitiesItf self,
-        SLuint32 encoderId,
-        SLuint32 *pIndex,
-        SLAudioCodecDescriptor * pDescriptor
-    );
+	SLresult(*GetAudioEncoders)(
+	    SLAudioEncoderCapabilitiesItf self,
+	    SLuint32 *pNumEncoders ,
+	    SLuint32 *pEncoderIds
+	);
+	SLresult(*GetAudioEncoderCapabilities)(
+	    SLAudioEncoderCapabilitiesItf self,
+	    SLuint32 encoderId,
+	    SLuint32 *pIndex,
+	    SLAudioCodecDescriptor * pDescriptor
+	);
 };
 
 
@@ -2375,14 +2375,14 @@ struct SLAudioEncoderItf_;
 typedef const struct SLAudioEncoderItf_ * const * SLAudioEncoderItf;
 
 struct SLAudioEncoderItf_ {
-    SLresult (*SetEncoderSettings) (
-        SLAudioEncoderItf		self,
-        SLAudioEncoderSettings 	*pSettings
-    );
-    SLresult (*GetEncoderSettings) (
-        SLAudioEncoderItf		self,
-        SLAudioEncoderSettings	*pSettings
-    );
+	SLresult(*SetEncoderSettings)(
+	    SLAudioEncoderItf		self,
+	    SLAudioEncoderSettings 	*pSettings
+	);
+	SLresult(*GetEncoderSettings)(
+	    SLAudioEncoderItf		self,
+	    SLAudioEncoderSettings	*pSettings
+	);
 };
 
 
@@ -2397,25 +2397,25 @@ struct SLBassBoostItf_;
 typedef const struct SLBassBoostItf_ * const * SLBassBoostItf;
 
 struct SLBassBoostItf_ {
-	SLresult (*SetEnabled)(
-		SLBassBoostItf self,
-		SLboolean enabled
+	SLresult(*SetEnabled)(
+	    SLBassBoostItf self,
+	    SLboolean enabled
 	);
-	SLresult (*IsEnabled)(
-		SLBassBoostItf self,
-		SLboolean *pEnabled
+	SLresult(*IsEnabled)(
+	    SLBassBoostItf self,
+	    SLboolean *pEnabled
 	);
-	SLresult (*SetStrength)(
-		SLBassBoostItf self,
-		SLpermille strength
+	SLresult(*SetStrength)(
+	    SLBassBoostItf self,
+	    SLpermille strength
 	);
-	SLresult (*GetRoundedStrength)(
-		SLBassBoostItf self,
-		SLpermille *pStrength
+	SLresult(*GetRoundedStrength)(
+	    SLBassBoostItf self,
+	    SLpermille *pStrength
 	);
-	SLresult (*IsStrengthSupported)(
-		SLBassBoostItf self,
-		SLboolean *pSupported
+	SLresult(*IsStrengthSupported)(
+	    SLBassBoostItf self,
+	    SLboolean *pSupported
 	);
 };
 
@@ -2430,18 +2430,18 @@ struct SLPitchItf_;
 typedef const struct SLPitchItf_ * const * SLPitchItf;
 
 struct SLPitchItf_ {
-	SLresult (*SetPitch) (
-		SLPitchItf self,
-		SLpermille pitch
+	SLresult(*SetPitch)(
+	    SLPitchItf self,
+	    SLpermille pitch
 	);
-	SLresult (*GetPitch) (
-		SLPitchItf self,
-		SLpermille *pPitch
+	SLresult(*GetPitch)(
+	    SLPitchItf self,
+	    SLpermille *pPitch
 	);
-	SLresult (*GetPitchCapabilities) (
-		SLPitchItf self,
-		SLpermille *pMinPitch,
-		SLpermille *pMaxPitch
+	SLresult(*GetPitchCapabilities)(
+	    SLPitchItf self,
+	    SLpermille *pMinPitch,
+	    SLpermille *pMaxPitch
 	);
 };
 
@@ -2459,18 +2459,18 @@ struct SLRatePitchItf_;
 typedef const struct SLRatePitchItf_ * const * SLRatePitchItf;
 
 struct SLRatePitchItf_ {
-	SLresult (*SetRate) (
-		SLRatePitchItf self,
-		SLpermille rate
+	SLresult(*SetRate)(
+	    SLRatePitchItf self,
+	    SLpermille rate
 	);
-	SLresult (*GetRate) (
-		SLRatePitchItf self,
-		SLpermille *pRate
+	SLresult(*GetRate)(
+	    SLRatePitchItf self,
+	    SLpermille *pRate
 	);
-	SLresult (*GetRatePitchCapabilities) (
-		SLRatePitchItf self,
-		SLpermille *pMinRate,
-		SLpermille *pMaxRate
+	SLresult(*GetRatePitchCapabilities)(
+	    SLRatePitchItf self,
+	    SLpermille *pMinRate,
+	    SLpermille *pMaxRate
 	);
 };
 
@@ -2486,25 +2486,25 @@ struct SLVirtualizerItf_;
 typedef const struct SLVirtualizerItf_ * const * SLVirtualizerItf;
 
 struct SLVirtualizerItf_ {
-	SLresult (*SetEnabled)(
-		SLVirtualizerItf self,
-		SLboolean enabled
+	SLresult(*SetEnabled)(
+	    SLVirtualizerItf self,
+	    SLboolean enabled
 	);
-	SLresult (*IsEnabled)(
-		SLVirtualizerItf self,
-		SLboolean *pEnabled
+	SLresult(*IsEnabled)(
+	    SLVirtualizerItf self,
+	    SLboolean *pEnabled
 	);
-	SLresult (*SetStrength)(
-		SLVirtualizerItf self,
-		SLpermille strength
+	SLresult(*SetStrength)(
+	    SLVirtualizerItf self,
+	    SLpermille strength
 	);
-	SLresult (*GetRoundedStrength)(
-		SLVirtualizerItf self,
-		SLpermille *pStrength
+	SLresult(*GetRoundedStrength)(
+	    SLVirtualizerItf self,
+	    SLpermille *pStrength
 	);
-	SLresult (*IsStrengthSupported)(
-		SLVirtualizerItf self,
-		SLboolean *pSupported
+	SLresult(*IsStrengthSupported)(
+	    SLVirtualizerItf self,
+	    SLboolean *pSupported
 	);
 };
 
@@ -2518,23 +2518,23 @@ extern SL_API const SLInterfaceID SL_IID_VISUALIZATION;
 struct SLVisualizationItf_;
 typedef const struct SLVisualizationItf_ * const * SLVisualizationItf;
 
-typedef void (SLAPIENTRY *slVisualizationCallback) (
-	void *pContext,
-	const SLuint8 waveform[],
-	const SLuint8 fft[],
-	SLmilliHertz samplerate
+typedef void (SLAPIENTRY *slVisualizationCallback)(
+    void *pContext,
+    const SLuint8 waveform[],
+    const SLuint8 fft[],
+    SLmilliHertz samplerate
 );
 
-struct SLVisualizationItf_{
-	SLresult (*RegisterVisualizationCallback)(
-		SLVisualizationItf self,
-		slVisualizationCallback callback,
-		void *pContext,
-		SLmilliHertz rate
+struct SLVisualizationItf_ {
+	SLresult(*RegisterVisualizationCallback)(
+	    SLVisualizationItf self,
+	    slVisualizationCallback callback,
+	    void *pContext,
+	    SLmilliHertz rate
 	);
-	SLresult (*GetMaxRate)(
-		SLVisualizationItf self,
-		SLmilliHertz* pRate
+	SLresult(*GetMaxRate)(
+	    SLVisualizationItf self,
+	    SLmilliHertz* pRate
 	);
 };
 
@@ -2552,116 +2552,116 @@ typedef const struct SLEngineItf_ * const * SLEngineItf;
 
 struct SLEngineItf_ {
 
-	SLresult (*CreateLEDDevice) (
-		SLEngineItf self,
-		SLObjectItf * pDevice,
-		SLuint32 deviceID,
-		SLuint32 numInterfaces,
-		const SLInterfaceID * pInterfaceIds,
-		const SLboolean * pInterfaceRequired
+	SLresult(*CreateLEDDevice)(
+	    SLEngineItf self,
+	    SLObjectItf * pDevice,
+	    SLuint32 deviceID,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-	SLresult (*CreateVibraDevice) (
-		SLEngineItf self,
-		SLObjectItf * pDevice,
-		SLuint32 deviceID,
-		SLuint32 numInterfaces,
-		const SLInterfaceID * pInterfaceIds,
-		const SLboolean * pInterfaceRequired
+	SLresult(*CreateVibraDevice)(
+	    SLEngineItf self,
+	    SLObjectItf * pDevice,
+	    SLuint32 deviceID,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-	SLresult (*CreateAudioPlayer) (
-		SLEngineItf self,
-		SLObjectItf * pPlayer,
-		SLDataSource *pAudioSrc,
-		SLDataSink *pAudioSnk,
-		SLuint32 numInterfaces,
-		const SLInterfaceID * pInterfaceIds,
-		const SLboolean * pInterfaceRequired
+	SLresult(*CreateAudioPlayer)(
+	    SLEngineItf self,
+	    SLObjectItf * pPlayer,
+	    SLDataSource *pAudioSrc,
+	    SLDataSink *pAudioSnk,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-	SLresult (*CreateAudioRecorder) (
-		SLEngineItf self,
-		SLObjectItf * pRecorder,
-		SLDataSource *pAudioSrc,
-		SLDataSink *pAudioSnk,
-		SLuint32 numInterfaces,
-		const SLInterfaceID * pInterfaceIds,
-		const SLboolean * pInterfaceRequired
+	SLresult(*CreateAudioRecorder)(
+	    SLEngineItf self,
+	    SLObjectItf * pRecorder,
+	    SLDataSource *pAudioSrc,
+	    SLDataSink *pAudioSnk,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-	SLresult (*CreateMidiPlayer) (
-		SLEngineItf self,
-		SLObjectItf * pPlayer,
-		SLDataSource *pMIDISrc,
-		SLDataSource *pBankSrc,
-		SLDataSink *pAudioOutput,
-		SLDataSink *pVibra,
-		SLDataSink *pLEDArray,
-		SLuint32 numInterfaces,
-		const SLInterfaceID * pInterfaceIds,
-		const SLboolean * pInterfaceRequired
+	SLresult(*CreateMidiPlayer)(
+	    SLEngineItf self,
+	    SLObjectItf * pPlayer,
+	    SLDataSource *pMIDISrc,
+	    SLDataSource *pBankSrc,
+	    SLDataSink *pAudioOutput,
+	    SLDataSink *pVibra,
+	    SLDataSink *pLEDArray,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-	SLresult (*CreateListener) (
-		SLEngineItf self,
-		SLObjectItf * pListener,
-		SLuint32 numInterfaces,
-		const SLInterfaceID * pInterfaceIds,
-		const SLboolean * pInterfaceRequired
+	SLresult(*CreateListener)(
+	    SLEngineItf self,
+	    SLObjectItf * pListener,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-	SLresult (*Create3DGroup) (
-		SLEngineItf self,
-		SLObjectItf * pGroup,
-		SLuint32 numInterfaces,
-		const SLInterfaceID * pInterfaceIds,
-		const SLboolean * pInterfaceRequired
+	SLresult(*Create3DGroup)(
+	    SLEngineItf self,
+	    SLObjectItf * pGroup,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-	SLresult (*CreateOutputMix) (
-		SLEngineItf self,
-		SLObjectItf * pMix,
-		SLuint32 numInterfaces,
-		const SLInterfaceID * pInterfaceIds,
-		const SLboolean * pInterfaceRequired
+	SLresult(*CreateOutputMix)(
+	    SLEngineItf self,
+	    SLObjectItf * pMix,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-	SLresult (*CreateMetadataExtractor) (
-		SLEngineItf self,
-		SLObjectItf * pMetadataExtractor,
-		SLDataSource * pDataSource,
-		SLuint32 numInterfaces,
-		const SLInterfaceID * pInterfaceIds,
-		const SLboolean * pInterfaceRequired
+	SLresult(*CreateMetadataExtractor)(
+	    SLEngineItf self,
+	    SLObjectItf * pMetadataExtractor,
+	    SLDataSource * pDataSource,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-    SLresult (*CreateExtensionObject) (
-        SLEngineItf self,
-        SLObjectItf * pObject,
-        void * pParameters,
-        SLuint32 objectID,
-        SLuint32 numInterfaces,
-        const SLInterfaceID * pInterfaceIds,
-        const SLboolean * pInterfaceRequired
-    );
-	SLresult (*QueryNumSupportedInterfaces) (
-		SLEngineItf self,
-		SLuint32 objectID,
-		SLuint32 * pNumSupportedInterfaces
+	SLresult(*CreateExtensionObject)(
+	    SLEngineItf self,
+	    SLObjectItf * pObject,
+	    void * pParameters,
+	    SLuint32 objectID,
+	    SLuint32 numInterfaces,
+	    const SLInterfaceID * pInterfaceIds,
+	    const SLboolean * pInterfaceRequired
 	);
-	SLresult (*QuerySupportedInterfaces) (
-		SLEngineItf self,
-		SLuint32 objectID,
-		SLuint32 index,
-		SLInterfaceID * pInterfaceId
+	SLresult(*QueryNumSupportedInterfaces)(
+	    SLEngineItf self,
+	    SLuint32 objectID,
+	    SLuint32 * pNumSupportedInterfaces
 	);
-    SLresult (*QueryNumSupportedExtensions) (
-        SLEngineItf self,
-        SLuint32 * pNumExtensions
-    );
-    SLresult (*QuerySupportedExtension) (
-        SLEngineItf self,
-        SLuint32 index,
-        SLchar * pExtensionName,
-        SLint16 * pNameLength
-    );
-    SLresult (*IsExtensionSupported) (
-        SLEngineItf self,
-        const SLchar * pExtensionName,
-        SLboolean * pSupported
-    );
+	SLresult(*QuerySupportedInterfaces)(
+	    SLEngineItf self,
+	    SLuint32 objectID,
+	    SLuint32 index,
+	    SLInterfaceID * pInterfaceId
+	);
+	SLresult(*QueryNumSupportedExtensions)(
+	    SLEngineItf self,
+	    SLuint32 * pNumExtensions
+	);
+	SLresult(*QuerySupportedExtension)(
+	    SLEngineItf self,
+	    SLuint32 index,
+	    SLchar * pExtensionName,
+	    SLint16 * pNameLength
+	);
+	SLresult(*IsExtensionSupported)(
+	    SLEngineItf self,
+	    const SLchar * pExtensionName,
+	    SLboolean * pSupported
+	);
 };
 
 
@@ -2676,42 +2676,42 @@ struct SLEngineCapabilitiesItf_;
 typedef const struct SLEngineCapabilitiesItf_ * const * SLEngineCapabilitiesItf;
 
 struct SLEngineCapabilitiesItf_ {
-	SLresult (*QuerySupportedProfiles) (
-		SLEngineCapabilitiesItf self,
-		SLuint16 *pProfilesSupported
+	SLresult(*QuerySupportedProfiles)(
+	    SLEngineCapabilitiesItf self,
+	    SLuint16 *pProfilesSupported
 	);
-	SLresult (*QueryAvailableVoices) (
-		SLEngineCapabilitiesItf self,
-		SLuint16 voiceType,
-		SLint16 *pNumMaxVoices,
-		SLboolean *pIsAbsoluteMax,
-		SLint16 *pNumFreeVoices
+	SLresult(*QueryAvailableVoices)(
+	    SLEngineCapabilitiesItf self,
+	    SLuint16 voiceType,
+	    SLint16 *pNumMaxVoices,
+	    SLboolean *pIsAbsoluteMax,
+	    SLint16 *pNumFreeVoices
 	);
-	SLresult (*QueryNumberOfMIDISynthesizers) (
-		SLEngineCapabilitiesItf self,
-		SLint16 *pNumMIDIsynthesizers
+	SLresult(*QueryNumberOfMIDISynthesizers)(
+	    SLEngineCapabilitiesItf self,
+	    SLint16 *pNumMIDIsynthesizers
 	);
-	SLresult (*QueryAPIVersion) (
-		SLEngineCapabilitiesItf self,
-		SLint16 *pMajor,
-		SLint16 *pMinor,
-		SLint16 *pStep
+	SLresult(*QueryAPIVersion)(
+	    SLEngineCapabilitiesItf self,
+	    SLint16 *pMajor,
+	    SLint16 *pMinor,
+	    SLint16 *pStep
 	);
-	SLresult (*QueryLEDCapabilities) (
-		SLEngineCapabilitiesItf self,
-        SLuint32 *pIndex,
-		SLuint32 *pLEDDeviceID,
-		SLLEDDescriptor *pDescriptor
+	SLresult(*QueryLEDCapabilities)(
+	    SLEngineCapabilitiesItf self,
+	    SLuint32 *pIndex,
+	    SLuint32 *pLEDDeviceID,
+	    SLLEDDescriptor *pDescriptor
 	);
-	SLresult (*QueryVibraCapabilities) (
-		SLEngineCapabilitiesItf self,
-        SLuint32 *pIndex,
-		SLuint32 *pVibraDeviceID,
-		SLVibraDescriptor *pDescriptor
+	SLresult(*QueryVibraCapabilities)(
+	    SLEngineCapabilitiesItf self,
+	    SLuint32 *pIndex,
+	    SLuint32 *pVibraDeviceID,
+	    SLVibraDescriptor *pDescriptor
 	);
-	SLresult (*IsThreadSafe) (
-		SLEngineCapabilitiesItf self,
-		SLboolean *pIsThreadSafe
+	SLresult(*IsThreadSafe)(
+	    SLEngineCapabilitiesItf self,
+	    SLboolean *pIsThreadSafe
 	);
 };
 
@@ -2727,11 +2727,11 @@ typedef const struct SLThreadSyncItf_ * const * SLThreadSyncItf;
 
 
 struct SLThreadSyncItf_ {
-	SLresult (*EnterCriticalSection) (
-		SLThreadSyncItf self
+	SLresult(*EnterCriticalSection)(
+	    SLThreadSyncItf self
 	);
-	SLresult (*ExitCriticalSection) (
-		SLThreadSyncItf self
+	SLresult(*ExitCriticalSection)(
+	    SLThreadSyncItf self
 	);
 };
 
@@ -2750,21 +2750,21 @@ typedef struct SLEngineOption_ {
 
 
 SL_API SLresult SLAPIENTRY slCreateEngine(
-	SLObjectItf             *pEngine,
-	SLuint32                numOptions,
-	const SLEngineOption    *pEngineOptions,
-	SLuint32                numInterfaces,
-	const SLInterfaceID     *pInterfaceIds,
-	const SLboolean         * pInterfaceRequired
+    SLObjectItf             *pEngine,
+    SLuint32                numOptions,
+    const SLEngineOption    *pEngineOptions,
+    SLuint32                numInterfaces,
+    const SLInterfaceID     *pInterfaceIds,
+    const SLboolean         * pInterfaceRequired
 );
 
 SL_API SLresult SLAPIENTRY slQueryNumSupportedEngineInterfaces(
-	SLuint32 * pNumSupportedInterfaces
+    SLuint32 * pNumSupportedInterfaces
 );
 
 SL_API SLresult SLAPIENTRY slQuerySupportedEngineInterfaces(
-	SLuint32 index,
-	SLInterfaceID * pInterfaceId
+    SLuint32 index,
+    SLInterfaceID * pInterfaceId
 );
 
 #ifdef __cplusplus

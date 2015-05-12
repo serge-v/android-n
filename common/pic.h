@@ -5,22 +5,20 @@
 #include <EGL/egl.h>
 #include <GLES/gl.h>
 
-struct point
-{
-    GLfloat x, y;
+struct point {
+	GLfloat x, y;
 };
 
-struct pic
-{
-    const char*     name;
-    GLuint          tex;
-    GLfloat         scale;
-    struct point    vertices[4];
-    struct point    pos;
-    int             mouseover;
-    int             selected;
-    int             width;
-    int             height;
+struct pic {
+	const char*     name;
+	GLuint          tex;
+	GLfloat         scale;
+	struct point    vertices[4];
+	struct point    pos;
+	int             mouseover;
+	int             selected;
+	int             width;
+	int             height;
 };
 
 int pic_load_png(struct pic* p, const char* fname);

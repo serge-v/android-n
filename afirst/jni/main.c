@@ -251,6 +251,7 @@ struct point axises_vertices[] = {
 	{ 0, 9 }, { D, 9 },
 };
 
+/*
 static void
 draw_controls()
 {
@@ -264,6 +265,7 @@ draw_controls()
 	glTranslatef(button_quit.pos.x, button_quit.pos.y, 0);
 	pic_draw(&button_quit);
 }
+*/
 
 static void
 draw_axises()

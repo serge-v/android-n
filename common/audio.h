@@ -1,30 +1,27 @@
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
 
-struct aengine
-{
-    SLObjectItf                 object;
-    SLEngineItf                 engine;
-    SLObjectItf                 mix;
-    SLEnvironmentalReverbItf    reverb;
+struct aengine {
+	SLObjectItf                 object;
+	SLEngineItf                 engine;
+	SLObjectItf                 mix;
+	SLEnvironmentalReverbItf    reverb;
 };
 
-struct player
-{
-    SLObjectItf                     object;
-    SLPlayItf                       play;
-    SLEffectSendItf                 effect_send;
-    SLMuteSoloItf                   solo;
-    SLVolumeItf                     volume;
-    SLAndroidSimpleBufferQueueItf   queue;  // for buffer based player
-    SLSeekItf                       seek;   // for file descriptor player
+struct player {
+	SLObjectItf                     object;
+	SLPlayItf                       play;
+	SLEffectSendItf                 effect_send;
+	SLMuteSoloItf                   solo;
+	SLVolumeItf                     volume;
+	SLAndroidSimpleBufferQueueItf   queue;  // for buffer based player
+	SLSeekItf                       seek;   // for file descriptor player
 };
 
-struct recorder
-{
-    SLObjectItf                     object;
-    SLRecordItf                     record;
-    SLAndroidSimpleBufferQueueItf   queue;
+struct recorder {
+	SLObjectItf                     object;
+	SLRecordItf                     record;
+	SLAndroidSimpleBufferQueueItf   queue;
 };
 
 SLresult get_sl_error();

@@ -45,27 +45,27 @@ typedef const struct SLAndroidEffectItf_ * const * SLAndroidEffectItf;
 
 struct SLAndroidEffectItf_ {
 
-    SLresult (*CreateEffect) (SLAndroidEffectItf self,
-            SLInterfaceID effectImplementationId);
+	SLresult(*CreateEffect)(SLAndroidEffectItf self,
+	                        SLInterfaceID effectImplementationId);
 
-    SLresult (*ReleaseEffect) (SLAndroidEffectItf self,
-            SLInterfaceID effectImplementationId);
+	SLresult(*ReleaseEffect)(SLAndroidEffectItf self,
+	                         SLInterfaceID effectImplementationId);
 
-    SLresult (*SetEnabled) (SLAndroidEffectItf self,
-            SLInterfaceID effectImplementationId,
-            SLboolean enabled);
+	SLresult(*SetEnabled)(SLAndroidEffectItf self,
+	                      SLInterfaceID effectImplementationId,
+	                      SLboolean enabled);
 
-    SLresult (*IsEnabled) (SLAndroidEffectItf self,
-            SLInterfaceID effectImplementationId,
-            SLboolean *pEnabled);
+	SLresult(*IsEnabled)(SLAndroidEffectItf self,
+	                     SLInterfaceID effectImplementationId,
+	                     SLboolean *pEnabled);
 
-    SLresult (*SendCommand) (SLAndroidEffectItf self,
-            SLInterfaceID effectImplementationId,
-            SLuint32 command,
-            SLuint32 commandSize,
-            void *pCommandData,
-            SLuint32 *replySize,
-            void *pReplyData);
+	SLresult(*SendCommand)(SLAndroidEffectItf self,
+	                       SLInterfaceID effectImplementationId,
+	                       SLuint32 command,
+	                       SLuint32 commandSize,
+	                       void *pCommandData,
+	                       SLuint32 *replySize,
+	                       void *pReplyData);
 };
 
 
@@ -81,35 +81,35 @@ struct SLAndroidEffectSendItf_;
 typedef const struct SLAndroidEffectSendItf_ * const * SLAndroidEffectSendItf;
 
 struct SLAndroidEffectSendItf_ {
-    SLresult (*EnableEffectSend) (
-        SLAndroidEffectSendItf self,
-        SLInterfaceID effectImplementationId,
-        SLboolean enable,
-        SLmillibel initialLevel
-    );
-    SLresult (*IsEnabled) (
-        SLAndroidEffectSendItf self,
-        SLInterfaceID effectImplementationId,
-        SLboolean *pEnable
-    );
-    SLresult (*SetDirectLevel) (
-        SLAndroidEffectSendItf self,
-        SLmillibel directLevel
-    );
-    SLresult (*GetDirectLevel) (
-        SLAndroidEffectSendItf self,
-        SLmillibel *pDirectLevel
-    );
-    SLresult (*SetSendLevel) (
-        SLAndroidEffectSendItf self,
-        SLInterfaceID effectImplementationId,
-        SLmillibel sendLevel
-    );
-    SLresult (*GetSendLevel)(
-        SLAndroidEffectSendItf self,
-        SLInterfaceID effectImplementationId,
-        SLmillibel *pSendLevel
-    );
+	SLresult(*EnableEffectSend)(
+	    SLAndroidEffectSendItf self,
+	    SLInterfaceID effectImplementationId,
+	    SLboolean enable,
+	    SLmillibel initialLevel
+	);
+	SLresult(*IsEnabled)(
+	    SLAndroidEffectSendItf self,
+	    SLInterfaceID effectImplementationId,
+	    SLboolean *pEnable
+	);
+	SLresult(*SetDirectLevel)(
+	    SLAndroidEffectSendItf self,
+	    SLmillibel directLevel
+	);
+	SLresult(*GetDirectLevel)(
+	    SLAndroidEffectSendItf self,
+	    SLmillibel *pDirectLevel
+	);
+	SLresult(*SetSendLevel)(
+	    SLAndroidEffectSendItf self,
+	    SLInterfaceID effectImplementationId,
+	    SLmillibel sendLevel
+	);
+	SLresult(*GetSendLevel)(
+	    SLAndroidEffectSendItf self,
+	    SLInterfaceID effectImplementationId,
+	    SLmillibel *pSendLevel
+	);
 };
 
 
@@ -126,16 +126,16 @@ typedef const struct SLAndroidEffectCapabilitiesItf_ * const * SLAndroidEffectCa
 
 struct SLAndroidEffectCapabilitiesItf_ {
 
-    SLresult (*QueryNumEffects) (SLAndroidEffectCapabilitiesItf self,
-            SLuint32 *pNumSupportedEffects);
+	SLresult(*QueryNumEffects)(SLAndroidEffectCapabilitiesItf self,
+	                           SLuint32 *pNumSupportedEffects);
 
 
-    SLresult (*QueryEffect) (SLAndroidEffectCapabilitiesItf self,
-            SLuint32 index,
-            SLInterfaceID *pEffectType,
-            SLInterfaceID *pEffectImplementation,
-            SLchar *pName,
-            SLuint16 *pNameSize);
+	SLresult(*QueryEffect)(SLAndroidEffectCapabilitiesItf self,
+	                       SLuint32 index,
+	                       SLInterfaceID *pEffectType,
+	                       SLInterfaceID *pEffectImplementation,
+	                       SLchar *pName,
+	                       SLuint16 *pNameSize);
 };
 
 
@@ -151,16 +151,16 @@ typedef const struct SLAndroidConfigurationItf_ * const * SLAndroidConfiguration
 
 struct SLAndroidConfigurationItf_ {
 
-    SLresult (*SetConfiguration) (SLAndroidConfigurationItf self,
-            const SLchar *configKey,
-            const void *pConfigValue,
-            SLuint32 valueSize);
+	SLresult(*SetConfiguration)(SLAndroidConfigurationItf self,
+	                            const SLchar *configKey,
+	                            const void *pConfigValue,
+	                            SLuint32 valueSize);
 
-    SLresult (*GetConfiguration) (SLAndroidConfigurationItf self,
-           const SLchar *configKey,
-           SLuint32 *pValueSize,
-           void *pConfigValue
-       );
+	SLresult(*GetConfiguration)(SLAndroidConfigurationItf self,
+	                            const SLchar *configKey,
+	                            SLuint32 *pValueSize,
+	                            void *pConfigValue
+	                           );
 };
 
 
@@ -174,8 +174,8 @@ struct SLAndroidSimpleBufferQueueItf_;
 typedef const struct SLAndroidSimpleBufferQueueItf_ * const * SLAndroidSimpleBufferQueueItf;
 
 typedef void (SLAPIENTRY *slAndroidSimpleBufferQueueCallback)(
-	SLAndroidSimpleBufferQueueItf caller,
-	void *pContext
+    SLAndroidSimpleBufferQueueItf caller,
+    void *pContext
 );
 
 /** Android simple buffer queue state **/
@@ -187,22 +187,22 @@ typedef struct SLAndroidSimpleBufferQueueState_ {
 
 
 struct SLAndroidSimpleBufferQueueItf_ {
-	SLresult (*Enqueue) (
-		SLAndroidSimpleBufferQueueItf self,
-		const void *pBuffer,
-		SLuint32 size
+	SLresult(*Enqueue)(
+	    SLAndroidSimpleBufferQueueItf self,
+	    const void *pBuffer,
+	    SLuint32 size
 	);
-	SLresult (*Clear) (
-		SLAndroidSimpleBufferQueueItf self
+	SLresult(*Clear)(
+	    SLAndroidSimpleBufferQueueItf self
 	);
-	SLresult (*GetState) (
-		SLAndroidSimpleBufferQueueItf self,
-		SLAndroidSimpleBufferQueueState *pState
+	SLresult(*GetState)(
+	    SLAndroidSimpleBufferQueueItf self,
+	    SLAndroidSimpleBufferQueueState *pState
 	);
-	SLresult (*RegisterCallback) (
-		SLAndroidSimpleBufferQueueItf self,
-		slAndroidSimpleBufferQueueCallback callback,
-		void* pContext
+	SLresult(*RegisterCallback)(
+	    SLAndroidSimpleBufferQueueItf self,
+	    slAndroidSimpleBufferQueueCallback callback,
+	    void* pContext
 	);
 };
 
@@ -233,12 +233,12 @@ typedef const struct SLAndroidBufferQueueItf_ * const * SLAndroidBufferQueueItf;
 #endif
 
 typedef struct SLAndroidBufferItem_ {
-    SLuint32 itemKey;  // identifies the item
-    SLuint32 itemSize;
-    SLuint8* itemData;
+	SLuint32 itemKey;  // identifies the item
+	SLuint32 itemSize;
+	SLuint8* itemData;
 } SLAndroidBufferItem;
 
-typedef SLresult (SLAPIENTRY *slAndroidBufferQueueCallback)(
+typedef SLresult(SLAPIENTRY *slAndroidBufferQueueCallback)(
     SLAndroidBufferQueueItf caller,/* input */
     void *pCallbackContext,        /* input */
     void *pBufferContext,          /* input */
@@ -250,44 +250,44 @@ typedef SLresult (SLAPIENTRY *slAndroidBufferQueueCallback)(
 );
 
 typedef struct SLAndroidBufferQueueState_ {
-    SLuint32    count;
-    SLuint32    index;
+	SLuint32    count;
+	SLuint32    index;
 } SLAndroidBufferQueueState;
 
 struct SLAndroidBufferQueueItf_ {
-    SLresult (*RegisterCallback) (
-        SLAndroidBufferQueueItf self,
-        slAndroidBufferQueueCallback callback,
-        void* pCallbackContext
-    );
+	SLresult(*RegisterCallback)(
+	    SLAndroidBufferQueueItf self,
+	    slAndroidBufferQueueCallback callback,
+	    void* pCallbackContext
+	);
 
-    SLresult (*Clear) (
-        SLAndroidBufferQueueItf self
-    );
+	SLresult(*Clear)(
+	    SLAndroidBufferQueueItf self
+	);
 
-    SLresult (*Enqueue) (
-        SLAndroidBufferQueueItf self,
-        void *pBufferContext,
-        void *pData,
-        SLuint32 dataLength,
-        const SLAndroidBufferItem *pItems,
-        SLuint32 itemsLength
-    );
+	SLresult(*Enqueue)(
+	    SLAndroidBufferQueueItf self,
+	    void *pBufferContext,
+	    void *pData,
+	    SLuint32 dataLength,
+	    const SLAndroidBufferItem *pItems,
+	    SLuint32 itemsLength
+	);
 
-    SLresult (*GetState) (
-        SLAndroidBufferQueueItf self,
-        SLAndroidBufferQueueState *pState
-    );
+	SLresult(*GetState)(
+	    SLAndroidBufferQueueItf self,
+	    SLAndroidBufferQueueState *pState
+	);
 
-    SLresult (*SetCallbackEventsMask) (
-            SLAndroidBufferQueueItf self,
-            SLuint32 eventFlags
-    );
+	SLresult(*SetCallbackEventsMask)(
+	    SLAndroidBufferQueueItf self,
+	    SLuint32 eventFlags
+	);
 
-    SLresult (*GetCallbackEventsMask) (
-            SLAndroidBufferQueueItf self,
-            SLuint32 *pEventFlags
-    );
+	SLresult(*GetCallbackEventsMask)(
+	    SLAndroidBufferQueueItf self,
+	    SLuint32 *pEventFlags
+	);
 };
 
 
@@ -302,10 +302,10 @@ struct SLAndroidBufferQueueItf_ {
 
 /** File Descriptor-based data locator definition, locatorType must be SL_DATALOCATOR_ANDROIDFD */
 typedef struct SLDataLocator_AndroidFD_ {
-    SLuint32        locatorType;
-    SLint32         fd;
-    SLAint64        offset;
-    SLAint64        length;
+	SLuint32        locatorType;
+	SLint32         fd;
+	SLAint64        offset;
+	SLAint64        length;
 } SLDataLocator_AndroidFD;
 
 
@@ -333,8 +333,8 @@ typedef struct SLDataLocator_AndroidSimpleBufferQueue {
 /** Android Buffer Queue-based data locator definition,
  *  locatorType must be SL_DATALOCATOR_ANDROIDBUFFERQUEUE */
 typedef struct SLDataLocator_AndroidBufferQueue_ {
-    SLuint32    locatorType;
-    SLuint32    numBuffers;
+	SLuint32    locatorType;
+	SLuint32    numBuffers;
 } SLDataLocator_AndroidBufferQueue;
 
 /**
