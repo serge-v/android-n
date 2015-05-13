@@ -27,7 +27,6 @@ int main(int argc, char **argv)
 	if (sfd == NULL)
 		err(1, "cannot open output source file %s", out_source);
 
-	fprintf(hfd, "unsigned char *%s;\n", var_name);
 	fprintf(sfd, "unsigned char %s[] = {\n", var_name);
 
 	const size_t buf_size = 4096;
@@ -59,6 +58,7 @@ int main(int argc, char **argv)
 	}
 
 	fprintf(sfd, "\n};\n");
+	fprintf(hfd, "unsigned char %s[%zu];\n", var_name, total_size);
 	fprintf(hfd, "unsigned int %s_len = %zu;\n", var_name, total_size);
 
 	fclose(hfd);

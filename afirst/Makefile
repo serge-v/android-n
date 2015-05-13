@@ -111,8 +111,8 @@ debug/%.png.obj : jni/gen/%.png.c
 .PRECIOUS: jni/gen/%.wav.c jni/gen/%.png.c
 
 jni/gen/%.png.c : med/%.xcf debug/mkresource
-	convert $< -depth 24 $(basename $(notdir $<)).png
-	debug/mkresource $(basename $(notdir $<)).png $(basename $(notdir $<))_png \
+	convert $< -depth 24 jni/gen/$(basename $(notdir $<)).png
+	debug/mkresource jni/gen/$(basename $(notdir $<)).png $(basename $(notdir $<))_png \
 		jni/gen/$(basename $(notdir $<)).png.h jni/gen/$(basename $(notdir $<)).png.c
 
 jni/gen/%.wav.c : med/%.wav debug/mkresource

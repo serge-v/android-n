@@ -187,7 +187,7 @@ int pic_load_png_data(struct pic* p, const unsigned char* data, int len)
 		channels = 3;
 	}
 
-	if (color_type == PNG_COLOR_TYPE_GRAY) {
+	if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA) {
 		png_set_gray_to_rgb(png_ptr);
 		png_set_expand(png_ptr);
 		png_set_filler(png_ptr, 0xFF, PNG_FILLER_AFTER);
@@ -201,8 +201,9 @@ int pic_load_png_data(struct pic* p, const unsigned char* data, int len)
 
 	png_read_update_info(png_ptr, info_ptr);
 	rowbytes = png_get_rowbytes(png_ptr, info_ptr);
+	rowbytes += 3 - ((rowbytes-1) % 4);
 
-	image_data = (png_byte*)malloc(sizeof(png_byte) * rowbytes * theight);
+	image_data = (png_byte*)malloc(sizeof(png_byte) * rowbytes * theight + 15);
 	if (image_data == NULL)
 		goto out;
 

@@ -49,14 +49,20 @@ display(void)
 
 	glLoadIdentity();
 	glutSwapBuffers();
+	glutPostRedisplay();
+}
+
+static void
+mouse(int button, int state, int x, int y)
+{
+	LOGI("mouse: b,s: %d,%d, x,y: %d,%d", button, state, x, y);
+	app_touch(state + 1, x, window_height - y);
 }
 
 int main(int argc, char *argv[])
 {
 	g_log = fopen("1.log", "wt");
 	LOGI("log opened");
-
-	app_init(window_width, window_height);
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -65,6 +71,7 @@ int main(int argc, char *argv[])
 	glutCreateWindow("OpenGL window");
 
 	glutDisplayFunc(display);
+	glutMouseFunc(mouse);
 
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &texture_id);
@@ -73,6 +80,8 @@ int main(int argc, char *argv[])
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 //	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixmap_height, pixmap_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)(&(xim->data[0])));
+
+	app_init(window_width, window_height);
 
 	glutMainLoop();
 }

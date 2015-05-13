@@ -37,21 +37,23 @@ list(APPEND RESOURCES
 	jni/gen/bg.wav.c
 )
 
+source_group(resources FILES ${RESOURCES})
+
 add_executable(
 	afirst
 	jni/main.c
 	jni/font.c
-	jni/game.c
-	../common/pic.c
-	jni/pumpkin.c
-	jni/worm.c
-	jni/cart.c
-	jni/leika.c
-	jni/spray.c
-	jni/resources.c
+	jni/game.c jni/game.h
+	../common/pic.c ../common/pic.h
+	jni/pumpkin.c jni/pumpkin.h
+	jni/worm.c jni/worm.h
+	jni/cart.c jni/cart.h
+	jni/leika.c jni/leika.h
+	jni/spray.c jni/spray.h
+	jni/resources.c jni/resources.h
 	jni/sound-osx.c
 	../common/app-osx.c
-	../common/app.c
+	../common/app.c ../common/app.h
 	${RESOURCES}
 )
 
