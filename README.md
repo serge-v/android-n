@@ -23,7 +23,8 @@ Install dependencies for android build:
 	
 	cmake \
 		-DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake \
-		-DCMAKE_INSTALL_PREFIX=/opt/libpng ~/srcr/libpng-1.6.17
+		-DCMAKE_INSTALL_PREFIX=/opt/libpng \
+		~/srcr/libpng-1.6.17
 	
 	cd ~/b/freetype
 	
