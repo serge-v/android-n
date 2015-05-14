@@ -15,11 +15,19 @@ For osx:
 For android:
 
 	cd ~/b/afirsta
-	cmake -DCMAKE_TOOLCHAIN_FILE=~/src/xtree/android-n/afirst/android.cmake ~/src/xtree/android-n/afirst/
+	cmake -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake ~/src/xtree/android-n/afirst/
 
 Install dependencies for android build:
 
 	cd ~/b/libpng
-	cmake -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake -DCMAKE_INSTALL_PREFIX=/opt/libpng ~/srcr/libpng-1.6.17
+	
+	cmake \
+		-DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake \
+		-DCMAKE_INSTALL_PREFIX=/opt/libpng ~/srcr/libpng-1.6.17
+	
 	cd ~/b/freetype
-	cmake -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake -DCMAKE_INSTALL_PREFIX=/opt/freetype ~/srcr/freetype-2.5.5
+	
+	cmake \
+		-DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake \
+		-DCMAKE_INSTALL_PREFIX=/opt/freetype \
+		~/srcr/freetype-2.5.5
