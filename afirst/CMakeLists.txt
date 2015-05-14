@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 include_directories(../common)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 if(ANDROID)
 
@@ -14,6 +15,8 @@ if(ANDROID)
 	message("libpng:" ${png_LIBRARY})
 
 	list(APPEND SOURCES /opt/android-ndk-r10d/sources/android/native_app_glue/android_native_app_glue.c)
+	list(APPEND LIBS EGL GLESv1_CM OpenSLES android)
+
 else()
 	set(ARCH osx)
 	include_directories(/usr/local/include/freetype2)
@@ -25,35 +28,89 @@ else()
 
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations")
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework GLUT -framework OpenGL")
+
 endif()
 
 message("ARCH:" ${ARCH})
 
-list(APPEND RESOURCES
-	jni/gen/pumpkin_red.png.c
-	jni/gen/courier.png.c
-	jni/gen/button_test.png.c
-	jni/gen/button_quit.png.c
-	jni/gen/font.png.c
-	jni/gen/pumpkin_green.png.c
-	jni/gen/pumpkin_yellow.png.c
-	jni/gen/pumpkin_mask.png.c
-	jni/gen/pumpkin_spoiled.png.c
-	jni/gen/bg.png.c
-	jni/gen/cart.png.c
-	jni/gen/cart_mask.png.c
-	jni/gen/worm1.png.c
-	jni/gen/worm1_mask.png.c
-	jni/gen/worm2.png.c
-	jni/gen/worm2_mask.png.c
-	jni/gen/worm3.png.c
-	jni/gen/worm3_mask.png.c
-	jni/gen/leika.png.c
-	jni/gen/leika_mask.png.c
-	jni/gen/spray.png.c
-	jni/gen/spray_mask.png.c
-	jni/gen/bg.wav.c
+macro(CONV_RESOURCE SRC HDR SUFFIX file)
+	set(${SRC})
+	set(${HDR})
+
+	get_filename_component(basename "${file}" NAME_WE)
+
+	file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/gen)
+	set(rsfile ${CMAKE_CURRENT_BINARY_DIR}/gen/${basename}.${SUFFIX})
+	set(hsfile ${CMAKE_CURRENT_BINARY_DIR}/gen/${basename}.${SUFFIX}.h)
+	set(csfile ${CMAKE_CURRENT_BINARY_DIR}/gen/${basename}.${SUFFIX}.c)
+
+	if(${SUFFIX} STREQUAL "png")
+		set(converter convert)
+		set(converter_args "${CMAKE_CURRENT_SOURCE_DIR}/${file}" "-depth" "24" "${rsfile}")
+	elseif(${SUFFIX} STREQUAL "s16")
+		set(converter "sox")
+		set(converter_args "${CMAKE_CURRENT_SOURCE_DIR}/${file}" "-r" "8k" "-c" "1" "${rsfile}")
+	else()
+		message(FATAL_ERROR "invalid SUFFIX parameter")
+	endif()
+
+	add_custom_command(
+		OUTPUT "${csfile}" "${hsfile}" "${rsfile}"
+		COMMAND ${converter}
+		ARGS ${converter_args}
+		COMMAND mkresource
+		ARGS ${rsfile} ${basename}_${SUFFIX} ${hsfile} ${csfile}
+		DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${file}
+		COMMENT "Generating C code from ${file}"
+	)
+
+	list(APPEND ${SRC} ${csfile})
+	list(APPEND ${HDR} ${hsfile})
+	
+	list(APPEND CLEAN ${rsfile} ${csfile} ${hsfile})
+
+	set_directory_properties(ADDITIONAL_MAKE_CLEAN_FILES ${${CLEAN}})
+	set_source_files_properties(${${CLEAN}} PROPERTIES GENERATED TRUE)
+endmacro(CONV_RESOURCE SRC HDR SUFFIX file)
+
+list(APPEND PICTURES
+	med/pumpkin_red.xcf
+	med/courier.xcf
+	med/button_test.xcf
+	med/button_quit.xcf
+	med/font.xcf
+	med/pumpkin_green.xcf
+	med/pumpkin_yellow.xcf
+	med/pumpkin_mask.xcf
+	med/pumpkin_spoiled.xcf
+	med/bg.xcf
+	med/cart.xcf
+	med/cart_mask.xcf
+	med/worm1.xcf
+	med/worm1_mask.xcf
+	med/worm2.xcf
+	med/worm2_mask.xcf
+	med/worm3.xcf
+	med/worm3_mask.xcf
+	med/leika.xcf
+	med/leika_mask.xcf
+	med/spray.xcf
+	med/spray_mask.xcf
 )
+
+list(APPEND SOUNDS
+	med/bg.wav
+)
+
+foreach(file ${PICTURES})
+	conv_resource(SRC HDR "png" ${file})
+	list(APPEND GENERATED ${SRC} ${HDR})
+endforeach()
+
+foreach(file ${SOUNDS})
+	conv_resource(SRC HDR "s16" ${file})
+	list(APPEND GENERATED ${SRC} ${HDR})
+endforeach()
 
 list(APPEND SOURCES
 	jni/main.c
@@ -69,7 +126,7 @@ list(APPEND SOURCES
 	../common/app-${ARCH}.c
 	../common/app.c
 	../common/pic.c
-	../common/audio.c
+	${GENERATED}
 )
 
 list(APPEND HEADERS
@@ -84,29 +141,27 @@ list(APPEND HEADERS
 	../common/app.h
 )
 
-source_group(resources FILES ${RESOURCES})
+source_group(resources FILES ${XCF_RESOURCES})
+source_group(resources FILES ${WAV_RESOURCES})
 source_group(sources FILES ${SOURCES})
 source_group(headers FILES ${HEADERS})
 
-add_library(
-	afirst
-	SHARED
-	${SOURCES}
-	${HEADERS}
-	${RESOURCES}
-)
-
-target_link_libraries(
-	afirst
-	${ft_LIBRARY}
-	${png_LIBRARY}
-	EGL
-	GLESv1_CM
-	OpenSLES
-	android
-)
-
 if(ANDROID)
+	add_library(
+		afirst
+		SHARED
+		${SOURCES}
+		${HEADERS}
+		${RESOURCES}
+	)
+
+	target_link_libraries(
+		afirst
+		${ft_LIBRARY}
+		${png_LIBRARY}
+		${LIBS}
+	)
+
 	execute_process(COMMAND /opt/android-sdk/tools/android create project
 		--path ${CMAKE_CURRENT_BINARY_DIR}/android
 		--target android-15
@@ -127,16 +182,22 @@ if(ANDROID)
 		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/android
 		COMMENT "Creating apk"
 	)
+else()
+	add_executable(
+		afirst
+		${SOURCES}
+		${HEADERS}
+		${RESOURCES}
+	)
 
+	target_link_libraries(
+		afirst
+		${ft_LIBRARY}
+		${png_LIBRARY}
+	)
+
+	add_executable(mkresource mkresource.c)
+	add_dependencies(afirst mkresource)
 endif()
-
-
-
-
-
-
-
-
-
 
 

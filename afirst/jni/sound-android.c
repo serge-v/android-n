@@ -7,7 +7,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#include "gen/bg.wav.h"
+#include "gen/bg.s16.h"
 
 static struct aengine aeng;
 static struct player bg_player;

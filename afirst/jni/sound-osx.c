@@ -7,7 +7,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#include "gen/bg.wav.h"
+#include "gen/bg.s16.h"
 
 static void create_players()
 {
