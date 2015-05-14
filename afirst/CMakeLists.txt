@@ -170,13 +170,14 @@ if(ANDROID)
 		--activity DummyActivity
 		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
+	file(COPY AndroidManifest.xml DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/android/)
+
 	set(ANDROID_SO_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/android/libs/armeabi)
 	set_target_properties(afirst PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${ANDROID_SO_OUTDIR})
 
 	add_custom_command(
 		TARGET afirst
 		POST_BUILD
-		COMMAND echo edit config
 		COMMAND ant debug
 		ARGS -quiet
 		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/android
