@@ -105,3 +105,38 @@ target_link_libraries(
 	OpenSLES
 	android
 )
+
+if(ANDROID)
+	execute_process(COMMAND /opt/android-sdk/tools/android create project
+		--path ${CMAKE_CURRENT_BINARY_DIR}/android
+		--target android-15
+		--name afirst
+		--package mila.afirst
+		--activity DummyActivity
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
+	set(ANDROID_SO_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/android/libs/armeabi)
+	set_target_properties(afirst PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${ANDROID_SO_OUTDIR})
+
+	add_custom_command(
+		TARGET afirst
+		POST_BUILD
+		COMMAND echo edit config
+		COMMAND ant debug
+		ARGS -quiet
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/android
+		COMMENT "Creating apk"
+	)
+
+endif()
+
+
+
+
+
+
+
+
+
+
+
