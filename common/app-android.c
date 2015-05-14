@@ -7,7 +7,8 @@
 #include <android/sensor.h>
 #include <android_native_app_glue.h>
 
-int g_app_alive = 1;
+int g_log_level = 0;
+const char* g_appname = "afirst";
 
 struct saved_state {
 	int32_t x;
@@ -90,7 +91,6 @@ static int engine_init_display(struct engine* engine)
 	engine->surface = surface;
 	engine->width = w;
 	engine->height = h;
-	engine->state.angle = 0;
 
 	// Initialize GL state.
 //    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);

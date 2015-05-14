@@ -90,7 +90,7 @@ gl_init_viewport(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(left, (left + size_x) * aspect, bottom, bottom + size_y, -1, 1);
+	glOrthof(left, (left + size_x) * aspect, bottom, bottom + size_y, -1, 1);
 
 	glMatrixMode(GL_MODELVIEW);
 	glClearColor(0.0, 0.0, 0.0, 1.0);

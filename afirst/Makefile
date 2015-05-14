@@ -117,7 +117,7 @@ jni/gen/%.png.c : med/%.xcf debug/mkresource
 
 jni/gen/%.wav.c : med/%.wav debug/mkresource
 	sox $< -r 8k -c 1 jni/gen/$(basename $(notdir $<)).s16
-	debug/mkresource jni/gen/$(basename $(notdir $<)).s16 $(basename $(notdir $<)) \
+	debug/mkresource jni/gen/$(basename $(notdir $<)).s16 $(basename $(notdir $<))_s16 \
 		jni/gen/$(basename $(notdir $<)).wav.h jni/gen/$(basename $(notdir $<)).wav.c
 
 depends: jni/*.c

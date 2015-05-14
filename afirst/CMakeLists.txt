@@ -1,15 +1,33 @@
 cmake_minimum_required(VERSION 2.8)
 
 include_directories(../common)
-include_directories(../arch-osx)
-include_directories(/usr/local/include/freetype2)
-include_directories(/usr/local/include)
 
-find_library(ft_LIBRARY freetype)
-find_library(png_LIBRARY png)
+if(ANDROID)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework GLUT -framework OpenGL")
+	include_directories(/opt/android-ndk-r10d/sources/android/native_app_glue)
+	include_directories(/opt/freetype/include/freetype2)
+	include_directories(/opt/libpng/include)
+
+	find_library(ft_LIBRARY freetype PATHS /opt/freetype/lib NO_DEFAULT_PATH)
+	find_library(png_LIBRARY png PATHS /opt/libpng/lib NO_DEFAULT_PATH)
+	message("freetype:" ${ft_LIBRARY})
+	message("libpng:" ${png_LIBRARY})
+
+	list(APPEND SOURCES /opt/android-ndk-r10d/sources/android/native_app_glue/android_native_app_glue.c)
+else()
+	set(ARCH osx)
+	include_directories(/usr/local/include/freetype2)
+	include_directories(/usr/local/include)
+	include_directories(../arch-osx)
+
+	find_library(ft_LIBRARY freetype)
+	find_library(png_LIBRARY png)
+
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations")
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework GLUT -framework OpenGL")
+endif()
+
+message("ARCH:" ${ARCH})
 
 list(APPEND RESOURCES
 	jni/gen/pumpkin_red.png.c
@@ -47,10 +65,11 @@ list(APPEND SOURCES
 	jni/leika.c
 	jni/spray.c
 	jni/resources.c
-	jni/sound-osx.c
-	../common/app-osx.c
+	jni/sound-${ARCH}.c
+	../common/app-${ARCH}.c
 	../common/app.c
 	../common/pic.c
+	../common/audio.c
 )
 
 list(APPEND HEADERS
@@ -69,8 +88,9 @@ source_group(resources FILES ${RESOURCES})
 source_group(sources FILES ${SOURCES})
 source_group(headers FILES ${HEADERS})
 
-add_executable(
+add_library(
 	afirst
+	SHARED
 	${SOURCES}
 	${HEADERS}
 	${RESOURCES}
@@ -80,4 +100,8 @@ target_link_libraries(
 	afirst
 	${ft_LIBRARY}
 	${png_LIBRARY}
+	EGL
+	GLESv1_CM
+	OpenSLES
+	android
 )

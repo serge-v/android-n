@@ -24,24 +24,27 @@ static void create_players()
 
 	rc = create_engine(&aeng);
 
-	if (rc == -1)
+	if (rc == -1) {
 		LOGE("create_engine: rc: %d, errno: %d, slerror: %d", rc, errno, get_sl_error());
-	else
+	} else {
 		LOGI("aengine created");
+	}
 
 	rc = create_queued_player(&bg_player, &aeng);
 
-	if (rc == -1)
+	if (rc == -1) {
 		LOGE("create bg_player: rc: %d, errno: %d, slerror: %d", rc, errno, get_sl_error());
-	else
+	} else {
 		LOGI("bg_player created");
+	}
 
 	rc = create_queued_player(&eff_player, &aeng);
 
-	if (rc == -1)
+	if (rc == -1) {
 		LOGE("create eff_player: rc: %d, errno: %d, slerror: %d", rc, errno, get_sl_error());
-	else
+	} else {
 		LOGI("eff_player created");
+	}
 }
 
 void sound_create()
