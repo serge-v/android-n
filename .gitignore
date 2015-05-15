@@ -1,7 +1,3 @@
-debug/
-jni/
-gen/
-
 *.png
 *.xbm
 *.log
