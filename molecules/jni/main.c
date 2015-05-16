@@ -177,9 +177,9 @@ draw_objects()
 	glPushMatrix();
 
 	glLoadIdentity();
-	glTranslatef(g.spray.x, g.spray.y, 0);
-	glScalef(g.spray.scale, g.spray.scale, 0);
-	pic_draw2(&R.spray_pic, &R.spray_mask_pic);
+
+	glTranslatef(g.mol.x, g.mol.y, 0);
+	molecule_draw(&g.mol);
 
 	glPopMatrix();
 }

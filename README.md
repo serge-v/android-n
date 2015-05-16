@@ -23,3 +23,16 @@ Install dependencies for android build:
 	cmake -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake -DCMAKE_INSTALL_PREFIX=/opt/libpng ~/srcr/libpng-1.6.17
 	cd ~/b/freetype
 	cmake -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake -DCMAKE_INSTALL_PREFIX=/opt/freetype ~/srcr/freetype-2.5.5
+
+Install to android:
+
+	/opt/android-sdk/platform-tools/adb install -r android/bin/afirst-debug.apk
+
+View log:
+
+	/opt/android-sdk/platform-tools/adb logcat
+
+View smbols:
+
+	/opt/ndk-standalone-9/bin/arm-linux-androideabi-objdump -T android/libs/armeabi/libafirst.so
+

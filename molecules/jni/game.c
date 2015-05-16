@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <memory.h>
 #include "sound.h"
-#include "spray.h"
 
 int game_create(struct game* g)
 {
@@ -16,7 +15,7 @@ int game_create(struct game* g)
 	g->max_x = 8;
 	g->max_y = 3;
 
-	spray_create(&g->spray, "spray", 9.2f, 1.5f);
+	molecule_create(&g->mol, "mol", 1.0f, 1.0f);
 
 	sound_play(sound_bg);
 

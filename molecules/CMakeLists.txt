@@ -79,8 +79,8 @@ list(APPEND PICTURES
 	med/button_quit.xcf
 	med/font.xcf
 	med/bg.xcf
-	med/spray.xcf
-	med/spray_mask.xcf
+	med/hidrogen.xcf
+	med/hidrogen_mask.xcf
 )
 
 list(APPEND SOUNDS
@@ -102,24 +102,24 @@ list(APPEND SOURCES
 	jni/font.c
 	jni/game.c
 	jni/spray.c
+	jni/molecule.c
 	jni/resources.c
 	jni/sound-${ARCH}.c
 	../common/app-${ARCH}.c
 	../common/app.c
 	../common/pic.c
-	${GENERATED}
 )
 
 list(APPEND HEADERS
 	jni/game.h
 	jni/spray.h
+	jni/molecule.h
 	jni/resources.h
 	../common/pic.h
 	../common/app.h
 )
 
-source_group(resources FILES ${XCF_RESOURCES})
-source_group(resources FILES ${WAV_RESOURCES})
+source_group(generated FILES ${GENERATED})
 source_group(sources FILES ${SOURCES})
 source_group(headers FILES ${HEADERS})
 
@@ -129,7 +129,7 @@ if(ANDROID)
 		SHARED
 		${SOURCES}
 		${HEADERS}
-		${RESOURCES}
+		${GENERATED}
 	)
 
 	target_link_libraries(
@@ -165,7 +165,7 @@ else()
 		molecules
 		${SOURCES}
 		${HEADERS}
-		${RESOURCES}
+		${GENERATED}
 	)
 
 	target_link_libraries(

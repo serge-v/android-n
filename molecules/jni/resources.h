@@ -7,8 +7,8 @@ struct sound_res {
 
 struct resources {
 	struct pic bg_pic;
-	struct pic spray_pic;
-	struct pic spray_mask_pic;
+	struct pic hidrogen_pic;
+	struct pic hidrogen_mask_pic;
 };
 
 extern struct resources R;

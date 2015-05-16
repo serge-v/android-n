@@ -148,8 +148,15 @@ source_group(sources FILES ${SOURCES})
 source_group(headers FILES ${HEADERS})
 
 if(ANDROID)
+	add_executable(
+		afirst-check-symbols
+		jni/checker.c
+		${SOURCES}
+		${HEADERS}
+		${RESOURCES}
+	)
+
 	add_library(
-#	add_executable(
 		afirst
 		SHARED
 		${SOURCES}
@@ -159,6 +166,13 @@ if(ANDROID)
 
 	target_link_libraries(
 		afirst
+		${ft_LIBRARY}
+		${png_LIBRARY}
+		${LIBS}
+	)
+
+	target_link_libraries(
+		afirst-check-symbols
 		${ft_LIBRARY}
 		${png_LIBRARY}
 		${LIBS}

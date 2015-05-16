@@ -1,4 +1,4 @@
-#include "spray.h"
+#include "molecule.h"
 
 enum game_state {
 	GAME_PLAY,
@@ -11,7 +11,7 @@ struct game {
 	int max_y;
 	long elapsed;                   // milliseconds since start
 
-	struct spray spray;             // spray agains the worm
+	struct molecule mol;            // first molecule
 };
 
 int game_create(struct game* g);
