@@ -1,7 +1,7 @@
 android-n
 =========
 
-Attempt to develop portable apps using C and OpenGL and (Android NDK or Win32 or X11 or OSX).
+Cross platform apps for Android and desktop (Win32, X11, OSX) using C and OpenGL.
 
 Building afirst application
 ---------------------------
@@ -15,14 +15,23 @@ For osx:
 For android:
 
 	cd ~/b/afirsta
-	cmake -DCMAKE_TOOLCHAIN_FILE=~/src/xtree/android-n/afirst/android.cmake ~/src/xtree/android-n/afirst/
+	cmake -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake ~/src/xtree/android-n/afirst/
 
 Install dependencies for android build:
 
 	cd ~/b/libpng
-	cmake -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake -DCMAKE_INSTALL_PREFIX=/opt/libpng ~/srcr/libpng-1.6.17
+	
+	cmake \
+		-DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake \
+		-DCMAKE_INSTALL_PREFIX=/opt/libpng \
+		~/srcr/libpng-1.6.17
+	
 	cd ~/b/freetype
-	cmake -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake -DCMAKE_INSTALL_PREFIX=/opt/freetype ~/srcr/freetype-2.5.5
+
+	cmake \
+		-DCMAKE_TOOLCHAIN_FILE=$SRCDIR/afirst/android.cmake \
+		-DCMAKE_INSTALL_PREFIX=/opt/freetype \
+		~/srcr/freetype-2.5.5
 
 Install to android:
 
@@ -35,4 +44,3 @@ View log:
 View smbols:
 
 	/opt/ndk-standalone-9/bin/arm-linux-androideabi-objdump -T android/libs/armeabi/libafirst.so
-
