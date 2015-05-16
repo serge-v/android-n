@@ -4,9 +4,9 @@
 #include <time.h>
 #include <sys/time.h>
 
-FILE* g_log = NULL;
+//FILE* g_log = NULL;
 int g_app_alive = 1;
-
+/*
 static const char* levels[] = {
 	"LEVEL0",
 	"LEVEL1",
@@ -40,3 +40,4 @@ __android_log_print(int prio, const char *tag,  const char *fmt, ...)
 	fflush(g_log);
 	return n;
 }
+*/

@@ -7,36 +7,14 @@
 #include "log.h"
 #include "app.h"
 
-//GLint                   att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
 GLuint texture_id;
 int pixmap_width = 128, pixmap_height = 128;
 int window_width = 600, window_height = 400;
 
 const char* g_appname = "";
+FILE* g_log = NULL;
 int g_log_level = 0;
-/*
-static void
-demo(void)
-{
-	int i; double angle;
-	glClear(GL_COLOR_BUFFER_BIT);
-	for (i=0; i<360; i+=4) {
-		glColor3f((float)i/360.0,1.0,1.0);
-		glBegin(GL_LINES);
-		glVertex2d(cos(i/57.25779),sin(i/57.25779));
-		glVertex2d(cos((i+90)/57.25779),sin((i+90)/57.25779));
-		glEnd();
 
-		glColor3f(1.0, (float)i/360.0,1.0);
-		glBegin(GL_LINES);
-		glVertex2d(cos(i/57.25779),sin(i/57.25779));
-		glVertex2d(cos((i*2)/57.25779),sin((i+90)/57.25779));
-		glEnd();
-	}
-	glLoadIdentity();
-	glutSwapBuffers();
-}
-*/
 static void
 display(void)
 {
@@ -85,3 +63,37 @@ int main(int argc, char *argv[])
 
 	glutMainLoop();
 }
+
+static const char* levels[] = {
+	"LEVEL0",
+	"LEVEL1",
+	"TRACE",
+	"DEBUG",
+	"INFO",
+	"WARN",
+	"ERROR",
+	"FATAL"
+ };
+
+ static int
+ print_level(int level)
+ {
+	time_t now = time(NULL);
+	struct tm* t = gmtime(&now);
+	return fprintf(g_log, "%04d-%02d-%02d %02d:%02d:%02d %s ",
+ 	t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, levels[level]);
+ }
+
+ int
+ __android_log_print(int prio, const char *tag,  const char *fmt, ...)
+ {
+	va_list marker;
+	int n;
+
+	va_start(marker, fmt);
+	n = print_level(prio);
+	n += vfprintf(g_log, fmt, marker);
+	n += fprintf(g_log, "\n");
+	fflush(g_log);
+	return n;
+ }

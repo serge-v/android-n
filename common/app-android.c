@@ -188,6 +188,7 @@ void android_main(struct android_app* state)
 	struct engine engine;
 
 	app_dummy();
+//	g_log = fopen("/data/local/tmp/afirst.log", "wt");
 	LOGI("android_main started");
 
 	memset(&engine, 0, sizeof(engine));
