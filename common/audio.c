@@ -10,7 +10,8 @@
 
 static SLresult sl_error = 0;
 
-SLresult get_sl_error()
+SLresult
+get_sl_error()
 {
 	SLresult ret = sl_error;
 	sl_error = 0;
@@ -29,7 +30,8 @@ static short *nextBuffer;
 static unsigned nextSize;
 static int nextCount;
 
-void bq_player_callback(SLAndroidSimpleBufferQueueItf bq, void *context)
+static void
+bq_player_callback(SLAndroidSimpleBufferQueueItf bq, void *context)
 {
 	SLresult rc;
 	struct player* p = (struct player*)context;
@@ -38,8 +40,8 @@ void bq_player_callback(SLAndroidSimpleBufferQueueItf bq, void *context)
 	rc = (*p->play)->SetPlayState(p->play, SL_PLAYSTATE_STOPPED);
 }
 
-
-void bq_recorder_callback(SLAndroidSimpleBufferQueueItf bq, void *context)
+static void
+bq_recorder_callback(SLAndroidSimpleBufferQueueItf bq, void *context)
 {
 	SLresult rc;
 	struct recorder* p = (struct recorder*)context;
@@ -49,7 +51,8 @@ void bq_recorder_callback(SLAndroidSimpleBufferQueueItf bq, void *context)
 	rc = (*p->record)->SetRecordState(p->record, SL_RECORDSTATE_STOPPED);
 }
 
-void destroy_player(struct player* p)
+static void
+destroy_player(struct player* p)
 {
 	if (p->object)
 		(*p->object)->Destroy(p->object);
@@ -57,7 +60,8 @@ void destroy_player(struct player* p)
 	memset(p, 0, sizeof(struct player));
 }
 
-void destroy_recorder(struct recorder* p)
+static void
+destroy_recorder(struct recorder* p)
 {
 	if (p->object)
 		(*p->object)->Destroy(p->object);
@@ -65,7 +69,8 @@ void destroy_recorder(struct recorder* p)
 	memset(p, 0, sizeof(struct recorder));
 }
 
-void destroy_engine(struct aengine* ae)
+static void
+destroy_engine(struct aengine* ae)
 {
 	if (ae->mix)
 		(*ae->mix)->Destroy(ae->mix);
@@ -76,7 +81,8 @@ void destroy_engine(struct aengine* ae)
 	memset(ae, 0, sizeof(struct aengine));
 }
 
-int create_engine(struct aengine* ae)
+int
+create_engine(struct aengine* ae)
 {
 	SLInterfaceID ids[1] = { SL_IID_ENVIRONMENTALREVERB };
 	SLboolean req[1] = { SL_BOOLEAN_FALSE };
@@ -119,7 +125,8 @@ error:
 	return -1;
 }
 
-int create_queued_player(struct player* p, struct aengine* ae)
+int
+create_queued_player(struct player* p, struct aengine* ae)
 {
 	SLresult rc;
 
@@ -209,7 +216,8 @@ error:
 	return -1;
 }
 
-int create_file_player(struct player* p, const char* fname, struct aengine* ae)
+static int
+create_file_player(struct player* p, const char* fname, struct aengine* ae)
 {
 	SLresult rc;
 	int fd;
@@ -303,7 +311,8 @@ error:
 	return -1;
 }
 
-int set_play_state(struct player* p, int isPlaying)
+static int
+set_play_state(struct player* p, int isPlaying)
 {
 	SLresult rc;
 
@@ -318,7 +327,8 @@ int set_play_state(struct player* p, int isPlaying)
 	return -1;
 }
 
-int create_recorder(struct recorder* p, struct aengine* ae)
+static int
+create_recorder(struct recorder* p, struct aengine* ae)
 {
 	SLresult rc;
 
@@ -392,7 +402,8 @@ error:
 	return -1;
 }
 
-int start_recording(struct recorder* p)
+static int
+start_recording(struct recorder* p)
 {
 	SLresult rc;
 
@@ -423,7 +434,8 @@ error:
 	return -1;
 }
 
-int play_recording(struct player* p)
+static int
+play_recording(struct player* p)
 {
 	SLresult rc;
 
@@ -437,7 +449,8 @@ int play_recording(struct player* p)
 	return 0;
 }
 
-int play_data(struct player* p, unsigned char* data, int size)
+int
+play_data(struct player* p, unsigned char* data, int size)
 {
 	SLresult rc;
 

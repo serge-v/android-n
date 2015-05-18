@@ -29,14 +29,16 @@ static const char* levels[] = {
 	"FATAL"
 };
 
-int print_level(int level)
+int
+print_level(int level)
 {
 	time_t now = time(NULL);
 	struct tm* t = gmtime(&now);
 	return fprintf(g_log, "%04d-%02d-%02d %02d:%02d:%02d %s ", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, levels[level]);
 }
 
-void check_glerrors()
+void
+check_glerrors()
 {
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR) {
@@ -46,7 +48,8 @@ void check_glerrors()
 	}
 }
 
-static LRESULT CALLBACK wnd_proc(HWND wnd, UINT message,
+static LRESULT CALLBACK
+wnd_proc(HWND wnd, UINT message,
                                  WPARAM wParam, LPARAM lParam)
 {
 	RECT rc;
@@ -59,8 +62,8 @@ static LRESULT CALLBACK wnd_proc(HWND wnd, UINT message,
 	case WM_CLOSE:
 		DestroyWindow(wnd);
 		g_app_alive = 0;
-		break;
 
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		g_app_alive = 0;
@@ -123,7 +126,8 @@ static LRESULT CALLBACK wnd_proc(HWND wnd, UINT message,
 	return 0;
 }
 
-void enable_opengl(HWND hWnd, HDC * hDC, HGLRC * hRC)
+static void
+enable_opengl(HWND hWnd, HDC * hDC, HGLRC * hRC)
 {
 	PIXELFORMATDESCRIPTOR pfd;
 	int iFormat;
@@ -149,7 +153,8 @@ void enable_opengl(HWND hWnd, HDC * hDC, HGLRC * hRC)
 		check_glerrors();
 }
 
-int create_window(HINSTANCE instance, int cmd_show)
+static int
+create_window(HINSTANCE instance, int cmd_show)
 {
 	WNDCLASSW wc;
 	DWORD windowStyle;
@@ -190,7 +195,8 @@ int create_window(HINSTANCE instance, int cmd_show)
 	return 0;
 }
 
-int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdShow)
+int WINAPI
+WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdShow)
 {
 	MSG msg;
 	HDC hDC;
@@ -255,7 +261,8 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, in
 	return 0;
 }
 
-int __android_log_print(int prio, const char *tag,  const char *fmt, ...)
+int
+__android_log_print(int prio, const char *tag,  const char *fmt, ...)
 {
 	va_list marker;
 	int n;

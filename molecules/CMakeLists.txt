@@ -9,13 +9,14 @@ if(ANDROID)
 	include_directories(/opt/freetype/include/freetype2)
 	include_directories(/opt/libpng/include)
 
-	find_library(ft_LIBRARY freetype PATHS /opt/freetype/lib NO_DEFAULT_PATH)
-	find_library(png_LIBRARY png PATHS /opt/libpng/lib NO_DEFAULT_PATH)
+	find_library(ft_LIBRARY libfreetype.a PATHS /opt/freetype/lib NO_DEFAULT_PATH)
+	find_library(png_LIBRARY libpng.a PATHS /opt/libpng/lib NO_DEFAULT_PATH)
 	message("freetype:" ${ft_LIBRARY})
 	message("libpng:" ${png_LIBRARY})
 
 	list(APPEND SOURCES /opt/android-ndk-r10d/sources/android/native_app_glue/android_native_app_glue.c)
-	list(APPEND LIBS EGL GLESv1_CM OpenSLES android)
+	list(APPEND SOURCES ../common/audio.c)
+	list(APPEND LIBS android log EGL OpenSLES GLESv2 GLESv1_CM z m)
 
 else()
 	set(ARCH osx)
@@ -119,11 +120,28 @@ list(APPEND HEADERS
 	../common/app.h
 )
 
-source_group(generated FILES ${GENERATED})
+source_group(resources FILES ${XCF_RESOURCES})
+source_group(resources FILES ${WAV_RESOURCES})
 source_group(sources FILES ${SOURCES})
 source_group(headers FILES ${HEADERS})
+source_group(headers FILES ${GENERATED})
 
 if(ANDROID)
+	add_executable(
+		molecules-check-symbols
+		jni/checker.c
+		${SOURCES}
+		${HEADERS}
+		${GENERATED}
+	)
+
+	target_link_libraries(
+		molecules-check-symbols
+		${ft_LIBRARY}
+		${png_LIBRARY}
+		${LIBS}
+	)
+
 	add_library(
 		molecules
 		SHARED

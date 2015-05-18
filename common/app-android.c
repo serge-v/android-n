@@ -31,14 +31,16 @@ struct engine {
 	struct saved_state state;
 };
 
-static long get_ms()
+static long
+get_ms()
 {
 	struct timeval  now;
 	gettimeofday(&now, NULL);
 	return (long)(now.tv_sec * 1000 + now.tv_usec / 1000);
 }
 
-static int engine_init_display(struct engine* engine)
+static int
+engine_init_display(struct engine* engine)
 {
 	const EGLint attribs[] = {
 		EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
@@ -103,7 +105,8 @@ static int engine_init_display(struct engine* engine)
 	return 0;
 }
 
-static void engine_draw_frame(struct engine* engine)
+static void
+engine_draw_frame(struct engine* engine)
 {
 	if (engine->display == NULL)
 		return;
@@ -112,7 +115,8 @@ static void engine_draw_frame(struct engine* engine)
 	eglSwapBuffers(engine->display, engine->surface);
 }
 
-static void engine_term_display(struct engine* engine)
+static void
+engine_term_display(struct engine* engine)
 {
 	LOGI("term");
 
@@ -130,7 +134,8 @@ static void engine_term_display(struct engine* engine)
 	engine->surface = EGL_NO_SURFACE;
 }
 
-static int32_t engine_handle_input(struct android_app* app, AInputEvent* event)
+static int32_t
+engine_handle_input(struct android_app* app, AInputEvent* event)
 {
 	int32_t action;
 	struct engine* engine = (struct engine*)app->userData;
@@ -153,10 +158,10 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event)
 	return 0;
 }
 
-static void engine_handle_cmd(struct android_app* app, int32_t cmd)
+static void
+engine_handle_cmd(struct android_app* app, int32_t cmd)
 {
 	struct engine* engine = (struct engine*)app->userData;
-
 	LOGI("cmd: %d", cmd);
 
 	switch (cmd) {
@@ -183,7 +188,8 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
 	}
 }
 
-void android_main(struct android_app* state)
+void
+android_main(struct android_app* state)
 {
 	struct engine engine;
 
@@ -221,4 +227,3 @@ void android_main(struct android_app* state)
 			engine_draw_frame(&engine);
 	}
 }
-
