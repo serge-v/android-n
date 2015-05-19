@@ -17,7 +17,7 @@ static float aspect = 1;    // aspect ratio
 static float ux, uy;        // user to scene divider
 
 static int mouse_x = -1, mouse_y = -1;
-static float left = -0.4f, bottom = -1, size_x = 8, size_y = 8;
+static float left = -0.4f, bottom = -1, size_x = 16, size_y = 16;
 
 static int lb_down = 0;
 
@@ -166,7 +166,7 @@ draw_bg()
 	glPushMatrix();
 	glLoadIdentity();
 	glTranslatef(5.6f + 0.01f, 3 + 0.01f, 0);
-	glScalef(12, 12, 0);
+	glScalef(48, 48, 0);
 	pic_draw(&R.bg_pic);
 	glPopMatrix();
 }
@@ -178,8 +178,13 @@ draw_objects()
 
 	glLoadIdentity();
 
-	glTranslatef(g.mol.x, g.mol.y, 0);
-	molecule_draw(&g.mol);
+//	molecule_draw(&g.mol);
+//
+//	g.mol.x += 0.05;
+//	molecule_draw(&g.mol);
+
+	for (struct molecule *m = g.strip.head; m != NULL; m = m->next)
+		molecule_draw(m);
 
 	glPopMatrix();
 }
@@ -187,10 +192,15 @@ draw_objects()
 #define D -0.05f
 
 struct point axises_vertices[] = {
-	{ 0, 0 }, { 10, 0 },
-	{ 0, 0 }, { 0, 10 },
+	{ 0, 0 }, { 20, 0 },
+	{ 0, 0 }, { 0, 20 },
+
 	{ 5, 0 }, { 5, -0.2f },
 	{ 0, 5 }, { -0.2f, 5 },
+	{ 10, 0 }, { 10, -0.2f },
+	{ 0, 10 }, { -0.2f, 10 },
+	{ 15, 0 }, { 15, -0.2f },
+	{ 0, 15 }, { -0.2f, 15 },
 
 	{ 1, 0 }, { 1, D },
 	{ 0, 1 }, { D, 1 },
@@ -209,6 +219,16 @@ struct point axises_vertices[] = {
 	{ 0, 8 }, { D, 8 },
 	{ 9, 0 }, { 9, D },
 	{ 0, 9 }, { D, 9 },
+
+	{ 11, 0 }, { 11, D },
+	{ 0, 11 }, { D, 11 },
+	{ 12, 0 }, { 12, D },
+	{ 0, 12 }, { D, 12 },
+	{ 13, 0 }, { 13, D },
+	{ 0, 13 }, { D, 13 },
+	{ 14, 0 }, { 14, D },
+	{ 0, 14 }, { D, 14 },
+
 };
 
 static void
@@ -216,14 +236,11 @@ draw_axises()
 {
 	glLoadIdentity();
 	glEnableClientState(GL_VERTEX_ARRAY);
-//    glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(2, GL_FLOAT, sizeof(struct point), axises_vertices);
-//    glColorPointer(4, GL_FLOAT, sizeof(struct color), axises_colors);
 	glDrawArrays(GL_LINES, 0, sizeof(axises_vertices) / sizeof(axises_vertices[0]));
 
 	glDisableClientState(GL_VERTEX_ARRAY);
-//    glDisableClientState(GL_COLOR_ARRAY);
 }
 
 static void

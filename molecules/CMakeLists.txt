@@ -82,6 +82,9 @@ list(APPEND PICTURES
 	med/bg.xcf
 	med/hidrogen.xcf
 	med/hidrogen_mask.xcf
+	med/carbon.xcf
+	med/bond1.xcf
+	med/bond2.xcf
 )
 
 list(APPEND SOUNDS
