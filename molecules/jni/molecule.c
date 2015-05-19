@@ -21,27 +21,20 @@ atom_create(char symbol, int angle, int bond)
 	return a;
 }
 
-void
-molecule_create(struct molecule* p, const char* name, float x, float y)
+static struct atom *
+create_ethylene()
 {
-	memset(p, 0, sizeof(struct molecule));
-
-	p->name = strdup(name);
-	p->scale = 1;
-	p->x = x;
-	p->y = y;
-
 	struct atom *c1, *c2, *h1, *h2, *h3, *h4;
 
 	/*
 	 create molecule:
-	 
+
 	 H1       H3
-	  \      /
-	   C1==C2
-	  /      \
+	 \      /
+	 C1==C2
+	 /      \
 	 H2       H4
-	*/
+	 */
 
 	c1 = atom_create('C', 0, 0);
 	c2 = atom_create('C', 0, 2);
@@ -57,7 +50,88 @@ molecule_create(struct molecule* p, const char* name, float x, float y)
 	c2->child = h3;
 	h3->next = h4;
 
-	p->a = c1;
+	return c1;
+}
+
+static struct atom *
+create_etan()
+{
+	struct atom *c1, *c2, *h1, *h2, *h3, *h4, *h5, *h6;
+
+	/*
+	 create molecule:
+
+	     H1    H4
+	      \    /
+	  H2--C1--C2--H5
+	      /    \
+	     H3     H6
+	 */
+
+	c1 = atom_create('C', 0, 0);
+	c2 = atom_create('C', 0, 1);
+	h1 = atom_create('H', 135, 1);
+	h2 = atom_create('H', 180, 1);
+	h3 = atom_create('H', -135, 1);
+	h4 = atom_create('H', 45, 1);
+	h5 = atom_create('H', 0, 1);
+	h6 = atom_create('H', -45, 1);
+
+	c1->child = c2;
+	c2->next = h1;
+	h1->next = h2;
+	h2->next = h3;
+
+	c2->child = h4;
+	h4->next = h5;
+	h5->next = h6;
+
+	return c1;
+}
+
+static struct atom *
+create_metan()
+{
+	struct atom *c1, *h1, *h2, *h3;
+
+	/*
+	 H1
+	 \
+	  C1-H3
+	 /
+	 H2
+	 */
+
+	c1 = atom_create('C', 0, 0);
+	h1 = atom_create('H', 135, 1);
+	h2 = atom_create('H', -135, 1);
+	h3 = atom_create('H', 0, 1);
+
+	c1->child = h1;
+	h1->next = h2;
+	h2->next = h3;
+
+	return c1;
+}
+
+void
+molecule_create(struct molecule* p, const char* name, float x, float y)
+{
+	memset(p, 0, sizeof(struct molecule));
+
+	p->name = strdup(name);
+	p->scale = 1;
+	p->x = x;
+	p->y = y;
+
+	if (strcmp(name, "ethylene") == 0)
+		p->a = create_ethylene();
+	else if (strcmp(name, "metan") == 0)
+		p->a = create_metan();
+	else if (strcmp(name, "etan") == 0)
+		p->a = create_etan();
+	else
+		p->a = atom_create('H', 0, 0);
 }
 
 static void
