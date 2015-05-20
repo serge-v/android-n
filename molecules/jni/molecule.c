@@ -54,7 +54,7 @@ create_ethylene()
 }
 
 static struct atom *
-create_etan()
+create_ethane()
 {
 	struct atom *c1, *c2, *h1, *h2, *h3, *h4, *h5, *h6;
 
@@ -90,26 +90,28 @@ create_etan()
 }
 
 static struct atom *
-create_metan()
+create_methane()
 {
-	struct atom *c1, *h1, *h2, *h3;
+	struct atom *c1, *h1, *h2, *h3, *h4;
 
 	/*
-	 H1
-	 \
-	  C1-H3
-	 /
-	 H2
+	     H1
+	     |
+	  H4-C1-H3
+	     |
+	     H2
 	 */
 
 	c1 = atom_create('C', 0, 0);
-	h1 = atom_create('H', 135, 1);
-	h2 = atom_create('H', -135, 1);
-	h3 = atom_create('H', 0, 1);
+	h1 = atom_create('H', 0, 1);
+	h2 = atom_create('H', 180, 1);
+	h3 = atom_create('H', 90, 1);
+	h4 = atom_create('H', -90, 1);
 
 	c1->child = h1;
 	h1->next = h2;
 	h2->next = h3;
+	h3->next = h4;
 
 	return c1;
 }
@@ -126,10 +128,10 @@ molecule_create(struct molecule* p, const char* name, float x, float y)
 
 	if (strcmp(name, "ethylene") == 0)
 		p->a = create_ethylene();
-	else if (strcmp(name, "metan") == 0)
-		p->a = create_metan();
-	else if (strcmp(name, "etan") == 0)
-		p->a = create_etan();
+	else if (strcmp(name, "methane") == 0)
+		p->a = create_methane();
+	else if (strcmp(name, "ethane") == 0)
+		p->a = create_ethane();
 	else
 		p->a = atom_create('H', 0, 0);
 }

@@ -72,10 +72,10 @@ strip_recalc(struct strip* sr, long ms)
 				molecule_create(m, "hidrogen", -6, 2);
 				break;
 			case 1:
-				molecule_create(m, "metan", -6, 2);
+				molecule_create(m, "methane", -6, 2);
 				break;
 			case 2:
-				molecule_create(m, "etan", -6, 2);
+				molecule_create(m, "ethane", -6, 2);
 				break;
 			case 3:
 				molecule_create(m, "ethylene", -6, 2);
