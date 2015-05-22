@@ -67,7 +67,7 @@ strip_recalc(struct strip* sr, long ms)
 
 	if (sr->head->x > 1) {
 		m = calloc(1, sizeof(struct molecule));
-		switch (rand() % 4) {
+		switch (rand() % 5) {
 			case 0:
 				molecule_create(m, "hidrogen", -6, 2);
 				break;
@@ -79,6 +79,9 @@ strip_recalc(struct strip* sr, long ms)
 				break;
 			case 3:
 				molecule_create(m, "ethylene", -6, 2);
+				break;
+			case 4:
+				molecule_create(m, "peroxyde", -6, 1);
 				break;
 		}
 

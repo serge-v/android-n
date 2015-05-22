@@ -12,6 +12,8 @@ struct resources {
 	struct pic carbon_pic;
 	struct pic bond1_pic;
 	struct pic bond2_pic;
+	struct pic oxygen_pic;
+	struct pic oxygen_mask_pic;
 };
 
 extern struct resources R;

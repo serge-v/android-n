@@ -46,10 +46,10 @@ macro(CONV_RESOURCE SRC HDR SUFFIX file)
 	set(csfile ${CMAKE_CURRENT_BINARY_DIR}/gen/${basename}.${SUFFIX}.c)
 
 	if(${SUFFIX} STREQUAL "png")
-		set(converter convert)
+		set(converter /usr/local/bin/convert)
 		set(converter_args "${CMAKE_CURRENT_SOURCE_DIR}/${file}" "-depth" "24" "${rsfile}")
 	elseif(${SUFFIX} STREQUAL "s16")
-		set(converter "sox")
+		set(converter "/usr/local/bin/sox")
 		set(converter_args "${CMAKE_CURRENT_SOURCE_DIR}/${file}" "-r" "8k" "-c" "1" "${rsfile}")
 	else()
 		message(FATAL_ERROR "invalid SUFFIX parameter")
@@ -59,7 +59,7 @@ macro(CONV_RESOURCE SRC HDR SUFFIX file)
 		OUTPUT "${csfile}" "${hsfile}" "${rsfile}"
 		COMMAND ${converter}
 		ARGS ${converter_args}
-		COMMAND mkresource
+		COMMAND ~/bin/mkresource
 		ARGS ${rsfile} ${basename}_${SUFFIX} ${hsfile} ${csfile}
 		DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${file}
 		COMMENT "Generating C code from ${file}"
@@ -73,6 +73,37 @@ macro(CONV_RESOURCE SRC HDR SUFFIX file)
 	set_directory_properties(ADDITIONAL_MAKE_CLEAN_FILES ${${CLEAN}})
 	set_source_files_properties(${${CLEAN}} PROPERTIES GENERATED TRUE)
 endmacro(CONV_RESOURCE SRC HDR SUFFIX file)
+
+macro(GEN_PICS SRCS)
+	set(${SRCS})
+
+	list(APPEND OUT_SOURCES
+		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen.png.c
+		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen_mask.png.c
+	)
+
+	add_custom_command(
+		OUTPUT ${OUT_SOURCES}
+		COMMAND ${CMAKE_SOURCE_DIR}/gen-pics.sh
+		DEPENDS ${CMAKE_SOURCE_DIR}/gen-pics.sh
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/gen
+		COMMENT "Generating imagemagick for pngs and mkresource for C code"
+	)
+
+	list(APPEND ${SRCS} ${OUT_SOURCES})
+	set_source_files_properties(
+		${${OUT_SOURCES}}
+		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen.png
+		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen_mask.png
+		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen.png.h
+		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen_mask.png.h
+		PROPERTIES GENERATED TRUE
+	)
+endmacro(GEN_PICS SRCS)
+
+gen_pics(SRCS)
+list(APPEND GENERATED ${SRCS})
+message("generated:" ${GENERATED})
 
 list(APPEND PICTURES
 	med/courier.xcf
@@ -123,11 +154,10 @@ list(APPEND HEADERS
 	../common/app.h
 )
 
-source_group(resources FILES ${XCF_RESOURCES})
-source_group(resources FILES ${WAV_RESOURCES})
+source_group(resources FILES ${PICTURES})
 source_group(sources FILES ${SOURCES})
 source_group(headers FILES ${HEADERS})
-source_group(headers FILES ${GENERATED})
+source_group(generated FILES ${GENERATED})
 
 if(ANDROID)
 	add_executable(

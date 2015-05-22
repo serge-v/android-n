@@ -6,6 +6,8 @@
 #include "gen/carbon.png.h"
 #include "gen/bond1.png.h"
 #include "gen/bond2.png.h"
+#include "gen/oxygen.png.h"
+#include "gen/oxygen_mask.png.h"
 
 struct resources R;
 
@@ -17,6 +19,8 @@ void resources_load()
 	pic_load_png_data(&R.carbon_pic, carbon_png, carbon_png_len);
 	pic_load_png_data(&R.bond1_pic, bond1_png, bond1_png_len);
 	pic_load_png_data(&R.bond2_pic, bond2_png, bond2_png_len);
+	pic_load_png_data(&R.oxygen_pic, oxygen_png, oxygen_png_len);
+	pic_load_png_data(&R.oxygen_mask_pic, oxygen_mask_png, oxygen_mask_png_len);
 }
 
 void resources_destroy()
@@ -27,4 +31,6 @@ void resources_destroy()
 	pic_destroy(&R.carbon_pic);
 	pic_destroy(&R.bond1_pic);
 	pic_destroy(&R.bond2_pic);
+	pic_destroy(&R.oxygen_pic);
+	pic_destroy(&R.oxygen_mask_pic);
 }

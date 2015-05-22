@@ -116,6 +116,31 @@ create_methane()
 	return c1;
 }
 
+static struct atom *
+create_peroxide()
+{
+	struct atom *o1, *o2, *h1, *h2;
+
+	/*
+
+	 H1     H2
+	  \    /
+	   O1-O2
+
+	 */
+
+	o1 = atom_create('O', 0, 0);
+	o2 = atom_create('O', 0, 1);
+	h1 = atom_create('H', -225, 1);
+	h2 = atom_create('H', 45, 1);
+
+	o1->child = o2;
+	o2->next = h1;
+	o2->child = h2;
+
+	return o1;
+}
+
 void
 molecule_create(struct molecule* p, const char* name, float x, float y)
 {
@@ -132,6 +157,8 @@ molecule_create(struct molecule* p, const char* name, float x, float y)
 		p->a = create_methane();
 	else if (strcmp(name, "ethane") == 0)
 		p->a = create_ethane();
+	else if (strcmp(name, "peroxyde") == 0)
+		p->a = create_peroxide();
 	else
 		p->a = atom_create('H', 0, 0);
 }
@@ -152,6 +179,8 @@ atom_draw(const struct atom* atom, const struct atom* parent, bool bonds)
 	if (!bonds) {
 		if (atom->symbol == 'H')
 			pic_draw2(&R.hidrogen_pic, &R.hidrogen_mask_pic);
+		else if (atom->symbol == 'O')
+			pic_draw2(&R.oxygen_pic, &R.oxygen_mask_pic);
 		else
 			pic_draw2(&R.carbon_pic, &R.hidrogen_mask_pic);
 	}
