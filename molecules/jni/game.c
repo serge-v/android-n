@@ -110,9 +110,10 @@ game_clear(struct game* g)
 void
 game_touch(struct game* g, int touch_x, int touch_y)
 {
-	for (struct molecule *m = g->strip.head; m != NULL; m = m->next) {
+	struct molecule *m;
+	for (m = g->strip.head; m != NULL; m = m->next) {
 		if ((touch_x-4) < m->x && (touch_x+2) > m->x)
-			m->y += 1;
+			m->y += 4;
 	}
 }
 

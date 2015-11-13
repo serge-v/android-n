@@ -15,9 +15,9 @@ void pic_create(struct pic* p, const char* name, const unsigned char* d, int w, 
 	LOGGLE("glGenTextures");
 	glBindTexture(GL_TEXTURE_2D, p->tex);
 	LOGGLE("glBindTexture");
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	LOGGLE("glTexParameteri 1");
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	LOGGLE("glTexParameteri 2");
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, d);
 	LOGGLE("texture loading: %s", name);

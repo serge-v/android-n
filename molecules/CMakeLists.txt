@@ -16,7 +16,7 @@ if(ANDROID)
 
 	list(APPEND SOURCES /opt/android-ndk-r10d/sources/android/native_app_glue/android_native_app_glue.c)
 	list(APPEND SOURCES ../common/audio.c)
-	list(APPEND LIBS android log EGL OpenSLES GLESv2 GLESv1_CM z m)
+	list(APPEND LIBS ui android log EGL OpenSLES GLESv2 GLESv1_CM z m)
 
 else()
 	set(ARCH osx)
@@ -59,7 +59,7 @@ macro(CONV_RESOURCE SRC HDR SUFFIX file)
 		OUTPUT "${csfile}" "${hsfile}" "${rsfile}"
 		COMMAND ${converter}
 		ARGS ${converter_args}
-		COMMAND ~/bin/mkresource
+		COMMAND $ENV{HOME}/bin/mkresource
 		ARGS ${rsfile} ${basename}_${SUFFIX} ${hsfile} ${csfile}
 		DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${file}
 		COMMENT "Generating C code from ${file}"
@@ -80,6 +80,8 @@ macro(GEN_PICS SRCS)
 	list(APPEND OUT_SOURCES
 		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen.png.c
 		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen_mask.png.c
+		${CMAKE_CURRENT_BINARY_DIR}/gen/carbon.png.c
+		${CMAKE_CURRENT_BINARY_DIR}/gen/carbon_mask.png.c
 	)
 
 	add_custom_command(
@@ -97,6 +99,10 @@ macro(GEN_PICS SRCS)
 		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen_mask.png
 		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen.png.h
 		${CMAKE_CURRENT_BINARY_DIR}/gen/oxygen_mask.png.h
+		${CMAKE_CURRENT_BINARY_DIR}/gen/carbon.png
+		${CMAKE_CURRENT_BINARY_DIR}/gen/carbon_mask.png
+		${CMAKE_CURRENT_BINARY_DIR}/gen/carbon.png.h
+		${CMAKE_CURRENT_BINARY_DIR}/gen/carbon_mask.png.h
 		PROPERTIES GENERATED TRUE
 	)
 endmacro(GEN_PICS SRCS)
@@ -113,7 +119,6 @@ list(APPEND PICTURES
 	med/bg.xcf
 	med/hidrogen.xcf
 	med/hidrogen_mask.xcf
-	med/carbon.xcf
 	med/bond1.xcf
 	med/bond2.xcf
 )

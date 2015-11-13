@@ -67,12 +67,12 @@ app_touch(int release, int x, int y)
 static void
 gl_init()
 {
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.5f);
-	glDisable(GL_DITHER);
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-	glEnable(GL_DEPTH_TEST);
-	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+//	glEnable(GL_ALPHA_TEST);
+//	glAlphaFunc(GL_GREATER, 0.5f);
+//	glDisable(GL_DITHER);
+//	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+//	glEnable(GL_DEPTH_TEST);
+//	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 static void
@@ -86,7 +86,7 @@ gl_init_viewport(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glShadeModel(GL_SMOOTH);
+//	glShadeModel(GL_SMOOTH);
 	glEnable(GL_BLEND);
 }
 
@@ -175,21 +175,17 @@ static void
 draw_objects()
 {
 	glPushMatrix();
-
 	glLoadIdentity();
 
-//	molecule_draw(&g.mol);
-//
-//	g.mol.x += 0.05;
-//	molecule_draw(&g.mol);
+	struct molecule *m;
 
-	for (struct molecule *m = g.strip.head; m != NULL; m = m->next)
+	for (m = g.strip.head; m != NULL; m = m->next)
 		molecule_draw(m);
 
 	glPopMatrix();
 }
 
-#define D -0.05f
+#define D 0.05f
 
 struct point axises_vertices[] = {
 	{ 0, 0 }, { 20, 0 },

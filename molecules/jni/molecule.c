@@ -166,6 +166,8 @@ molecule_create(struct molecule* p, const char* name, float x, float y)
 static void
 atom_draw(const struct atom* atom, const struct atom* parent, bool bonds)
 {
+	struct atom *a;
+
 	glRotatef(atom->angle, 0, 0, 1);
 	glTranslatef(0.75, 0, 0);
 	if (parent != NULL && bonds) {
@@ -185,7 +187,7 @@ atom_draw(const struct atom* atom, const struct atom* parent, bool bonds)
 			pic_draw2(&R.carbon_pic, &R.hidrogen_mask_pic);
 	}
 
-	for (struct atom *a = atom->child; a != NULL; a = a->next)
+	for (a = atom->child; a != NULL; a = a->next)
 		atom_draw(a, atom, bonds);
 
 	glTranslatef(-1.5, 0, 0);
@@ -208,8 +210,9 @@ molecule_draw(const struct molecule* p)
 static void
 atom_destroy(struct atom *atom)
 {
-	struct atom *tmp;
-	for (struct atom *a = atom->child; a != NULL;) {
+	struct atom *tmp, *a;
+
+	for (a = atom->child; a != NULL;) {
 		tmp = a;
 		a = a->next;
 		atom_destroy(tmp);
